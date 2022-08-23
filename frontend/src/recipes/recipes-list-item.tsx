@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { Tag } from "./tag-item";
+import { Tag } from "./tags/tag-item";
 import { Link } from "wouter";
 import { Recipe, RecipeTag } from "../api/recipes.api";
 

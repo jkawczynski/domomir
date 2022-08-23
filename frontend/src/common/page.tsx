@@ -16,12 +16,6 @@ type PageButtonProps = {
   icon?: string;
 };
 
-type PageProps = {
-  title: string;
-  pageButtons?: React.ReactNode[];
-  children?: React.ReactNode;
-};
-
 export const PageButton: FunctionComponent<PageButtonProps> = ({
   name,
   onClick,
@@ -42,7 +36,11 @@ export const PageButton: FunctionComponent<PageButtonProps> = ({
   );
 };
 
-export const Page: FunctionComponent<PageProps> = ({
+export const Page: FunctionComponent<{
+  title: string;
+  pageButtons?: React.ReactNode[];
+  children?: React.ReactNode;
+}> = ({
   title,
   pageButtons,
   children,

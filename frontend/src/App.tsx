@@ -15,7 +15,7 @@ export const App: FunctionComponent = () => {
     <QueryClientProvider client={queryClient}>
       <Menu>
         <MenuItem name="Shutter" path="/shutter" />
-        <MenuItem name="Recipes" path="/food" />
+        <MenuItem name="Recipes" path="/food/list" activeFor="/food"/>
       </Menu>
       <div className="content-divider"></div>
 

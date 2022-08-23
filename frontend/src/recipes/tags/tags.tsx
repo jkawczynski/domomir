@@ -1,6 +1,6 @@
 import { FunctionComponent, useState } from "react";
-import { getTags, RecipeTag } from "../api/recipes.api";
-import { Spinner } from "../common/spinner";
+import { getTags, RecipeTag } from "../../api/recipes.api";
+import { Spinner } from "../../common/spinner";
 import { Tag } from "./tag-item";
 import { useQuery } from "@tanstack/react-query";
 

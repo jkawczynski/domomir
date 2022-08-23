@@ -1,6 +1,6 @@
 import { FunctionComponent } from "react";
 import { Recipe, RecipeSchema } from "../api/recipes.api";
-import { Tags } from "./tags";
+import { Tags } from "./tags/tags";
 import { PictureUploader } from "./picture-uploader";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

@@ -1,11 +1,12 @@
 import { FunctionComponent, useState } from "react";
 import { RecipeListItem } from "./recipes-list-item";
-import { Page, PageButton } from "../common/page";
+import { PageButton } from "../common/page";
 import { useLocation } from "wouter";
 import { getRecipes, RecipeTag } from "../api/recipes.api";
 import { Spinner } from "../common/spinner";
-import { Tags } from "./tags";
+import { Tags } from "./tags/tags";
 import { useQuery } from "@tanstack/react-query";
+import { RecipesPage } from "./page";
 
 const RecipesList: FunctionComponent<{
   tags: RecipeTag[];
@@ -40,7 +41,7 @@ export const RecipesSearchView: FunctionComponent = () => {
   const [tags, setTags] = useState<RecipeTag[]>([]);
 
   return (
-    <Page
+    <RecipesPage
       title="Recipes"
       pageButtons={[
         <PageButton
@@ -54,6 +55,6 @@ export const RecipesSearchView: FunctionComponent = () => {
     >
       <Tags onChange={setTags} />
       <RecipesList tags={tags} />
-    </Page>
+    </RecipesPage>
   );
 };

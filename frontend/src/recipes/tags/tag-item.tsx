@@ -1,5 +1,5 @@
 import { FunctionComponent } from "react";
-import { RecipeTag } from "../api/recipes.api";
+import { RecipeTag } from "../../api/recipes.api";
 
 type TagProps = {
   recipeTag: RecipeTag;
