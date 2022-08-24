@@ -21,7 +21,7 @@ function getThumbnail(url: string): string {
 export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
   const thumbnail = getThumbnail(recipe.picture);
   const [_, setLocation] = useLocation();
-  const recipePath = `/${recipe.id}`;
+  const recipePath = `/recipes/${recipe.id}`;
   let buttons = [
     <Button
       onClick={() => setLocation(recipePath)}

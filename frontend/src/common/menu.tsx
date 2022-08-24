@@ -14,7 +14,7 @@ import { useLocation } from "wouter";
 
 const pages = [
   { name: "Shutter", path: "/shutter" },
-  { name: "Recipes", path: "/food/list" },
+  { name: "Food", path: "/food/recipes" },
 ];
 
 export const AppMenu: FunctionComponent = () => {

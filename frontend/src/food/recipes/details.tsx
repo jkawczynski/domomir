@@ -111,8 +111,8 @@ export const RecipeDetailsView: FunctionComponent<{ id: string }> = ({
     <Page>
       <RecipeDetailCard
         recipe={data}
-        onEdit={() => setLocation(`/${id}/edit`)}
-        onDelete={() => deleteRecipe(id).then(() => setLocation("/list"))}
+        onEdit={() => setLocation(`/recipes/${id}/edit`)}
+        onDelete={() => deleteRecipe(id).then(() => setLocation("/recipes"))}
       />
     </Page>
   );

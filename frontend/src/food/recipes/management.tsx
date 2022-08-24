@@ -15,7 +15,7 @@ import { RecipeForm } from "./form";
 export const NewRecipeView: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
   const mutation = useMutation(createRecipe, {
-    onSuccess: () => setLocation("/list"),
+    onSuccess: () => setLocation("/recipes"),
   });
 
   return (
@@ -31,7 +31,7 @@ export const NewRecipeView: FunctionComponent = () => {
 export const EditRecipeView: FunctionComponent<{ id: string }> = ({ id }) => {
   const [_, setLocation] = useLocation();
   const mutation = useMutation(updateRecipe, {
-    onSuccess: () => setLocation("/list"),
+    onSuccess: () => setLocation("/recipes"),
   });
 
   const { isLoading, data, isError } = useQuery(["getRecipe", id], () =>

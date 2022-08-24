@@ -56,7 +56,7 @@ export const RecipesDashboard: FunctionComponent = () => {
         {
           icon: <AddIcon />,
           name: "Add new",
-          onClick: () => setLocation("/new"),
+          onClick: () => setLocation("/recipes/new"),
         },
       ]}
     >
