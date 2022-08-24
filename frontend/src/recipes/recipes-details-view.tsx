@@ -4,47 +4,75 @@ import { Spinner } from "../common/spinner";
 import { getRecipe, deleteRecipe, Recipe } from "../api/recipes.api";
 import { useLocation, Link } from "wouter";
 import { useQuery } from "@tanstack/react-query";
+import { TagsList } from "./tags/tags";
+
+import Stack from "@mui/material/Stack";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 
 const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;
-  onDelete?: Function;
-}> = ({ recipe, onDelete }) => {
+  onDelete: Function;
+  onEdit: Function;
+}> = ({ recipe, onDelete, onEdit }) => {
   const recipeUrl = recipe.url ? (
-    <h5 className="card-title">
-      <a href={recipe.url}>Recipe Link</a>
-    </h5>
+    <Button
+      href={recipe.url}
+      size="small"
+      target="_blank"
+      color="secondary"
+      startIcon={<OpenInNewIcon />}
+    >
+      Link
+    </Button>
   ) : null;
 
   return (
-    <div className="card">
-      <img src={recipe.picture} alt={recipe.name} />
-      <div className="card-body">
-        {recipeUrl}
-        <p className="card-text">{recipe.description}</p>
-      </div>
-      <div className="card-footer">
-        <div className="btn-toolbar justify-content-end">
-          <div className="btn-group" role="group">
-            <Link
-              role="button"
-              className="btn btn-primary"
-              to={`/${recipe.id}/edit`}
-            >
-              Edit
-            </Link>
-            <button
-              role="button"
-              className="btn btn-danger"
-              onClick={() => {
-                if (onDelete) onDelete();
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Card sx={{ minWidth: 350 }}>
+      <CardMedia
+        component="img"
+        height="500"
+        image={recipe.picture}
+        alt="Recipe picture"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {recipe.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <TagsList tags={recipe.tags} />
+          {recipe.description}
+        </Typography>
+      </CardContent>
+      <CardActions disableSpacing>
+        <Stack direction="row" spacing={2}>
+          <Button
+            onClick={() => onDelete()}
+            size="small"
+            color="error"
+            startIcon={<DeleteIcon />}
+          >
+            Delete
+          </Button>
+          <Button
+            onClick={() => onEdit()}
+            size="small"
+            startIcon={<EditIcon />}
+          >
+            Edit
+          </Button>
+          {recipeUrl}
+        </Stack>
+      </CardActions>
+    </Card>
   );
 };
 
@@ -60,10 +88,11 @@ export const RecipeDetailsView: FunctionComponent<{ id: string }> = ({
   if (isError) return <span>Error loading recipe</span>;
 
   return (
-    <Page title={data.name}>
+    <Page>
       <RecipeDetailCard
         recipe={data}
-        onDelete={() => deleteRecipe(id).then(() => setLocation("/"))}
+        onEdit={() => setLocation(`/${id}/edit`)}
+        onDelete={() => deleteRecipe(id).then(() => setLocation("/list"))}
       />
     </Page>
   );

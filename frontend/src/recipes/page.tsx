@@ -1,5 +1,12 @@
 import { Link, useLocation } from "wouter";
 import { FunctionComponent } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
+import AddIcon from "@mui/icons-material/Add";
 
 export const RecipesMenuItem: FunctionComponent<{
   name: string;
@@ -30,31 +37,32 @@ export const RecipesMenu: FunctionComponent = () => {
   );
 };
 
+const actions = [{ icon: <AddIcon />, name: "Add new recipe" }];
+
 export const RecipesPage: FunctionComponent<{
   title: string;
   pageButtons?: React.ReactNode[];
   children?: React.ReactNode;
 }> = ({ title, pageButtons, children }) => {
   return (
-    <div className="container">
-      <div className="row">
-        <div className="col-md-2">
-          <RecipesMenu />
-        </div>
-        <div className="col-md-10">
-          <div className="d-flex justify-content-between p-2">
-            <div className="p-2">
-              <h1> {title} </h1>
-            </div>
-            <div className="p-2">
-              <div className="btn-group" role="group">
-                {pageButtons}
-              </div>
-            </div>
-          </div>
-          {children}
-        </div>
-      </div>
-    </div>
+    <Container>
+      <Typography mt={2} variant="h2">
+        {title}
+      </Typography>
+      {children}
+      <SpeedDial
+        ariaLabel="Add"
+        sx={{ position: "absolute", bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+          />
+        ))}
+      </SpeedDial>
+    </Container>
   );
 };

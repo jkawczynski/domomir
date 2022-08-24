@@ -7,7 +7,7 @@ from foods.models import Recipe, RecipeTag, RecipePicture
 class RecipeTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeTag
-        fields = ("name", "tag_type")
+        fields = ("name",)
 
 
 class RecipeSerializer(serializers.ModelSerializer):
@@ -25,6 +25,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
 class RecipeInputSerializer(RecipeSerializer):
     picture = serializers.CharField(required=False)
+    tags = serializers.ListSerializer(child=serializers.CharField())
 
     def _save_picture(self, instance: Recipe, picture_id: str = None):
         if not picture_id:
@@ -34,8 +35,8 @@ class RecipeInputSerializer(RecipeSerializer):
         instance.picture = picture
         instance.save(update_fields=["picture"])
 
-    def _save_tags(self, instance: Recipe, tags: List[dict]):
-        tags = RecipeTag.objects.filter(name__in=[tag["name"] for tag in tags])
+    def _save_tags(self, instance: Recipe, tags: List[str]):
+        tags = RecipeTag.objects.filter(name__in=tags)
         instance.tags.set(tags)
 
     def update(self, instance: Recipe, validated_data: dict) -> Recipe:

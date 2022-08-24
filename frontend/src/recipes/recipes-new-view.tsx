@@ -1,7 +1,12 @@
 import { Page } from "../common/page";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
-import { Recipe, createRecipe, getRecipe, updateRecipe } from "../api/recipes.api";
+import {
+  Recipe,
+  createRecipe,
+  getRecipe,
+  updateRecipe,
+} from "../api/recipes.api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Spinner } from "../common/spinner";
 import { RecipeForm } from "./recipe-form";
@@ -9,7 +14,7 @@ import { RecipeForm } from "./recipe-form";
 export const NewRecipeView: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
   const mutation = useMutation(createRecipe, {
-    onSuccess: () => setLocation("/"),
+    onSuccess: () => setLocation("/list"),
   });
 
   return (
@@ -25,7 +30,7 @@ export const NewRecipeView: FunctionComponent = () => {
 export const EditRecipeView: FunctionComponent<{ id: string }> = ({ id }) => {
   const [_, setLocation] = useLocation();
   const mutation = useMutation(updateRecipe, {
-    onSuccess: () => setLocation("/"),
+    onSuccess: () => setLocation("/list"),
   });
 
   const { isLoading, data, isError } = useQuery(["getRecipe", id], () =>
@@ -41,9 +46,7 @@ export const EditRecipeView: FunctionComponent<{ id: string }> = ({ id }) => {
     <Page title={title}>
       <RecipeForm
         recipe={data}
-        onSubmit={(recipe: Recipe) =>
-          mutation.mutate(recipe)
-        }
+        onSubmit={(recipe: Recipe) => mutation.mutate(recipe)}
         isLoading={mutation.isLoading}
         error={mutation?.error?.message}
       />

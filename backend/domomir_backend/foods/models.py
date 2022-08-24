@@ -5,19 +5,7 @@ from easy_thumbnails.fields import ThumbnailerImageField
 
 
 class RecipeTag(models.Model):
-    TAG_CHOICES = (
-        ("primary", "Blue"),
-        ("secondary", "Grey"),
-        ("success", "Green"),
-        ("danger", "Red"),
-        ("warning", "Orange"),
-        ("info", "Light Blue"),
-        ("light", "Light Grey"),
-        ("dark", "Black"),
-    )
-
-    name = models.CharField(max_length=255)
-    tag_type = models.CharField(max_length=24, choices=TAG_CHOICES, default="primary")
+    name = models.CharField(max_length=255, unique=True)
 
     def __str__(self):
         return self.name

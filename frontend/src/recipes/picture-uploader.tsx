@@ -1,23 +1,47 @@
-import { FunctionComponent } from "react";
+import { FunctionComponent, useState } from "react";
 import { useMutation } from "@tanstack/react-query";
 import { uploadPicture } from "../api/recipes.api";
+import TextField from "@mui/material/TextField";
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+import UploadIcon from "@mui/icons-material/Upload";
 
 export const PictureUploader: FunctionComponent<{
   onFileSelect: Function;
-  className?: string;
-}> = ({ onFileSelect, className }) => {
+  error?: string;
+}> = ({ onFileSelect, error }) => {
+  const [fileName, setFileName] = useState("");
+
   const mutation = useMutation(uploadPicture, {
     onSuccess: (response) => onFileSelect(response.data["file_id"]),
   });
 
+  const onChange = (event) => {
+    const file = event.target.files[0];
+    setFileName(file.name);
+    mutation.mutate(file);
+  };
+
   return (
-    <div>
-      <input
-        type="file"
-        className={className ? className : "form-control"}
-        accept="image/jpeg, image/jpg"
-        onChange={(e) => mutation.mutate(e.target.files[0])}
+    <Stack direction="row" spacing={1}>
+      <TextField
+        label="Picture"
+        sx={{ width: 1 }}
+        disabled
+        value={fileName}
+        error={!!error}
+        helperText={error}
       />
-    </div>
+      <Button variant="contained" component="label" endIcon={<UploadIcon />}>
+        Upload
+        <input
+          hidden
+          accept="image/*"
+          multiple
+          type="file"
+          onChange={onChange}
+        />
+      </Button>
+    </Stack>
   );
 };

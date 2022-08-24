@@ -1,65 +1,49 @@
 import { FunctionComponent } from "react";
+import Container from "@mui/material/Container";
+import Typography from "@mui/material/Typography";
+import SpeedDial from "@mui/material/SpeedDial";
+import SpeedDialIcon from "@mui/material/SpeedDialIcon";
+import SpeedDialAction from "@mui/material/SpeedDialAction";
 
-type PageButtonProps = {
+type PageAction = {
+  icon: React.ReactNode;
+  onClick: Function;
   name: string;
-  onClick: React.MouseEventHandler;
-  type:
-    | "primary"
-    | "secondary"
-    | "success"
-    | "danger"
-    | "warning"
-    | "info"
-    | "light"
-    | "dark"
-    | "link";
-  icon?: string;
-};
-
-export const PageButton: FunctionComponent<PageButtonProps> = ({
-  name,
-  onClick,
-  type,
-  icon,
-}) => {
-  let iconEl: React.ReactNode;
-  if (icon) {
-    const iconClass = `bi-${icon} btn-icon`;
-    iconEl = <i className={iconClass}></i>;
-  }
-  const btnClassName = `btn btn-${type || "primary"}`;
-  return (
-    <button key={name} type="button" onClick={onClick} className={btnClassName}>
-      {iconEl}
-      {name}
-    </button>
-  );
 };
 
 export const Page: FunctionComponent<{
-  title: string;
-  pageButtons?: React.ReactNode[];
+  title?: string;
+  actions?: PageAction[];
   children?: React.ReactNode;
-}> = ({
-  title,
-  pageButtons,
-  children,
-}) => {
+}> = ({ title, actions, children }) => {
+  function renderActions() {
+    if (!actions) {
+      return;
+    }
+    return (
+      <SpeedDial
+        ariaLabel="Add"
+        sx={{ position: "absolute", bottom: 16, right: 16 }}
+        icon={<SpeedDialIcon />}
+      >
+        {actions.map((action) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.name}
+            onClick={action.onClick}
+          />
+        ))}
+      </SpeedDial>
+    );
+  }
   return (
-    <div className="container">
-      <div className="col-md-8 mx-auto">
-        <div className="d-flex justify-content-between p-2">
-          <div className="p-2">
-            <h1> {title} </h1>
-          </div>
-          <div className="p-2">
-            <div className="btn-group" role="group">
-              {pageButtons}
-            </div>
-          </div>
-        </div>
-        {children}
-      </div>
-    </div>
+    <Container>
+      <Typography mt={2} variant="h2">
+        {title}
+      </Typography>
+      {children}
+      {renderActions()}
+    </Container>
   );
 };

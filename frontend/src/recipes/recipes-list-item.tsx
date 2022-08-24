@@ -1,7 +1,13 @@
 import { FunctionComponent } from "react";
-import { Tag } from "./tags/tag-item";
-import { Link } from "wouter";
-import { Recipe, RecipeTag } from "../api/recipes.api";
+import { TagsList } from "./tags/tags";
+import { useLocation } from "wouter";
+import { Recipe } from "../api/recipes.api";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
 
 function getThumbnail(url: string): string {
   let ext = url.split(".")[1];
@@ -13,50 +19,38 @@ function getThumbnail(url: string): string {
 
 export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
   const thumbnail = getThumbnail(recipe.picture);
+  const [_, setLocation] = useLocation();
   const recipePath = `/${recipe.id}`;
   let buttons = [
-    <Link
-      role="button"
+    <Button
+      onClick={() => setLocation(recipePath)}
       key={recipePath}
-      className="btn btn-outline-primary"
-      to={recipePath}
+      size="small"
     >
       Details
-    </Link>,
+    </Button>,
   ];
   if (recipe.url) {
     buttons = [
-      <a
-        key={recipe.url}
-        role="button"
-        className="btn btn-outline-primary"
-        href={recipe.url}
-        target="_blank"
-      >
+      <Button href={recipe.url} key={recipe.url} target="_blank" size="small">
         Link
-      </a>,
+      </Button>,
       ...buttons,
     ];
   }
 
   return (
-    <div className="col">
-      <div className="card">
-        <img className="card-img-top" src={thumbnail} alt="Card image cap" />
-        <div className="card-body">
-          <h4 className="card-title">{recipe.name}</h4>
-          {recipe.tags.map((tag: RecipeTag) => (
-            <Tag key={tag.name} recipeTag={tag} />
-          ))}
-        </div>
-        <div className="card-footer">
-          <div className="btn-toolbar justify-content-end">
-            <div className="btn-group" role="group">
-              {buttons}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
+    <Card sx={{ maxWidth: 345 }}>
+      <CardMedia component="img" image={thumbnail} alt="green iguana" />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="div">
+          {recipe.name}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <TagsList tags={recipe.tags} />
+        </Typography>
+      </CardContent>
+      <CardActions>{buttons}</CardActions>
+    </Card>
   );
 };

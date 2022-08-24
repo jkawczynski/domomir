@@ -2,19 +2,8 @@ import axios, { AxiosResponse } from "axios";
 import qs from "qs";
 import { z } from "zod";
 
-const recipeTagSchema = z.object({
+const RecipeTagSchema = z.object({
   name: z.string(),
-  tag_type: z.enum([
-    "primary",
-    "secondary",
-    "success",
-    "danger",
-    "warning",
-    "info",
-    "light",
-    "dark",
-    "link",
-  ]),
 });
 
 export const RecipeSchema = z.object({
@@ -23,17 +12,17 @@ export const RecipeSchema = z.object({
   url: z.string().url().optional().or(z.literal("")),
   picture: z.string(),
   description: z.string().min(3).optional().or(z.literal("")),
-  tags: z.array(recipeTagSchema),
+  tags: z.array(RecipeTagSchema),
 });
 
-export type RecipeTag = z.infer<typeof recipeTagSchema>;
+export type RecipeTag = z.infer<typeof RecipeTagSchema>;
 export type Recipe = z.infer<typeof RecipeSchema>;
 
-export async function getRecipes(tags: RecipeTag[]) {
+export async function getRecipes(tags: string[]) {
   const url = `${import.meta.env.VITE_APP_API_URL}api/recipes/`;
   return await axios
     .get<Recipe[]>(url, {
-      params: { tags: tags.map((tag: RecipeTag) => tag.name) },
+      params: { tags: tags },
       paramsSerializer: (params) =>
         qs.stringify(params, { arrayFormat: "repeat" }),
     })

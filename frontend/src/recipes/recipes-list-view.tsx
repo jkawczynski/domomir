@@ -1,18 +1,19 @@
 import { FunctionComponent, useState } from "react";
 import { RecipeListItem } from "./recipes-list-item";
-import { PageButton } from "../common/page";
+import { Page } from "../common/page";
 import { useLocation } from "wouter";
-import { getRecipes, RecipeTag } from "../api/recipes.api";
+import { getRecipes } from "../api/recipes.api";
 import { Spinner } from "../common/spinner";
-import { Tags } from "./tags/tags";
+import { TagsFilter } from "./tags/tags";
 import { useQuery } from "@tanstack/react-query";
-import { RecipesPage } from "./page";
+import AddIcon from "@mui/icons-material/Add";
+import Stack from "@mui/material/Stack";
 
 const RecipesList: FunctionComponent<{
-  tags: RecipeTag[];
+  tags: string[];
 }> = ({ tags }) => {
-  const { isLoading, data, isError } = useQuery(
-      ["getRecipes", tags], () => getRecipes(tags)
+  const { isLoading, data, isError } = useQuery(["getRecipes", tags], () =>
+    getRecipes(tags)
   );
   if (!data && isLoading) return <Spinner />;
   if (isError) return <span>Error loading recipe</span>;
@@ -20,7 +21,7 @@ const RecipesList: FunctionComponent<{
   if (!data.length) return <h3>No recipes found.</h3>;
 
   return (
-    <div className="row row-cols-1 row-cols-md-2 g-4">
+    <Stack spacing={2} direction="row">
       {data.map((recipe) => (
         <RecipeListItem
           key={recipe.id}
@@ -32,29 +33,27 @@ const RecipesList: FunctionComponent<{
           picture={recipe.picture}
         />
       ))}
-    </div>
+    </Stack>
   );
 };
 
 export const RecipesSearchView: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
-  const [tags, setTags] = useState<RecipeTag[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
 
   return (
-    <RecipesPage
+    <Page
       title="Recipes"
-      pageButtons={[
-        <PageButton
-          key="new"
-          type="success"
-          icon="plus-circle"
-          name="Add new"
-          onClick={() => setLocation("/new")}
-        />,
+      actions={[
+        {
+          icon: <AddIcon />,
+          name: "Add new",
+          onClick: () => setLocation("/new"),
+        },
       ]}
     >
-      <Tags onChange={setTags} />
+      <TagsFilter onChange={setTags} />
       <RecipesList tags={tags} />
-    </RecipesPage>
+    </Page>
   );
 };

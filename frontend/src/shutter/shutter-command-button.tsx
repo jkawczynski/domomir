@@ -1,46 +1,46 @@
 import { FunctionComponent } from "react";
 import { sendShutterCommand } from "../api/shutter.api";
 
+import Stack from "@mui/material/Stack";
+import Button from "@mui/material/Button";
+
 const ShutterCommandButton: FunctionComponent<{
   command: string;
   name: string;
-  btnClassName: string;
+  color: string;
   disabled?: boolean;
-}> = ({ command, name, btnClassName, disabled }) => (
-  <button
-    className={btnClassName}
-    type="button"
+}> = ({ command, name, color, disabled }) => (
+  <Button
+    color={color}
+    variant="outlined"
     onClick={() => sendShutterCommand(command).then(() => {})}
     disabled={disabled}
   >
     {name}
-  </button>
+  </Button>
 );
 
-export const ShutterCommandButtons: FunctionComponent<{ disabled: boolean }> =
-  ({ disabled }) => (
-    <div className="row align-items-start">
-      <div className="col-12">
-        <div className="d-grid gap-4">
-          <ShutterCommandButton
-            btnClassName="btn btn-primary"
-            command="u"
-            name="Up"
-            disabled={disabled}
-          />
-          <ShutterCommandButton
-            btnClassName="btn btn-warning"
-            command="s"
-            name="Stop"
-            disabled={disabled}
-          />
-          <ShutterCommandButton
-            btnClassName="btn btn-primary"
-            command="d"
-            name="Down"
-            disabled={disabled}
-          />
-        </div>
-      </div>
-    </div>
-  );
+export const ShutterCommandButtons: FunctionComponent<{
+  disabled: boolean;
+}> = ({ disabled }) => (
+  <Stack mt={2} spacing={2}>
+    <ShutterCommandButton
+      color="secondary"
+      command="u"
+      name="Up"
+      disabled={disabled}
+    />
+    <ShutterCommandButton
+      color="error"
+      command="s"
+      name="Stop"
+      disabled={disabled}
+    />
+    <ShutterCommandButton
+      color="secondary"
+      command="d"
+      name="Down"
+      disabled={disabled}
+    />
+  </Stack>
+);
