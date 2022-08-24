@@ -48,7 +48,7 @@ const RecipeDetailCard: FunctionComponent<{
         <Typography gutterBottom variant="h4" component="div">
           {recipe.name}
         </Typography>
-        <TagsList tags={recipe.tags} />
+        <TagsList tags={recipe.tags.map((t) => t.name)} />
         <Grid container>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">

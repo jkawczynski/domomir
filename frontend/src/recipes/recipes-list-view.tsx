@@ -1,4 +1,5 @@
 import AddIcon from "@mui/icons-material/Add";
+import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
@@ -8,13 +9,13 @@ import { getRecipes } from "../api/recipes.api";
 import { Page } from "../common/page";
 import { Spinner } from "../common/spinner";
 import { RecipeListItem } from "./recipes-list-item";
-import { TagsFilter } from "./tags/tags";
+import { Filters, RecipesFilter } from "./recipes-search-filter";
 
 const RecipesList: FunctionComponent<{
-  tags: string[];
-}> = ({ tags }) => {
-  const { isLoading, data, isError } = useQuery(["getRecipes", tags], () =>
-    getRecipes(tags)
+  filters: typeof RecipesFilter;
+}> = ({ filters }) => {
+  const { isLoading, data, isError } = useQuery(["getRecipes", filters], () =>
+    getRecipes(filters)
   );
   if (!data && isLoading) return <Spinner />;
   if (isError) return <span>Error loading recipe</span>;
@@ -33,6 +34,7 @@ const RecipesList: FunctionComponent<{
             url={recipe.url}
             tags={recipe.tags}
             picture={recipe.picture}
+            ingredients={recipe.ingredients}
           />
         </Grid>
       ))}
@@ -42,7 +44,10 @@ const RecipesList: FunctionComponent<{
 
 export const RecipesSearchView: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
-  const [tags, setTags] = useState<string[]>([]);
+  const [filters, setFilters] = useState<Filters>({
+    tags: [],
+    ingredients: [],
+  });
 
   return (
     <Page
@@ -55,8 +60,10 @@ export const RecipesSearchView: FunctionComponent = () => {
         },
       ]}
     >
-      <TagsFilter onChange={setTags} />
-      <RecipesList tags={tags} />
+      <Box mt={2} mb={2}>
+        <RecipesFilter value={filters} onChange={setFilters} />
+      </Box>
+      <RecipesList filters={filters} />
     </Page>
   );
 };

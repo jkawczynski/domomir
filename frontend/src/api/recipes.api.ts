@@ -25,11 +25,15 @@ export type RecipeTag = z.infer<typeof RecipeTagSchema>;
 export type RecipeIngredient = z.infer<typeof RecipeIngredientSchema>;
 export type Recipe = z.infer<typeof RecipeSchema>;
 
-export async function getRecipes(tags: string[]) {
+export async function getRecipes(filters: {
+  tags: string[];
+  ingredients: string[];
+}) {
+  const { tags, ingredients } = filters;
   const url = `${import.meta.env.VITE_APP_API_URL}api/recipes/`;
   return await axios
     .get<Recipe[]>(url, {
-      params: { tags: tags },
+      params: { tags, ingredients },
       paramsSerializer: (params) =>
         qs.stringify(params, { arrayFormat: "repeat" }),
     })
@@ -78,7 +82,15 @@ export function uploadPicture(file: File) {
 }
 
 export async function getTags() {
+  console.log("get tags");
   return await axios
-    .get<RecipeTag[]>(`${import.meta.env.VITE_APP_API_URL}api/tags/`)
+    .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/tags/`)
+    .then((response) => response.data);
+}
+
+export async function getIngredients() {
+  console.log("get ings");
+  return await axios
+    .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/ingredients/`)
     .then((response) => response.data);
 }

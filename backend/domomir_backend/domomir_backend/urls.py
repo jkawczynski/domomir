@@ -1,14 +1,15 @@
-from django.contrib import admin
-from django.urls import path, include
-from rest_framework.routers import DefaultRouter
-from foods import views as food_views
-from shutter import views as shutter_views
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
+from django.urls import include, path
+from foods import views as food_views
+from rest_framework.routers import DefaultRouter
+from shutter import views as shutter_views
 
 router = DefaultRouter()
 router.register(r"recipes", food_views.RecipeViewSet)
-router.register(r"tags", food_views.TagsViewSet)
+router.register(r"tags", food_views.TagsViewSet, basename="tags")
+router.register(r"ingredients", food_views.IngredientsViewSet, basename="ingredients")
 router.register(r"shutter", shutter_views.ShutterViewSet, basename="shutter")
 
 urlpatterns = [

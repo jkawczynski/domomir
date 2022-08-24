@@ -1,73 +1,32 @@
 import Box from "@mui/material/Box";
-import Checkbox from "@mui/material/Checkbox";
 import Chip from "@mui/material/Chip";
 import FormControl from "@mui/material/FormControl";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import FormGroup from "@mui/material/FormGroup";
 import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
 import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
 import { Theme, useTheme } from "@mui/material/styles";
 import { useQuery } from "@tanstack/react-query";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 
 import { RecipeTag, getTags } from "../../api/recipes.api";
 import { Spinner } from "../../common/spinner";
 
-export const Tag: FunctionComponent<{ tag: RecipeTag }> = ({ tag }) => {
-  return <Chip key={tag.name} size="small" label={tag.name} />;
+export const Tag: FunctionComponent<{ tag: string }> = ({ tag }) => {
+  return <Chip key={tag} size="small" label={tag} />;
 };
 
 export const TagsList: FunctionComponent<{
-  tags: RecipeTag[];
+  tags: string[];
 }> = ({ tags }) => {
   return (
     <Box mt={2} mb={2}>
       <Stack direction="row" spacing={1}>
         {tags.map((tag) => (
-          <Tag key={tag.name} tag={tag} />
+          <Tag key={tag} tag={tag} />
         ))}
-      </Stack>
-    </Box>
-  );
-};
-
-export const TagsFilter: FunctionComponent<{
-  onChange?: Function;
-}> = ({ onChange }) => {
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const { isLoading, data, isError } = useQuery(["getTags"], getTags);
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    let current = [...selectedTags];
-    if (selectedTags.includes(event.target.name)) {
-      current = selectedTags.filter((tagName) => tagName !== event.target.name);
-    } else {
-      current = [...current, event.target.name];
-    }
-    if (onChange) onChange(current);
-    setSelectedTags(current);
-  };
-
-  if (isLoading) return <Spinner />;
-  if (!data || isError) return <span>Error loading tags</span>;
-
-  return (
-    <Box mt={2} mb={2}>
-      <Typography>Select tags:</Typography>
-      <Stack direction="row" spacing={1}>
-        <FormGroup row>
-          {data.map((tag) => (
-            <FormControlLabel
-              key={tag.name}
-              control={<Checkbox name={tag.name} onChange={handleChange} />}
-              label={tag.name}
-            />
-          ))}
-        </FormGroup>
       </Stack>
     </Box>
   );
@@ -100,7 +59,7 @@ export const TagsSelect: FunctionComponent<{
 }> = ({ onChange, error, value }) => {
   const theme = useTheme();
   const { isLoading, data, isError } = useQuery(["getTags"], getTags);
-  const handleChange = (event: SelectChangeEvent<typeof personName>) => {
+  const handleChange = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value },
     } = event;
@@ -132,16 +91,8 @@ export const TagsSelect: FunctionComponent<{
           MenuProps={MenuProps}
         >
           {data.map((tag) => (
-            <MenuItem
-              key={tag.name}
-              value={tag.name}
-              style={getStyles(
-                tag.name,
-                data.map((t) => t.name),
-                theme
-              )}
-            >
-              {tag.name}
+            <MenuItem key={tag} value={tag} style={getStyles(tag, data, theme)}>
+              {tag}
             </MenuItem>
           ))}
         </Select>
