@@ -37,6 +37,10 @@ class RecipeViewSet(ModelViewSet):
         queryset = super().get_queryset()
         tags = self.request.query_params.getlist("tags", [])
         ingredients = self.request.query_params.getlist("ingredients", [])
+        query = self.request.query_params.get("query")
+        if query:
+            queryset = queryset.filter(name__icontains=query)
+
         for tag in tags:
             if not tag:
                 continue

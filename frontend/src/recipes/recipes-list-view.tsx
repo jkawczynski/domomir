@@ -6,8 +6,8 @@ import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
 
 import { getRecipes } from "../api/recipes.api";
-import { Page } from "../common/page";
 import { Spinner } from "../common/spinner";
+import { RecipesPage } from "./page";
 import { RecipeListItem } from "./recipes-list-item";
 import { Filters, RecipesFilter } from "./recipes-search-filter";
 
@@ -47,10 +47,10 @@ export const RecipesSearchView: FunctionComponent = () => {
   const [filters, setFilters] = useState<Filters>({
     tags: [],
     ingredients: [],
+    query: "",
   });
-
   return (
-    <Page
+    <RecipesPage
       title="Recipes"
       actions={[
         {
@@ -64,6 +64,6 @@ export const RecipesSearchView: FunctionComponent = () => {
         <RecipesFilter value={filters} onChange={setFilters} />
       </Box>
       <RecipesList filters={filters} />
-    </Page>
+    </RecipesPage>
   );
 };

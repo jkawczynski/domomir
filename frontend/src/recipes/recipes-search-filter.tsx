@@ -7,6 +7,7 @@ import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FunctionComponent } from "react";
@@ -17,6 +18,7 @@ import { Spinner } from "../common/spinner";
 export type Filters = {
   tags: string[];
   ingredients: string[];
+  query: string;
 };
 
 export const CheckboxListFilter: FunctionComponent<{
@@ -66,12 +68,22 @@ export const RecipesFilter: FunctionComponent<{
   const onChangeIngredients = (ingredients: string[]) => {
     onChange({ ...value, ingredients });
   };
+
+  const onChangeQuery = (query: string) => {
+    onChange({ ...value, query });
+  };
   return (
     <Accordion>
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Typography>Filters</Typography>
       </AccordionSummary>
       <AccordionDetails>
+        <TextField
+          value={value.query}
+          onChange={(event) => onChangeQuery(event.target.value)}
+          label="Search"
+          variant="outlined"
+        />
         <CheckboxListFilter
           name="tags"
           value={value.tags}

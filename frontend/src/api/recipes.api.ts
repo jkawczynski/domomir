@@ -28,12 +28,13 @@ export type Recipe = z.infer<typeof RecipeSchema>;
 export async function getRecipes(filters: {
   tags: string[];
   ingredients: string[];
+  query: string;
 }) {
-  const { tags, ingredients } = filters;
+  const { query, tags, ingredients } = filters;
   const url = `${import.meta.env.VITE_APP_API_URL}api/recipes/`;
   return await axios
     .get<Recipe[]>(url, {
-      params: { tags, ingredients },
+      params: { tags, ingredients, query },
       paramsSerializer: (params) =>
         qs.stringify(params, { arrayFormat: "repeat" }),
     })
