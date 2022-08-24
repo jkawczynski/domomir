@@ -1,5 +1,5 @@
 import { FunctionComponent, ReactElement } from "react";
-import { useLocation, useRouter, Router } from "wouter";
+import { Router, useLocation, useRouter } from "wouter";
 
 export const NestedRouter: FunctionComponent<{
   base: string;

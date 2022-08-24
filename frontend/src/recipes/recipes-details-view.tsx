@@ -1,22 +1,23 @@
-import { Page } from "../common/page";
-import { FunctionComponent } from "react";
-import { Spinner } from "../common/spinner";
-import { getRecipe, deleteRecipe, Recipe } from "../api/recipes.api";
-import { useLocation, Link } from "wouter";
-import { useQuery } from "@tanstack/react-query";
-import { TagsList } from "./tags/tags";
-
-import Stack from "@mui/material/Stack";
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
+import Grid from "@mui/material/Grid";
+import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
+import { useQuery } from "@tanstack/react-query";
+import { FunctionComponent } from "react";
+import { useLocation } from "wouter";
 
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Recipe, deleteRecipe, getRecipe } from "../api/recipes.api";
+import { Page } from "../common/page";
+import { Spinner } from "../common/spinner";
+import { IngredientList } from "./recipe-ingredients";
+import { TagsList } from "./tags/tags";
 
 const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;
@@ -44,13 +45,32 @@ const RecipeDetailCard: FunctionComponent<{
         alt="Recipe picture"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h4" component="div">
           {recipe.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <TagsList tags={recipe.tags} />
-          {recipe.description}
-        </Typography>
+        <TagsList tags={recipe.tags} />
+        <Grid container>
+          <Grid item md={6} xs={12}>
+            <Typography gutterBottom variant="h5" component="div">
+              Ingredients:
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {recipe.ingredients.length < 1 ? "No ingredients provided" : null}
+            </Typography>
+            <IngredientList ingredients={recipe.ingredients} />
+          </Grid>
+          <Grid item md={6} xs={12}>
+            <Typography gutterBottom variant="h5" component="div">
+              Description:
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {recipe.description}
+            </Typography>
+            <Typography variant="body2" color="text.secondary">
+              {recipe.description.length < 1 ? "No description provided" : null}
+            </Typography>
+          </Grid>
+        </Grid>
       </CardContent>
       <CardActions disableSpacing>
         <Stack direction="row" spacing={2}>

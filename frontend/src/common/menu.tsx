@@ -1,16 +1,16 @@
-import { FunctionComponent, useState } from "react";
-import { useLocation } from "wouter";
-import AppBar from "@mui/material/AppBar";
-import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
-import Toolbar from "@mui/material/Toolbar";
-import Menu from "@mui/material/Menu";
-import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
-import MenuItem from "@mui/material/MenuItem";
 import CottageIcon from "@mui/icons-material/Cottage";
 import MenuIcon from "@mui/icons-material/Menu";
-import IconButton from '@mui/material/IconButton';
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Container from "@mui/material/Container";
+import IconButton from "@mui/material/IconButton";
+import Menu from "@mui/material/Menu";
+import MenuItem from "@mui/material/MenuItem";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import { FunctionComponent, useState } from "react";
+import { useLocation } from "wouter";
 
 const pages = [
   { name: "Shutter", path: "/shutter" },

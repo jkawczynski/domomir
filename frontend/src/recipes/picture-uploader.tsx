@@ -1,10 +1,11 @@
-import { FunctionComponent, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { uploadPicture } from "../api/recipes.api";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
-import Button from "@mui/material/Button";
 import UploadIcon from "@mui/icons-material/Upload";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { useMutation } from "@tanstack/react-query";
+import { FunctionComponent, useState } from "react";
+
+import { uploadPicture } from "../api/recipes.api";
 
 export const PictureUploader: FunctionComponent<{
   onFileSelect: Function;

@@ -1,13 +1,14 @@
-import { FunctionComponent, useState } from "react";
-import { RecipeListItem } from "./recipes-list-item";
-import { Page } from "../common/page";
-import { useLocation } from "wouter";
-import { getRecipes } from "../api/recipes.api";
-import { Spinner } from "../common/spinner";
-import { TagsFilter } from "./tags/tags";
-import { useQuery } from "@tanstack/react-query";
 import AddIcon from "@mui/icons-material/Add";
-import Stack from "@mui/material/Stack";
+import Grid from "@mui/material/Grid";
+import { useQuery } from "@tanstack/react-query";
+import { FunctionComponent, useState } from "react";
+import { useLocation } from "wouter";
+
+import { getRecipes } from "../api/recipes.api";
+import { Page } from "../common/page";
+import { Spinner } from "../common/spinner";
+import { RecipeListItem } from "./recipes-list-item";
+import { TagsFilter } from "./tags/tags";
 
 const RecipesList: FunctionComponent<{
   tags: string[];
@@ -21,19 +22,21 @@ const RecipesList: FunctionComponent<{
   if (!data.length) return <h3>No recipes found.</h3>;
 
   return (
-    <Stack spacing={2} direction="row">
+    <Grid container spacing={2}>
       {data.map((recipe) => (
-        <RecipeListItem
-          key={recipe.id}
-          id={recipe.id}
-          name={recipe.name}
-          description={recipe.description}
-          url={recipe.url}
-          tags={recipe.tags}
-          picture={recipe.picture}
-        />
+        <Grid item xs={12} md={4}>
+          <RecipeListItem
+            key={recipe.id}
+            id={recipe.id}
+            name={recipe.name}
+            description={recipe.description}
+            url={recipe.url}
+            tags={recipe.tags}
+            picture={recipe.picture}
+          />
+        </Grid>
       ))}
-    </Stack>
+    </Grid>
   );
 };
 

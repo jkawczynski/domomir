@@ -1,8 +1,8 @@
-import { FunctionComponent } from "react";
-import { sendShutterCommand } from "../api/shutter.api";
-
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import { FunctionComponent } from "react";
+
+import { sendShutterCommand } from "../api/shutter.api";
 
 const ShutterCommandButton: FunctionComponent<{
   command: string;

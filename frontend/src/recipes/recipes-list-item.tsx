@@ -1,13 +1,14 @@
-import { FunctionComponent } from "react";
-import { TagsList } from "./tags/tags";
-import { useLocation } from "wouter";
-import { Recipe } from "../api/recipes.api";
+import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
+import { FunctionComponent } from "react";
+import { useLocation } from "wouter";
+
+import { Recipe } from "../api/recipes.api";
+import { TagsList } from "./tags/tags";
 
 function getThumbnail(url: string): string {
   let ext = url.split(".")[1];

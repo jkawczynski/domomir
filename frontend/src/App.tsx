@@ -1,12 +1,12 @@
+import Container from "@mui/material/Container";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
-import { Router, Route, Redirect } from "wouter";
-import { Shutter } from "./shutter/shutter";
-import { RecipesRouter } from "./recipes/router";
+import { Redirect, Route, Router } from "wouter";
+
 import { AppMenu } from "./common/menu";
 import { NestedRouter } from "./common/nested-router";
-
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Container from "@mui/material/Container";
+import { RecipesRouter } from "./recipes/router";
+import { Shutter } from "./shutter/shutter";
 
 const queryClient = new QueryClient();
 

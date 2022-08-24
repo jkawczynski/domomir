@@ -23,9 +23,19 @@ class Recipe(models.Model):
     url = models.URLField(null=True, blank=True)
     description = models.TextField(null=True, blank=True)
     tags = models.ManyToManyField(RecipeTag, related_name="tags")
-    ingredients = models.JSONField(null=True, blank=True)
     picture = models.OneToOneField(
         RecipePicture, on_delete=models.CASCADE, related_name="recipe", null=True
+    )
+
+    def __str__(self):
+        return self.name
+
+
+class RecipeIngredient(models.Model):
+    name = models.CharField(max_length=255)
+    amount_and_unit = models.CharField(max_length=255)
+    recipe = models.ForeignKey(
+        Recipe, on_delete=models.CASCADE, related_name="ingredients"
     )
 
     def __str__(self):

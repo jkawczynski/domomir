@@ -1,14 +1,16 @@
-import { FunctionComponent } from "react";
-import { Recipe, RecipeSchema } from "../api/recipes.api";
-import { TagsSelect } from "./tags/tags";
-import { PictureUploader } from "./picture-uploader";
-import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Spinner } from "../common/spinner";
-import TextField from "@mui/material/TextField";
-import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
+import TextField from "@mui/material/TextField";
+import { FunctionComponent } from "react";
+import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
+
+import { Recipe, RecipeSchema } from "../api/recipes.api";
+import { Spinner } from "../common/spinner";
+import { PictureUploader } from "./picture-uploader";
+import { IngredientsSelect } from "./recipe-ingredients";
+import { TagsSelect } from "./tags/tags";
 
 export const RecipeForm: FunctionComponent<{
   recipe?: Recipe;
@@ -31,17 +33,25 @@ export const RecipeForm: FunctionComponent<{
       name: recipe?.name,
       description: recipe?.description,
       url: recipe?.url || "",
-      tags: recipe?.tags.map((t) => t.name),
+      tags: recipe?.tags.map((t) => t.name) || [],
+      ingredients: recipe?.ingredients || [{ name: "", amount_and_unit: "" }],
     },
   });
   const { errors, isSubmitting } = formState;
+
+  const removeEmptyIngredients = (recipe: Recipe) => {
+    recipe.ingredients = recipe.ingredients.filter((i) => i.name !== "");
+    return recipe;
+  };
 
   if (isLoading) return <Spinner />;
   if (error) return <h5>An error occurred: {error}</h5>;
 
   return (
     <form
-      onSubmit={handleSubmit((recipe) => onSubmit(recipe))}
+      onSubmit={handleSubmit((recipe) =>
+        onSubmit(removeEmptyIngredients(recipe))
+      )}
       className="needs-validation"
       noValidate
     >
@@ -76,14 +86,21 @@ export const RecipeForm: FunctionComponent<{
           control={control}
         />
         <Controller
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <TagsSelect
-              error={errors?.tags?.message}
               onChange={onChange}
-              initial={recipe?.tags.map((t) => t.name)}
+              value={value}
+              error={errors?.tags?.message}
             />
           )}
           name="tags"
+          control={control}
+        />
+        <Controller
+          render={({ field: { onChange, value } }) => (
+            <IngredientsSelect onChange={onChange} value={value} />
+          )}
+          name="ingredients"
           control={control}
         />
 

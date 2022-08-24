@@ -6,16 +6,23 @@ const RecipeTagSchema = z.object({
   name: z.string(),
 });
 
+const RecipeIngredientSchema = z.object({
+  name: z.string(),
+  amount_and_unit: z.string(),
+});
+
 export const RecipeSchema = z.object({
   id: z.number().optional(),
   name: z.string().min(3),
   url: z.string().url().optional().or(z.literal("")),
   picture: z.string(),
+  ingredients: z.array(RecipeIngredientSchema),
   description: z.string().min(3).optional().or(z.literal("")),
   tags: z.array(RecipeTagSchema),
 });
 
 export type RecipeTag = z.infer<typeof RecipeTagSchema>;
+export type RecipeIngredient = z.infer<typeof RecipeIngredientSchema>;
 export type Recipe = z.infer<typeof RecipeSchema>;
 
 export async function getRecipes(tags: string[]) {

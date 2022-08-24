@@ -1,8 +1,9 @@
 import { FunctionComponent } from "react";
-import { Switch, Route } from "wouter";
-import { RecipesSearchView } from "./recipes-list-view";
+import { Route, Switch } from "wouter";
+
 import { RecipeDetailsView } from "./recipes-details-view";
-import { NewRecipeView, EditRecipeView } from "./recipes-new-view";
+import { RecipesSearchView } from "./recipes-list-view";
+import { EditRecipeView, NewRecipeView } from "./recipes-new-view";
 
 export const RecipesRouter: FunctionComponent = () => {
   return (

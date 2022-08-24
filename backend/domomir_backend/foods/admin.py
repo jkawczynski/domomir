@@ -1,12 +1,15 @@
 from django.contrib import admin
 
-from foods.models import Recipe, RecipeTag, RecipePicture
+from foods.models import Recipe, RecipeTag, RecipePicture, RecipeIngredient
 
-# Register your models here.
+
+class RecipeIngredientAdmin(admin.TabularInline):
+    model = RecipeIngredient
+
 
 @admin.register(Recipe)
 class RecipesAdmin(admin.ModelAdmin):
-    pass
+    inlines = [RecipeIngredientAdmin]
 
 
 @admin.register(RecipeTag)

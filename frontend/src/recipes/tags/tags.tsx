@@ -1,22 +1,22 @@
-import { FunctionComponent, useState } from "react";
-import { getTags, RecipeTag } from "../../api/recipes.api";
-import { Spinner } from "../../common/spinner";
-import { useQuery } from "@tanstack/react-query";
 import Box from "@mui/material/Box";
-import Stack from "@mui/material/Stack";
-import Chip from "@mui/material/Chip";
-import FormGroup from "@mui/material/FormGroup";
-import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
-import Typography from "@mui/material/Typography";
-
-import { Theme, useTheme } from "@mui/material/styles";
-import OutlinedInput from "@mui/material/OutlinedInput";
+import Chip from "@mui/material/Chip";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormGroup from "@mui/material/FormGroup";
+import FormHelperText from "@mui/material/FormHelperText";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import FormHelperText from "@mui/material/FormHelperText";
+import OutlinedInput from "@mui/material/OutlinedInput";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Stack from "@mui/material/Stack";
+import Typography from "@mui/material/Typography";
+import { Theme, useTheme } from "@mui/material/styles";
+import { useQuery } from "@tanstack/react-query";
+import { FunctionComponent, useState } from "react";
+
+import { RecipeTag, getTags } from "../../api/recipes.api";
+import { Spinner } from "../../common/spinner";
 
 export const Tag: FunctionComponent<{ tag: RecipeTag }> = ({ tag }) => {
   return <Chip key={tag.name} size="small" label={tag.name} />;
@@ -94,20 +94,17 @@ function getStyles(name: string, personName: readonly string[], theme: Theme) {
 }
 
 export const TagsSelect: FunctionComponent<{
-  initial?: string[];
+  value?: string[];
   onChange?: Function;
   error?: string;
-}> = ({ onChange, error, initial }) => {
+}> = ({ onChange, error, value }) => {
   const theme = useTheme();
   const { isLoading, data, isError } = useQuery(["getTags"], getTags);
-  const [tags, setTags] = useState<string[]>(initial || []);
-
   const handleChange = (event: SelectChangeEvent<typeof personName>) => {
     const {
       target: { value },
     } = event;
     const selected = typeof value === "string" ? value.split(",") : value;
-    setTags(selected);
     if (onChange) onChange(selected);
   };
 
@@ -122,7 +119,7 @@ export const TagsSelect: FunctionComponent<{
           labelId="tags-select"
           id="tags-select"
           multiple
-          value={tags}
+          value={value}
           onChange={handleChange}
           input={<OutlinedInput id="select-multiple-chip" label="Chip" />}
           renderValue={(selected) => (
