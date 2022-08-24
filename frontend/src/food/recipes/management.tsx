@@ -7,10 +7,10 @@ import {
   createRecipe,
   getRecipe,
   updateRecipe,
-} from "../api/recipes.api";
-import { Page } from "../common/page";
-import { Spinner } from "../common/spinner";
-import { RecipeForm } from "./recipe-form";
+} from "../../api/recipes.api";
+import { Page } from "../../common/page";
+import { Spinner } from "../../common/spinner";
+import { RecipeForm } from "./form";
 
 export const NewRecipeView: FunctionComponent = () => {
   const [_, setLocation] = useLocation();

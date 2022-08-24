@@ -5,7 +5,7 @@ import TextField from "@mui/material/TextField";
 import { useMutation } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
 
-import { uploadPicture } from "../api/recipes.api";
+import { uploadPicture } from "../../api/recipes.api";
 
 export const PictureUploader: FunctionComponent<{
   onFileSelect: Function;

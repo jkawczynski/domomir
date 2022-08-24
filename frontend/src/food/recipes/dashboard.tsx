@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
 
-import { getRecipes } from "../api/recipes.api";
-import { Spinner } from "../common/spinner";
-import { RecipesPage } from "./page";
-import { RecipeListItem } from "./recipes-list-item";
-import { Filters, RecipesFilter } from "./recipes-search-filter";
+import { getRecipes } from "../../api/recipes.api";
+import { Spinner } from "../../common/spinner";
+import { FoodPage } from "../page";
+import { RecipeListItem } from "./list-item";
+import { Filters, RecipesFilter } from "./search-filter";
 
 const RecipesList: FunctionComponent<{
   filters: typeof RecipesFilter;
@@ -42,7 +42,7 @@ const RecipesList: FunctionComponent<{
   );
 };
 
-export const RecipesSearchView: FunctionComponent = () => {
+export const RecipesDashboard: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
   const [filters, setFilters] = useState<Filters>({
     tags: [],
@@ -50,7 +50,7 @@ export const RecipesSearchView: FunctionComponent = () => {
     query: "",
   });
   return (
-    <RecipesPage
+    <FoodPage
       title="Recipes"
       actions={[
         {
@@ -64,6 +64,6 @@ export const RecipesSearchView: FunctionComponent = () => {
         <RecipesFilter value={filters} onChange={setFilters} />
       </Box>
       <RecipesList filters={filters} />
-    </RecipesPage>
+    </FoodPage>
   );
 };

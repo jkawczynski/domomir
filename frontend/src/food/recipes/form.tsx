@@ -6,11 +6,11 @@ import { FunctionComponent } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
 
-import { Recipe, RecipeSchema } from "../api/recipes.api";
-import { Spinner } from "../common/spinner";
+import { Recipe, RecipeSchema } from "../../api/recipes.api";
+import { Spinner } from "../../common/spinner";
+import { TagsSelect } from "../tags/tags";
+import { IngredientsSelect } from "./ingredients";
 import { PictureUploader } from "./picture-uploader";
-import { IngredientsSelect } from "./recipe-ingredients";
-import { TagsSelect } from "./tags/tags";
 
 export const RecipeForm: FunctionComponent<{
   recipe?: Recipe;

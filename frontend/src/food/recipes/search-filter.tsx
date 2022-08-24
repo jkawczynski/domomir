@@ -12,8 +12,8 @@ import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FunctionComponent } from "react";
 
-import { getIngredients, getTags } from "../api/recipes.api";
-import { Spinner } from "../common/spinner";
+import { getIngredients, getTags } from "../../api/recipes.api";
+import { Spinner } from "../../common/spinner";
 
 export type Filters = {
   tags: string[];

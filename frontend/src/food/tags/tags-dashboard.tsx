@@ -3,12 +3,12 @@ import Box from "@mui/material/Box";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
-import { RecipesPage } from "../page";
+import { FoodPage } from "../page";
 
 export const TagsDashboard: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
   return (
-    <RecipesPage
+    <FoodPage
       title="Tags"
       actions={[
         {
@@ -21,6 +21,6 @@ export const TagsDashboard: FunctionComponent = () => {
       <Box mt={2} mb={2}>
         Tags here :O
       </Box>
-    </RecipesPage>
+    </FoodPage>
   );
 };

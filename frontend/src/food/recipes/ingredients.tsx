@@ -16,7 +16,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent, useState } from "react";
 
-import { RecipeIngredient } from "../api/recipes.api";
+import { RecipeIngredient } from "../../api/recipes.api";
 
 export const IngredientList: FunctionComponent<{
   ingredients: RecipeIngredient[];

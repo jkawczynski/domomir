@@ -7,8 +7,8 @@ import Typography from "@mui/material/Typography";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
-import { Recipe } from "../api/recipes.api";
-import { TagsList } from "./tags/tags";
+import { Recipe } from "../../api/recipes.api";
+import { TagsList } from "../tags/tags";
 
 function getThumbnail(url: string): string {
   let ext = url.split(".")[1];

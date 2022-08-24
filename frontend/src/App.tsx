@@ -5,7 +5,7 @@ import { Redirect, Route, Router } from "wouter";
 
 import { AppMenu } from "./common/menu";
 import { NestedRouter } from "./common/nested-router";
-import { RecipesRouter } from "./recipes/router";
+import { RecipesRouter } from "./food/router";
 import { Shutter } from "./shutter/shutter";
 
 const queryClient = new QueryClient();

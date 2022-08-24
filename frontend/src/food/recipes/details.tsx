@@ -13,11 +13,11 @@ import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
-import { Recipe, deleteRecipe, getRecipe } from "../api/recipes.api";
-import { Page } from "../common/page";
-import { Spinner } from "../common/spinner";
-import { IngredientList } from "./recipe-ingredients";
-import { TagsList } from "./tags/tags";
+import { Recipe, deleteRecipe, getRecipe } from "../../api/recipes.api";
+import { Page } from "../../common/page";
+import { Spinner } from "../../common/spinner";
+import { TagsList } from "../tags/tags";
+import { IngredientList } from "./ingredients";
 
 const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;

@@ -11,7 +11,7 @@ import { Theme, useTheme } from "@mui/material/styles";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
-import { RecipeTag, getTags } from "../../api/recipes.api";
+import { getTags } from "../../api/recipes.api";
 import { Spinner } from "../../common/spinner";
 
 export const Tag: FunctionComponent<{ tag: string }> = ({ tag }) => {

@@ -5,11 +5,11 @@ import { FunctionComponent } from "react";
 import { Page, PageAction } from "../common/page";
 
 const subNavigation = [
-  { name: "Recipes", path: "/list", icon: <ListAltIcon /> },
+  { name: "Recipes", path: "/recipes", icon: <ListAltIcon /> },
   { name: "Tags", path: "/tags", icon: <TagIcon /> },
 ];
 
-export const RecipesPage: FunctionComponent<{
+export const FoodPage: FunctionComponent<{
   children?: React.ReactNode;
   actions?: PageAction[];
   title: string;
