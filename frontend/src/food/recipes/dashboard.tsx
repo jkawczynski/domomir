@@ -35,6 +35,7 @@ const RecipesList: FunctionComponent<{
             tags={recipe.tags}
             picture={recipe.picture}
             ingredients={recipe.ingredients}
+            thumbnail={recipe.thumbnail}
           />
         </Grid>
       ))}

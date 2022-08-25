@@ -1,5 +1,6 @@
 import UploadIcon from "@mui/icons-material/Upload";
 import Button from "@mui/material/Button";
+import LinearProgress from "@mui/material/LinearProgress";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@tanstack/react-query";
@@ -14,7 +15,10 @@ export const PictureUploader: FunctionComponent<{
   const [fileName, setFileName] = useState("");
 
   const mutation = useMutation(uploadPicture, {
-    onSuccess: (response) => onFileSelect(response.data["file_id"]),
+    onSuccess: (response) => {
+      onFileSelect(response.data["file_id"]);
+      setFileName(response.data["file_name"]);
+    },
   });
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,30 +26,35 @@ export const PictureUploader: FunctionComponent<{
       return;
     }
     const file = event.target.files[0];
-    setFileName(file.name);
     mutation.mutate(file);
   };
 
+  const uploadError = mutation?.error as any;
+
   return (
-    <Stack direction="row" spacing={1}>
-      <TextField
-        label="Picture"
-        sx={{ width: 1 }}
-        disabled
-        value={fileName}
-        error={!!error}
-        helperText={error}
-      />
-      <Button variant="contained" component="label" endIcon={<UploadIcon />}>
-        Upload
-        <input
-          hidden
-          accept="image/*"
-          multiple
-          type="file"
-          onChange={onChange}
+    <Stack spacing={0}>
+      <Stack direction="row" spacing={1}>
+        <TextField
+          label="Picture"
+          sx={{ width: 1 }}
+          disabled
+          value={fileName}
+          error={!!error || mutation.isError}
+          helperText={error || uploadError?.message}
         />
-      </Button>
+        <Button variant="contained" component="label" endIcon={<UploadIcon />}>
+          Upload
+          <input
+            hidden
+            accept="image/*"
+            multiple
+            type="file"
+            onChange={onChange}
+            disabled={mutation.isLoading}
+          />
+        </Button>
+      </Stack>
+      {mutation.isLoading ? <LinearProgress /> : null}
     </Stack>
   );
 };

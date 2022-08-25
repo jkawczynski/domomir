@@ -10,17 +10,7 @@ import { useLocation } from "wouter";
 import { Recipe } from "../../api/recipes.api";
 import { TagsList } from "../tags/tags";
 
-function getThumbnail(url: string): string {
-  const splited = url.split(".");
-  let ext = splited[splited.length - 1];
-  if (ext === "jpeg") {
-    ext = "jpg";
-  }
-  return `${url}.recipe_thumb.${ext}`;
-}
-
 export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
-  const thumbnail = getThumbnail(recipe.picture);
   const [_, setLocation] = useLocation();
   const recipePath = `/recipes/${recipe.id}`;
   let buttons = [
@@ -46,7 +36,7 @@ export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
       <CardMedia
         onClick={() => setLocation(recipePath)}
         component="img"
-        image={thumbnail}
+        image={recipe.thumbnail}
         alt="green iguana"
       />
       <CardContent>

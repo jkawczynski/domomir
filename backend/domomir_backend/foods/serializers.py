@@ -1,4 +1,5 @@
 from rest_framework import serializers
+import os.path
 from typing import Optional, List
 
 from foods.models import Recipe, RecipeTag, RecipePicture, RecipeIngredient
@@ -24,10 +25,18 @@ class RecipeSerializer(serializers.ModelSerializer):
     tags = RecipeTagSerializer(many=True)
     picture = serializers.SerializerMethodField()
     ingredients = RecipeIngredientSerializer(many=True, required=False)
+    thumbnail = serializers.SerializerMethodField()
 
     def get_picture(self, recipe: Recipe) -> Optional[str]:
         request = self.context.get("request")
         return request.build_absolute_uri(recipe.picture.file.url)
+
+    def get_thumbnail(self, recipe: Recipe) -> Optional[str]:
+        picture_url = self.get_picture(recipe)
+        _, ext = os.path.splitext(picture_url)
+        if ext == ".jpeg":
+            ext = ".jpg"
+        return f"{picture_url}.recipe_thumb{ext}"
 
     class Meta:
         model = Recipe

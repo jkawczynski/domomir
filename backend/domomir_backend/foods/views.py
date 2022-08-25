@@ -20,7 +20,9 @@ class RecipeUploadView(APIView):
 
         file = request.data["file"]
         picture = RecipePicture.objects.create(file=file)
-        return Response(data={"file_id": picture.pk}, status=200)
+        return Response(
+            data={"file_id": picture.pk, "file_name": file.name}, status=200
+        )
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
