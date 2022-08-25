@@ -2,8 +2,7 @@ version: "3.9"
 
 services:
   backend:
-    restart: always
-    image: woodev/domomir-backend:latest
+    build: ${PWD}/backend/
     environment:
       - YAMLCONF_CONFFILE=/srv/config.yaml
     volumes:
@@ -15,8 +14,9 @@ services:
     expose: ["8000"]
 
   frontend:
-    restart: always
-    image: woodev/domomir-frontend:latest
+    build:
+      context: ${PWD}/frontend/
+      dockerfile: ${PWD}/frontend/prod.Dockerfile
     volumes:
       - ${PWD}/etc/nginx_frontend.conf:/etc/nginx/nginx.conf
     user: app 
