@@ -91,7 +91,7 @@ export const RecipeForm: FunctionComponent<{
         <Controller
           render={({ field: { onChange, value } }) => (
             <TagsSelect
-              onChange={onChange}
+                onChange={(tags) => {console.log(tags); onChange(tags)}}
               value={value}
               error={errors?.tags?.message}
             />

@@ -10,7 +10,9 @@ services:
       - ./backend/domomir_backend/foods:/app/foods
       - ./backend/domomir_backend/shutter:/app/shutter
   frontend:
-    build: ./frontend/
+    build:
+      context: ${PWD}/frontend/
+      dockerfile: ${PWD}/frontend/Dockerfile
     ports:
       - "5173:5173"
     volumes:
