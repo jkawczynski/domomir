@@ -2,13 +2,13 @@ from foods.models import Recipe, RecipeIngredient, RecipePicture, RecipeTag
 from foods.serializers import (
     RecipeInputSerializer,
     RecipeSerializer,
+    RecipeTagSerializer,
 )
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 
 
 class RecipeUploadView(APIView):
@@ -23,7 +23,7 @@ class RecipeUploadView(APIView):
         return Response(data={"file_id": picture.pk}, status=200)
 
 
-class RecipeViewSet(ModelViewSet):
+class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
 
@@ -54,7 +54,12 @@ class RecipeViewSet(ModelViewSet):
         return queryset
 
 
-class TagsViewSet(viewsets.ViewSet):
+class TagsViewSet(viewsets.ModelViewSet):
+    queryset = RecipeTag.objects.all()
+    serializer_class = RecipeTagSerializer
+
+
+class TagsListViewSet(viewsets.ViewSet):
     def list(self, request):
         tags = list(RecipeTag.objects.all().values_list("name", flat=True).distinct())
         return Response(tags)

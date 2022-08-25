@@ -15,7 +15,7 @@ export const RecipesRouter: FunctionComponent = () => {
       <Route path="/recipes/:id">
         {(params) => <RecipeDetailsView id={params.id} />}
       </Route>
-      <Route path="recipes/:id/edit">
+      <Route path="/recipes/:id/edit">
         {(params) => <EditRecipeView id={params.id} />}
       </Route>
     </Switch>

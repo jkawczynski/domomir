@@ -12,7 +12,7 @@ import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FunctionComponent } from "react";
 
-import { getIngredients, getTags } from "../../api/recipes.api";
+import { getIngredients, getTagsNames } from "../../api/recipes.api";
 import { Spinner } from "../../common/spinner";
 
 export type Filters = {
@@ -88,7 +88,7 @@ export const RecipesFilter: FunctionComponent<{
           name="tags"
           value={value.tags}
           onChange={onChangeTags}
-          apiGet={getTags}
+          apiGet={getTagsNames}
         />
         <CheckboxListFilter
           name="ingredients"

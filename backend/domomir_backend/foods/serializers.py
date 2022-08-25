@@ -8,7 +8,10 @@ from django.db import transaction
 class RecipeTagSerializer(serializers.ModelSerializer):
     class Meta:
         model = RecipeTag
-        fields = ("name",)
+        fields = (
+            "id",
+            "name",
+        )
 
 
 class RecipeIngredientSerializer(serializers.ModelSerializer):
@@ -44,8 +47,12 @@ class RecipeInputSerializer(RecipeSerializer):
         instance.save(update_fields=["picture"])
 
     def _save_tags(self, instance: Recipe, tags: List[str]):
-        tags = RecipeTag.objects.filter(name__in=tags)
-        instance.tags.set(tags)
+        existing_tags = RecipeTag.objects.filter(name__in=tags)
+        new_tags = [tag for tag in tags if not existing_tags.filter(name=tag).exists()]
+        new_tags = RecipeTag.objects.bulk_create(
+            [RecipeTag(name=tag) for tag in new_tags]
+        )
+        instance.tags.set(RecipeTag.objects.filter(name__in=tags))
 
     def _save_ingredients(self, instance: Recipe, ingredients: List[dict]):
         instance.ingredients.all().delete()

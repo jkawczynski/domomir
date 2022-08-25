@@ -3,6 +3,7 @@ import qs from "qs";
 import { z } from "zod";
 
 const RecipeTagSchema = z.object({
+  id: z.number(),
   name: z.string(),
 });
 
@@ -18,7 +19,7 @@ export const RecipeSchema = z.object({
   picture: z.string(),
   ingredients: z.array(RecipeIngredientSchema),
   description: z.string().min(3).optional().or(z.literal("")),
-  tags: z.array(RecipeTagSchema),
+  tags: z.array(RecipeTagSchema)
 });
 
 export type RecipeTag = z.infer<typeof RecipeTagSchema>;
@@ -82,15 +83,25 @@ export function uploadPicture(file: File) {
   });
 }
 
-export async function getTags() {
-  console.log("get tags");
+export async function getTagsNames() {
   return await axios
-    .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/tags/`)
+    .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/tags_list/`)
     .then((response) => response.data);
 }
 
+export async function getTags() {
+  return await axios
+    .get<RecipeTag[]>(`${import.meta.env.VITE_APP_API_URL}api/tags/`)
+    .then((response) => response.data);
+}
+
+export async function deleteTag(id: number) {
+  return await axios.delete(
+    `${import.meta.env.VITE_APP_API_URL}api/tags/${id}/`
+  );
+}
+
 export async function getIngredients() {
-  console.log("get ings");
   return await axios
     .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/ingredients/`)
     .then((response) => response.data);

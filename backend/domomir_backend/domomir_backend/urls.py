@@ -8,7 +8,8 @@ from shutter import views as shutter_views
 
 router = DefaultRouter()
 router.register(r"recipes", food_views.RecipeViewSet)
-router.register(r"tags", food_views.TagsViewSet, basename="tags")
+router.register(r"tags_list", food_views.TagsListViewSet, basename="tags")
+router.register(r"tags", food_views.TagsViewSet)
 router.register(r"ingredients", food_views.IngredientsViewSet, basename="ingredients")
 router.register(r"shutter", shutter_views.ShutterViewSet, basename="shutter")
 

@@ -18,11 +18,14 @@ export const RecipeForm: FunctionComponent<{
   isLoading: boolean;
   error?: string;
 }> = ({ recipe, onSubmit, isLoading, error }) => {
+  const tagsSchema = z
+    .array(z.string())
+    .nonempty({ message: "Select at least one tag" });
   const schema = recipe
     ? RecipeSchema.extend({
-        tags: z.array(z.string()),
+        tags: tagsSchema,
       }).partial({ picture: true })
-    : RecipeSchema.extend({ tags: z.array(z.string()) });
+    : RecipeSchema.extend({ tags: tagsSchema });
 
   const { formState, register, handleSubmit, control } = useForm<
     z.infer<typeof schema>
