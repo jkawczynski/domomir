@@ -11,7 +11,8 @@ import { Recipe } from "../../api/recipes.api";
 import { TagsList } from "../tags/tags";
 
 function getThumbnail(url: string): string {
-  let ext = url.split(".")[1];
+  const splited = url.split(".");
+  let ext = splited[splited.length - 1];
   if (ext === "jpeg") {
     ext = "jpg";
   }
