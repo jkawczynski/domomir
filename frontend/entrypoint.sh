@@ -1,5 +1,4 @@
 #!/bin/sh
 
 pnpm rebuild esbuild
-
-exec "$@"
+pnpm run dev --host

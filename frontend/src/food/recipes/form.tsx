@@ -42,7 +42,7 @@ export const RecipeForm: FunctionComponent<{
   });
   const { errors, isSubmitting } = formState;
 
-  const removeEmptyIngredients = (recipe: Recipe) => {
+  const removeEmptyIngredients = (recipe: z.infer<typeof schema>) => {
     recipe.ingredients = recipe.ingredients.filter((i) => i.name !== "");
     return recipe;
   };

@@ -1,0 +1,31 @@
+version: "3.9"
+
+services:
+  backend:
+    build: ${PWD}/backend/
+    environment:
+      - YAMLCONF_CONFFILE=/srv/config.yaml
+    volumes:
+      - ${PWD}/etc/database/:/srv/database/
+      - ${PWD}/etc/upload/:/srv/upload/
+      - ${PWD}/etc/config.yaml:/srv/config.yaml
+      - ${PWD}/etc/nginx_backend.conf:/etc/nginx/nginx.conf
+    user: app
+    expose: ["8000"]
+
+  frontend:
+    build:
+      context: ${PWD}/frontend/
+      dockerfile: ${PWD}/frontend/prod.Dockerfile
+    volumes:
+      - ${PWD}/etc/nginx_frontend.conf:/etc/nginx/nginx.conf
+    user: app 
+    expose: ["8500"]
+
+  nginx:
+    image: nginx:1
+    volumes:
+      - ${PWD}/etc/nginx_proxy.conf:/etc/nginx/nginx.conf
+      - ${PWD}/etc/proxy_params:/etc/nginx/proxy_params
+    ports:
+      - '80:80'

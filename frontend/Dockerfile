@@ -13,4 +13,3 @@ RUN pnpm install
 
 ENTRYPOINT ["/entrypoint.sh"]
 
-CMD ["pnpm", "run", "dev", "--host"]

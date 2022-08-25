@@ -1,0 +1,9 @@
+DEBUG: false
+SHUTTER_IP_ADDRESS: '192.168.50.201'
+STATIC_ROOT: '/srv/static'
+MEDIA_URL: '/srv/upload'
+DATABASES:
+  default:
+    ENGINE: 'django.db.backends.sqlite3'
+    NAME: '/srv/database/db.sqlite3'
+SECRET_KEY: 'super_secret'

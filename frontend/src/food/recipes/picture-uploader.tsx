@@ -3,7 +3,7 @@ import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@tanstack/react-query";
-import { FunctionComponent, useState } from "react";
+import React, { FunctionComponent, useState } from "react";
 
 import { uploadPicture } from "../../api/recipes.api";
 
@@ -17,7 +17,10 @@ export const PictureUploader: FunctionComponent<{
     onSuccess: (response) => onFileSelect(response.data["file_id"]),
   });
 
-  const onChange = (event) => {
+  const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (!event.target.files) {
+      return;
+    }
     const file = event.target.files[0];
     setFileName(file.name);
     mutation.mutate(file);

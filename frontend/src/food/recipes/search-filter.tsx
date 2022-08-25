@@ -38,7 +38,7 @@ export const CheckboxListFilter: FunctionComponent<{
 
   if (isLoading) return <Spinner />;
   if (!data || isError) return <span>Error loading {name}</span>;
-  if (!data.length) return;
+  if (!data.length) return null;
 
   return (
     <Box mt={2} mb={2}>

@@ -9,7 +9,6 @@ import { FunctionComponent } from "react";
 import { getTagsNames } from "../../api/recipes.api";
 import { Spinner } from "../../common/spinner";
 
-
 export const Tag: FunctionComponent<{ tag: string }> = ({ tag }) => {
   return <Chip key={tag} size="small" label={tag} />;
 };
@@ -30,7 +29,7 @@ export const TagsList: FunctionComponent<{
 
 export const TagsSelect: FunctionComponent<{
   value?: string[];
-  onChange?: Function;
+  onChange: Function;
   error?: string;
 }> = ({ onChange, error, value }) => {
   const { isLoading, data, isError } = useQuery(["getTagsNames"], getTagsNames);
@@ -45,7 +44,7 @@ export const TagsSelect: FunctionComponent<{
         options={data}
         value={value}
         freeSolo
-        onChange={(event, value) => onChange(value)}
+        onChange={(_, value) => onChange(value)}
         renderTags={(value: readonly string[], getTagProps) =>
           value.map((option: string, index: number) => (
             <Chip

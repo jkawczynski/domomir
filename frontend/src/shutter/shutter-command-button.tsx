@@ -7,7 +7,7 @@ import { sendShutterCommand } from "../api/shutter.api";
 const ShutterCommandButton: FunctionComponent<{
   command: string;
   name: string;
-  color: string;
+  color: "secondary" | "error";
   disabled?: boolean;
 }> = ({ command, name, color, disabled }) => (
   <Button

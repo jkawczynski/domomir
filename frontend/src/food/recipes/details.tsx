@@ -19,6 +19,23 @@ import { Spinner } from "../../common/spinner";
 import { TagsList } from "../tags/tags";
 import { IngredientList } from "./ingredients";
 
+const RecipeDescription: FunctionComponent<{
+  description?: string;
+}> = ({ description }) => {
+  if (!description) {
+    return (
+      <Typography variant="body2" color="text.secondary">
+        No description provided
+      </Typography>
+    );
+  }
+  return (
+    <Typography variant="body2" color="text.secondary">
+      {description}
+    </Typography>
+  );
+};
+
 const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;
   onDelete: Function;
@@ -63,12 +80,7 @@ const RecipeDetailCard: FunctionComponent<{
             <Typography gutterBottom variant="h5" component="div">
               Description:
             </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {recipe.description}
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {recipe.description.length < 1 ? "No description provided" : null}
-            </Typography>
+            <RecipeDescription description={recipe.description} />
           </Grid>
         </Grid>
       </CardContent>

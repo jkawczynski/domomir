@@ -12,7 +12,7 @@ import { RecipeListItem } from "./list-item";
 import { Filters, RecipesFilter } from "./search-filter";
 
 const RecipesList: FunctionComponent<{
-  filters: typeof RecipesFilter;
+  filters: Filters;
 }> = ({ filters }) => {
   const { isLoading, data, isError } = useQuery(["getRecipes", filters], () =>
     getRecipes(filters)

@@ -25,7 +25,7 @@ const PageBottomNavigation: FunctionComponent<{
 }> = ({ subNavigation }) => {
   const [location, setLocation] = useLocation();
   if (!subNavigation) {
-    return;
+    return null;
   }
 
   return (
@@ -54,7 +54,7 @@ const PageActions: FunctionComponent<{
   actions?: PageAction[];
 }> = ({ actions }) => {
   if (!actions) {
-    return;
+    return null;
   }
   return (
     <SpeedDial
@@ -67,7 +67,7 @@ const PageActions: FunctionComponent<{
           key={action.name}
           icon={action.icon}
           tooltipTitle={action.name}
-          onClick={action.onClick}
+          onClick={() => action.onClick()}
         />
       ))}
     </SpeedDial>

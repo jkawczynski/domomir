@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+import django_yamlconf
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-@5y^e=(6pbpud^kygxk(3+u1-kt4thjrx#14+++#$@+*=lbbzz"
+SECRET_KEY = "dev-secret"
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True 
@@ -162,3 +163,5 @@ THUMBNAIL_ALIASES = {
 
 # Shutter settings
 SHUTTER_IP_ADDRESS = "192.168.50.201"
+
+django_yamlconf.load()

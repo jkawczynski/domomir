@@ -20,7 +20,7 @@ const pages = [
 export const AppMenu: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
-  const handleCloseNavMenu = (page) => {
+  const handleCloseNavMenu = (page: {name: string, path: string}) => {
     setAnchorElNav(null);
     setLocation(page.path);
   };

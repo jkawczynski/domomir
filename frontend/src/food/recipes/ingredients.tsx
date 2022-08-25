@@ -81,7 +81,7 @@ const IngredientSelectItem: FunctionComponent<{
     <Stack direction="row" spacing={2}>
       <TextField
         value={value.name}
-        onChange={(event) => onChange({ ...value, name: event.target.value})}
+        onChange={(event) => onChange({ ...value, name: event.target.value })}
         variant="standard"
         size="small"
         label="Name"
@@ -89,7 +89,7 @@ const IngredientSelectItem: FunctionComponent<{
       <TextField
         value={value.amount_and_unit}
         onChange={(event) =>
-          onChange({ ...value, amount_and_unit: event.target.value})
+          onChange({ ...value, amount_and_unit: event.target.value })
         }
         variant="standard"
         size="small"
@@ -134,7 +134,9 @@ export const IngredientsSelect: FunctionComponent<{
                 <Grid item xs={10}>
                   <IngredientSelectItem
                     value={ingredient}
-                    onChange={(i) => onChangeIngredient(index, i)}
+                    onChange={(ingredient: RecipeIngredient) =>
+                      onChangeIngredient(index, ingredient)
+                    }
                   />
                 </Grid>
                 <Grid item xs={2}>

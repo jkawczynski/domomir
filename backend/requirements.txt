@@ -6,7 +6,8 @@ marshmallow==3.14.1
 python-dateutil==2.8.2
 parameterized==0.8.1
 Pillow==9.0.0
-black
 easy-thumbnails==2.8.1
 django-cors-headers==3.11.0
+django_yamlconf==1.4.0
 ipdb
+black
