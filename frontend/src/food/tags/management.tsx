@@ -6,7 +6,6 @@ import Paper from "@mui/material/Paper";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemText from "@mui/material/ListItemText";
-import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
