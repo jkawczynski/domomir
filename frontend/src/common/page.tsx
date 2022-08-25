@@ -1,5 +1,6 @@
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
 import Paper from "@mui/material/Paper";
 import SpeedDial from "@mui/material/SpeedDial";
@@ -59,7 +60,7 @@ const PageActions: FunctionComponent<{
   return (
     <SpeedDial
       ariaLabel="Add"
-      sx={{ position: "absolute", bottom: 16, right: 16 }}
+      sx={{ position: "fixed", bottom: 30, right: 16 }}
       icon={<SpeedDialIcon />}
     >
       {actions.map((action) => (
@@ -82,12 +83,14 @@ export const Page: FunctionComponent<{
 }> = ({ title, actions, children, subNavigation }) => {
   return (
     <Container>
-      <Typography mt={2} variant="h2">
-        {title}
-      </Typography>
-      {children}
+      <Box pb={8}>
+        <Typography mt={2} variant="h2">
+          {title}
+        </Typography>
+        {children}
+        <PageBottomNavigation subNavigation={subNavigation} />
+      </Box>
       <PageActions actions={actions} />
-      <PageBottomNavigation subNavigation={subNavigation} />
     </Container>
   );
 };

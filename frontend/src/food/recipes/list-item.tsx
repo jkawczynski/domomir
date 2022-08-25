@@ -43,7 +43,12 @@ export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
 
   return (
     <Card sx={{ maxWidth: 345 }}>
-      <CardMedia component="img" image={thumbnail} alt="green iguana" />
+      <CardMedia
+        onClick={() => setLocation(recipePath)}
+        component="img"
+        image={thumbnail}
+        alt="green iguana"
+      />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {recipe.name}
