@@ -51,12 +51,24 @@ const PageBottomNavigation: FunctionComponent<{
   );
 };
 
+const SinglePageAction: FunctionComponent<{
+  action: PageAction;
+}> = ({ action }) => {
+  return (
+    <SpeedDial
+      ariaLabel="Add"
+      sx={{ position: "fixed", bottom: 30, right: 16 }}
+      icon={action.icon}
+      onClick={() => action.onClick()}
+    ></SpeedDial>
+  );
+};
+
 const PageActions: FunctionComponent<{
   actions?: PageAction[];
 }> = ({ actions }) => {
-  if (!actions) {
-    return null;
-  }
+  if (!actions) return null;
+  if (actions.length === 1) return <SinglePageAction action={actions[0]} />;
   return (
     <SpeedDial
       ariaLabel="Add"

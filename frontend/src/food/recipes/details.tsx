@@ -9,7 +9,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Grid from "@mui/material/Grid";
 import Stack from "@mui/material/Stack";
 import Typography from "@mui/material/Typography";
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
@@ -115,16 +115,21 @@ export const RecipeDetailsView: FunctionComponent<{ id: string }> = ({
   const { isLoading, data, isError } = useQuery(["getRecipe", id], () =>
     getRecipe(id)
   );
+  const mutation = useMutation(deleteRecipe, {
+    onSuccess: () => setLocation("/recipes"),
+  });
+  const deleteError = mutation?.error as Error;
 
-  if (!data && isLoading) return <Spinner />;
+  if ((!data && isLoading) || mutation.isLoading) return <Spinner />;
   if (isError) return <span>Error loading recipe</span>;
+  if (deleteError) return <span>Error deleteing recipe</span>;
 
   return (
     <Page>
       <RecipeDetailCard
         recipe={data}
         onEdit={() => setLocation(`/recipes/${id}/edit`)}
-        onDelete={() => deleteRecipe(id).then(() => setLocation("/recipes"))}
+        onDelete={() => mutation.mutate(id)}
       />
     </Page>
   );

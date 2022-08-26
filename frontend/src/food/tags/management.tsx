@@ -44,7 +44,7 @@ export const TagsManagedList = () => {
 
   return (
     <Paper sx={{ flexGrow: 1, maxWidth: 752 }}>
-      <Grid container spacing={2}>
+      <Grid container>
         <Grid item xs={12} md={6}>
           <List dense>
             {data.map((tag: RecipeTag) => (

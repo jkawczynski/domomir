@@ -92,7 +92,8 @@ export const TagsSelect: FunctionComponent<{
           value.map((option: any, index: number) => {
             return (
               <Chip
-                variant="outlined"
+                  variant="outlined"
+                  size="small"
                 label={option.inputValue ? option.inputValue : option}
                 {...getTagProps({ index })}
               />
@@ -104,6 +105,7 @@ export const TagsSelect: FunctionComponent<{
             error={!!error}
             {...params}
             variant="outlined"
+            size="small"
             label="Tags"
             helperText={error}
           />

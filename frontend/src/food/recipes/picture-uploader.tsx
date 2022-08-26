@@ -38,12 +38,13 @@ export const PictureUploader: FunctionComponent<{
           label="Picture"
           sx={{ width: 1 }}
           disabled
+          size="small"
           value={fileName}
           error={!!error || mutation.isError}
           helperText={error || uploadError?.message}
         />
-        <Button variant="contained" component="label" endIcon={<UploadIcon />}>
-          Upload
+        <Button size="small" variant="contained" component="label">
+          <UploadIcon />
           <input
             hidden
             accept="image/*"

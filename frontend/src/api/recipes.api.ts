@@ -1,4 +1,4 @@
-import axios, { AxiosResponse } from "axios";
+import axios  from "axios";
 import qs from "qs";
 import { z } from "zod";
 
@@ -30,15 +30,15 @@ export type Recipe = z.infer<typeof RecipeSchema>;
 export async function getRecipes(filters: {
   tags: string[];
   ingredients: string[];
-  query: string;
+  name: string;
 }) {
-  const { query, tags, ingredients } = filters;
+  const { name, tags, ingredients } = filters;
   const url = `${import.meta.env.VITE_APP_API_URL}api/recipes/`;
   return await axios
     .get<Recipe[]>(url, {
-      params: { tags, ingredients, query },
+      params: { tags, ingredients, name },
       paramsSerializer: (params) =>
-        qs.stringify(params, { arrayFormat: "repeat" }),
+        qs.stringify(params, { arrayFormat: "comma" }),
     })
     .then((response) => response.data);
 }
@@ -49,32 +49,32 @@ export async function getRecipe(recipeId: string) {
     .then((response) => response.data);
 }
 
-export function deleteRecipe(recipeId: string): Promise<AxiosResponse> {
-  return axios.delete(
+export async function deleteRecipe(recipeId: string) {
+  return await axios.delete(
     `${import.meta.env.VITE_APP_API_URL}api/recipes/${recipeId}/`
   );
 }
 
-export function createRecipe(recipe: Recipe) {
-  return axios({
+export async function createRecipe(recipe: Recipe) {
+  return await axios({
     method: "POST",
     url: `${import.meta.env.VITE_APP_API_URL}api/recipes/`,
     data: recipe,
   });
 }
 
-export function updateRecipe(recipe: Recipe) {
-  return axios({
+export async function updateRecipe(recipe: Recipe) {
+  return await axios({
     method: "PUT",
     url: `${import.meta.env.VITE_APP_API_URL}api/recipes/${recipe.id}/`,
     data: recipe,
   });
 }
 
-export function uploadPicture(file: File) {
+export async function uploadPicture(file: File) {
   const formData = new FormData();
   formData.append("file", file);
-  return axios({
+  return await axios({
     method: "POST",
     url: `${import.meta.env.VITE_APP_API_URL}recipes_upload/`,
     data: formData,

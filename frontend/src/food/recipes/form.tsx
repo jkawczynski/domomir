@@ -61,18 +61,21 @@ export const RecipeForm: FunctionComponent<{
       <Stack spacing={2} mt={2}>
         <TextField
           label="Name"
+          size="small"
           error={!!errors?.name?.message}
           helperText={errors?.name?.message}
           {...register("name")}
         />
         <TextField
           label="Link"
+          size="small"
           error={!!errors?.url?.message}
           helperText={errors?.url?.message}
           {...register("url")}
         />
         <TextField
           label="Description"
+          size="small"
           error={!!errors?.description?.message}
           helperText={errors?.description?.message}
           {...register("description")}

@@ -48,7 +48,7 @@ export const RecipesDashboard: FunctionComponent = () => {
   const [filters, setFilters] = useState<Filters>({
     tags: [],
     ingredients: [],
-    query: "",
+    name: "",
   });
   return (
     <FoodPage

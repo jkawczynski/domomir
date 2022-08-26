@@ -18,7 +18,7 @@ import { Spinner } from "../../common/spinner";
 export type Filters = {
   tags: string[];
   ingredients: string[];
-  query: string;
+  name: string;
 };
 
 export const CheckboxListFilter: FunctionComponent<{
@@ -48,7 +48,7 @@ export const CheckboxListFilter: FunctionComponent<{
           {data.map((item: string) => (
             <FormControlLabel
               key={item}
-              control={<Checkbox name={item} onChange={handleChange} />}
+              control={<Checkbox size="small" name={item} onChange={handleChange} />}
               label={item}
             />
           ))}
@@ -70,7 +70,7 @@ export const RecipesFilter: FunctionComponent<{
   };
 
   const onChangeQuery = (query: string) => {
-    onChange({ ...value, query });
+    onChange({ ...value, name: query});
   };
   return (
     <Accordion>
@@ -79,9 +79,10 @@ export const RecipesFilter: FunctionComponent<{
       </AccordionSummary>
       <AccordionDetails>
         <TextField
-          value={value.query}
+          value={value.name}
           onChange={(event) => onChangeQuery(event.target.value)}
-          label="Search"
+          label="Search by name"
+          size="small"
           variant="outlined"
         />
         <CheckboxListFilter

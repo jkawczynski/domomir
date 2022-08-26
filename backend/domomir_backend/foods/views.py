@@ -1,9 +1,8 @@
+from django_filters import rest_framework as filters
+from foods.filters import RecipeFilter
 from foods.models import Recipe, RecipeIngredient, RecipePicture, RecipeTag
-from foods.serializers import (
-    RecipeInputSerializer,
-    RecipeSerializer,
-    RecipeTagSerializer,
-)
+from foods.serializers import (RecipeInputSerializer, RecipeSerializer,
+                               RecipeTagSerializer)
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser
@@ -28,32 +27,14 @@ class RecipeUploadView(APIView):
 class RecipeViewSet(viewsets.ModelViewSet):
     queryset = Recipe.objects.all()
     serializer_class = RecipeSerializer
+    filter_backends = (filters.DjangoFilterBackend,)
+    filterset_class = RecipeFilter
 
     def get_serializer_class(self):
         if self.action in ("create", "update"):
             return RecipeInputSerializer
 
         return RecipeSerializer
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        tags = self.request.query_params.getlist("tags", [])
-        ingredients = self.request.query_params.getlist("ingredients", [])
-        query = self.request.query_params.get("query")
-        if query:
-            queryset = queryset.filter(name__icontains=query)
-
-        for tag in tags:
-            if not tag:
-                continue
-            queryset = queryset.filter(tags__name=tag)
-
-        for ing in ingredients:
-            if not ing:
-                continue
-            queryset = queryset.filter(ingredients__name=ing)
-
-        return queryset
 
 
 class TagsViewSet(viewsets.ModelViewSet):

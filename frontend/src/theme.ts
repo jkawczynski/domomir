@@ -1,7 +1,7 @@
-import { createTheme } from "@mui/material/styles";
+import { createTheme, responsiveFontSizes } from "@mui/material/styles";
 import { red, lightBlue, green } from "@mui/material/colors";
 
-const theme = createTheme({
+let theme = createTheme({
   palette: {
     primary: {
       main: "#512da8",
@@ -18,5 +18,6 @@ const theme = createTheme({
     fontFamily: ["Roboto"].join(","),
   },
 });
+theme = responsiveFontSizes(theme);
 
 export default theme;

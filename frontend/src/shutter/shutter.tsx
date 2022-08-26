@@ -45,7 +45,7 @@ export const Shutter: FunctionComponent = () => {
     <Page title="Shutter">
       <ShutterStatusInfo status={data} />
       <Grid container spacing={2}>
-        <Grid item xs={10} md={6}>
+        <Grid item xs={12} md={6}>
           <ShutterCommandButtons disabled={isError} />
         </Grid>
       </Grid>
