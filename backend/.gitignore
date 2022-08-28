@@ -1,4 +1,5 @@
 domomir_backend/upload/
 domomir_backend/db.sqlite3
 *.pyc
+static/
 

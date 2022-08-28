@@ -3,12 +3,14 @@ MAINTAINER jkawczynski
 
 ENV APP_ROOT=/app
 ENV ETC_ROOT=/srv
+ENV GUNICORN_CONFIG=/srv/gunicorn/config.py
 
-RUN apt-get update \
-    && apt-get install -y \
+RUN apt update \
+    && apt install -y \
         python-dev \
         build-essential \
-        nginx
+        nginx \
+    && rm -rf /var/lib/apt/lists/*
 
 RUN adduser --uid 1000 app --gecos app --disabled-password
 
@@ -21,11 +23,11 @@ RUN touch /var/run/nginx.pid && \
 
 ADD requirements.txt $APP_ROOT/
 WORKDIR $APP_ROOT
-RUN pip install uwsgi && \
+RUN pip install gunicorn && \
     pip install -r requirements.txt
 
-ADD docker/server/nginx/nginx.conf /etc/nginx/nginx.conf
-ADD docker/server/uwsgi/* $ETC_ROOT/uwsgi/
+ADD etc/nginx/nginx.conf /etc/nginx/nginx.conf
+ADD etc/gunicorn/* $ETC_ROOT/gunicorn/
 ADD domomir_backend $APP_ROOT/
 ADD docker_entrypoint.sh $ETC_ROOT
 

@@ -7,8 +7,9 @@ services:
       - "8000:8000"
     command: dev
     volumes:
-      - ./backend/domomir_backend/foods:/app/foods
-      - ./backend/domomir_backend/shutter:/app/shutter
+      - ./backend/domomir_backend:/app
+    environment:
+      - GUNICORN_CONFIG=/srv/gunicorn/config.dev.py
   frontend:
     build:
       context: ${PWD}/frontend/
