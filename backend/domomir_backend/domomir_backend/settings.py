@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "dev-secret"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True 
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django_celery_beat",
+    "django_celery_results",
     "easy_thumbnails",
     "rest_framework",
     "django_filters",
@@ -165,4 +167,12 @@ THUMBNAIL_ALIASES = {
 # Shutter settings
 SHUTTER_IP_ADDRESS = "192.168.50.201"
 
+# Celery 
+
+CELERY_RESULT_BACKEND = "django-db"
+
+CELERY_BROKER_URL = 'redis://redis:6379'
+CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+
 django_yamlconf.load()
+

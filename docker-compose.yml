@@ -10,6 +10,14 @@ services:
       - ./backend/domomir_backend:/app
     environment:
       - GUNICORN_CONFIG=/srv/gunicorn/config.dev.py
+  celery-worker:
+    build: ./backend/
+    command: celery-worker 
+
+  celery-beat:
+    build: ./backend/
+    command: celery-beat
+
   frontend:
     build:
       context: ${PWD}/frontend/
@@ -18,3 +26,7 @@ services:
       - "5173:5173"
     volumes:
       - ./frontend/src:/app/src
+
+  redis:
+    image: redis:latest
+    expose: ["6379"]
