@@ -157,7 +157,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 THUMBNAIL_NAMER = "easy_thumbnails.namers.alias"
 THUMBNAIL_ALIASES = {
     "": {
-        "recipe_thumb": {"size": (320, 180), "crop": True},
+        "recipe_thumb": {"size": (640, 360), "crop": True},
     },
 }
 

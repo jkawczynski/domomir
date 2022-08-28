@@ -10,5 +10,6 @@ easy-thumbnails==2.8.1
 django-cors-headers==3.11.0
 django_yamlconf==1.4.0
 django-filter==22.1
+tqdm==4.64.0
 ipdb
 black
