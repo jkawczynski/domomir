@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+
 import django_yamlconf
+from celery.schedules import crontab
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -37,7 +39,6 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "django_celery_beat",
     "django_celery_results",
     "easy_thumbnails",
     "rest_framework",
@@ -167,12 +168,18 @@ THUMBNAIL_ALIASES = {
 # Shutter settings
 SHUTTER_IP_ADDRESS = "192.168.50.201"
 
-# Celery 
+# Celery
 
 CELERY_RESULT_BACKEND = "django-db"
 
-CELERY_BROKER_URL = 'redis://redis:6379'
-CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers.DatabaseScheduler'
+CELERY_BROKER_URL = "redis://redis:6379"
+CELERY_TIMEZONE = "Europe/Warsaw"
+
+CELERY_BEAT_SCHEDULE = {
+    "pictures-cleanup": {
+        "task": "foods.tasks.clean_temp_pictures",
+        "schedule": crontab(),
+    },
+}
 
 django_yamlconf.load()
-
