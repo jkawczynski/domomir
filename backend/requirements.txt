@@ -16,5 +16,11 @@ requests==2.26.0
 redis==4.3.4
 tqdm==4.64.0
 
+pytest==7.1.2
+pytest-django==4.5.2
+factory-boy==3.2.1
+freezegun==1.2.2
+pytz==2022.2.1
+
 ipdb
 black

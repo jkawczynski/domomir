@@ -33,10 +33,7 @@ class RecipeSerializer(serializers.ModelSerializer):
 
     def get_thumbnail(self, recipe: Recipe) -> Optional[str]:
         picture_url = self.get_picture(recipe)
-        _, ext = os.path.splitext(picture_url)
-        if ext == ".jpeg":
-            ext = ".jpg"
-        return f"{picture_url}.recipe_thumb{ext}"
+        return f"{picture_url}.recipe_thumb.jpg"
 
     class Meta:
         model = Recipe

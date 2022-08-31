@@ -2,6 +2,7 @@ import uuid
 
 from django.db import models
 from easy_thumbnails.fields import ThumbnailerImageField
+from django.utils import timezone
 
 
 class RecipeTag(models.Model):
@@ -11,11 +12,10 @@ class RecipeTag(models.Model):
         return self.name
 
 
-# TODO: remove periodically pictures not attached to any recipe
 class RecipePicture(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     file = ThumbnailerImageField(blank=True, null=True, upload_to="recipe_pictures/")
-    created = models.DateTimeField(auto_now_add=True)
+    created = models.DateTimeField(default=timezone.now)
 
 
 class Recipe(models.Model):
@@ -33,7 +33,7 @@ class Recipe(models.Model):
 
 class RecipeIngredient(models.Model):
     name = models.CharField(max_length=255)
-    amount_and_unit = models.CharField(max_length=255)
+    amount_and_unit = models.CharField(max_length=255, null=True, blank=True)
     recipe = models.ForeignKey(
         Recipe, on_delete=models.CASCADE, related_name="ingredients"
     )

@@ -1,6 +1,7 @@
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
+import { Divider } from "@mui/material";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardActions from "@mui/material/CardActions";
@@ -66,7 +67,8 @@ const RecipeDetailCard: FunctionComponent<{
           {recipe.name}
         </Typography>
         <TagsList tags={recipe.tags.map((t) => t.name)} />
-        <Grid container>
+        <Divider  />
+        <Grid container mt={2}>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">
               Ingredients:
