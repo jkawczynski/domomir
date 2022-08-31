@@ -178,7 +178,7 @@ CELERY_TIMEZONE = "Europe/Warsaw"
 CELERY_BEAT_SCHEDULE = {
     "pictures-cleanup": {
         "task": "foods.tasks.clean_temp_pictures",
-        "schedule": crontab(),
+        "schedule": crontab(minute=0, hour=0),
     },
 }
 
