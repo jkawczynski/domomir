@@ -29,7 +29,7 @@ export const PictureUploader: FunctionComponent<{
     mutation.mutate(file);
   };
 
-  const uploadError = mutation?.error as any;
+  const uploadError = mutation?.error as { message: string };
 
   return (
     <Stack spacing={0}>

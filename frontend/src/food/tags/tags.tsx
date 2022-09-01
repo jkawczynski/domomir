@@ -91,7 +91,7 @@ export const TagsSelect: FunctionComponent<{
         getOptionLabel={(option: string | TagOption) =>
           typeof option === "string" ? option : option.inputValue
         }
-        renderOption={(props: any, option: TagOption) => {
+        renderOption={(props: object, option: TagOption) => {
           return <li {...props}>{option.name}</li>;
         }}
         renderTags={(options: readonly TagOption[], getTagProps) =>
