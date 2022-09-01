@@ -43,9 +43,7 @@ export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
         <Typography gutterBottom variant="h5" component="div">
           {recipe.name}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <TagsList tags={recipe.tags.map((t) => t.name)} />
-        </Typography>
+        <TagsList tags={recipe.tags.map((t) => t.name)} />
       </CardContent>
       <CardActions>{buttons}</CardActions>
     </Card>

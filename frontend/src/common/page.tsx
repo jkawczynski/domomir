@@ -1,3 +1,4 @@
+import { Divider } from "@mui/material";
 import BottomNavigation from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
 import Box from "@mui/material/Box";
@@ -41,6 +42,7 @@ const PageBottomNavigation: FunctionComponent<{
       >
         {subNavigation.map((navigation) => (
           <BottomNavigationAction
+            key={navigation.name}
             label={navigation.name}
             icon={navigation.icon}
             value={navigation.path}
@@ -96,9 +98,10 @@ export const Page: FunctionComponent<{
   return (
     <Container>
       <Box pb={8}>
-        <Typography mt={2} variant="h2">
+        <Typography mt={2} mb={2} variant="h2">
           {title}
         </Typography>
+        <Divider />
         {children}
         <PageBottomNavigation subNavigation={subNavigation} />
       </Box>

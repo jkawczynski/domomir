@@ -25,7 +25,7 @@ const RecipesList: FunctionComponent<{
   return (
     <Grid container spacing={2}>
       {data.map((recipe) => (
-        <Grid item xs={12} md={4}>
+        <Grid key={recipe.id} item xs={12} md={4}>
           <RecipeListItem
             key={recipe.id}
             id={recipe.id}
