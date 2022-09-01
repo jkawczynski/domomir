@@ -8,7 +8,7 @@ import { z } from "zod";
 
 import { Recipe, RecipeSchema } from "../../api/recipes.api";
 import { Spinner } from "../../common/spinner";
-import { TagsSelect } from "../tags/tags";
+import { TagsSelect, mapToTagOption } from "../tags/tags";
 import { IngredientsSelect } from "./ingredients";
 import { PictureUploader } from "./picture-uploader";
 

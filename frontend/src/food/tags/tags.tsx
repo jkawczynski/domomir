@@ -1,3 +1,4 @@
+import { FilterOptionsState } from "@mui/material";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
@@ -27,11 +28,23 @@ export const TagsList: FunctionComponent<{
   );
 };
 
-const filter = createFilterOptions();
+const filter = createFilterOptions<TagOption>();
+
+export type TagOption = {
+  inputValue: string;
+  name: string;
+  new: boolean;
+};
+
+export const mapToTagOption = (tag: string): TagOption => ({
+  inputValue: tag,
+  name: tag,
+  new: false,
+});
 
 export const TagsSelect: FunctionComponent<{
   value?: string[];
-  onChange: Function;
+  onChange: (options: string[]) => void;
   error?: string;
 }> = ({ onChange, error, value }) => {
   const { isLoading, data, isError } = useQuery(["getTagsNames"], getTagsNames);
@@ -39,10 +52,15 @@ export const TagsSelect: FunctionComponent<{
   if (isLoading) return <Spinner />;
   if (!data || isError) return <span>Error loading tags</span>;
 
-  const filterOptions = (options: string[], params: any) => {
+  const filterOptions = (
+    options: TagOption[],
+    params: FilterOptionsState<TagOption>
+  ) => {
     const filtered = filter(options, params);
     const { inputValue } = params;
-    const isExisting = options.some((option) => inputValue === option);
+    const isExisting = options.some(
+      (option) => inputValue.toLowerCase() === option.inputValue.toLowerCase()
+    );
 
     if (inputValue !== "" && !isExisting) {
       filtered.push({
@@ -51,50 +69,38 @@ export const TagsSelect: FunctionComponent<{
         new: true,
       });
     }
-    return filtered as string[];
-  };
-  const getOptionLabel = (option: any) => {
-    if (typeof option === "string") {
-      return option;
-    }
-
-    if (option.inputValue) {
-      return option.inputValue;
-    }
-
-    return option;
+    return filtered;
   };
 
-  const mapValues = (value: any) => {
-    const values = value.map((v: any) => {
-      if (v.inputValue) {
-        return v.inputValue;
-      }
-      return v;
-    });
-    return Array.from(new Set(values));
+  const handleOnChange = (options: (string | TagOption)[]) => {
+    const values = options.map((option) =>
+      typeof option === "string" ? option : option.inputValue
+    );
+    onChange(Array.from(new Set(values)));
   };
 
   return (
     <Box mt={2}>
       <Autocomplete
         multiple
-        options={data}
-        value={value}
+        options={data.map(mapToTagOption)}
+        value={value?.map(mapToTagOption)}
         filterOptions={filterOptions}
         freeSolo
-        onChange={(_, value) => onChange(mapValues(value))}
-        getOptionLabel={getOptionLabel}
-        renderOption={(props: any, option: any) => {
-          return <li {...props}>{option.inputValue ? option.name : option}</li>;
+        onChange={(_, options) => handleOnChange(options)}
+        getOptionLabel={(option: string | TagOption) =>
+          typeof option === "string" ? option : option.inputValue
+        }
+        renderOption={(props: any, option: TagOption) => {
+          return <li {...props}>{option.name}</li>;
         }}
-        renderTags={(value: readonly string[], getTagProps) =>
-          value.map((option: any, index: number) => {
+        renderTags={(options: readonly TagOption[], getTagProps) =>
+          options.map((option: TagOption, index: number) => {
             return (
               <Chip
-                  variant="outlined"
-                  size="small"
-                label={option.inputValue ? option.inputValue : option}
+                variant="outlined"
+                size="small"
+                label={option.inputValue}
                 {...getTagProps({ index })}
               />
             );
