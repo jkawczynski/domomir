@@ -5,16 +5,16 @@ import { FunctionComponent } from "react";
 import { sendShutterCommand } from "../api/shutter.api";
 
 const ShutterCommandButton: FunctionComponent<{
-  command: string;
   name: string;
   color: "secondary" | "error";
   disabled?: boolean;
-}> = ({ command, name, color, disabled }) => (
+  onClick: () => void;
+}> = ({ name, color, disabled, onClick}) => (
   <Button
     color={color}
     variant="outlined"
-    onClick={() => sendShutterCommand(command).then(() => {})}
     disabled={disabled}
+    onClick={onClick}
   >
     {name}
   </Button>
@@ -22,25 +22,26 @@ const ShutterCommandButton: FunctionComponent<{
 
 export const ShutterCommandButtons: FunctionComponent<{
   disabled: boolean;
-}> = ({ disabled }) => (
+  proxyAddress:string
+}> = ({ disabled, proxyAddress}) => (
   <Stack mt={2} spacing={2}>
     <ShutterCommandButton
       color="secondary"
-      command="u"
       name="Up"
       disabled={disabled}
+      onClick={() => sendShutterCommand(proxyAddress, "u")}
     />
     <ShutterCommandButton
       color="error"
-      command="s"
       name="Stop"
       disabled={disabled}
+      onClick={() => sendShutterCommand(proxyAddress, "s")}
     />
     <ShutterCommandButton
       color="secondary"
-      command="d"
       name="Down"
       disabled={disabled}
+      onClick={() => sendShutterCommand(proxyAddress, "d")}
     />
   </Stack>
 );
