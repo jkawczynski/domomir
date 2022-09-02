@@ -1,7 +1,8 @@
 import axios from "axios";
+import { authApi } from "./auth.api";
 
 export type ShutterStatus = {
-  shutter: {currentPos: { position: number }};
+  shutter: { currentPos: { position: number } };
 };
 
 export type ShutterData = {
@@ -25,7 +26,6 @@ export const getShutterStatus = async (proxyAddress: string) => {
 };
 
 export const getShutterIpAddress = async () => {
-  return await axios
-    .get<ShutterData>(`${import.meta.env.VITE_APP_API_URL}api/shutter/`)
-    .then((response) => response.data);
+  const response = await authApi.get<ShutterData>("api/shutter/");
+  return response.data;
 };

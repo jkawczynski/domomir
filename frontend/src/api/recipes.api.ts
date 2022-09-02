@@ -1,6 +1,7 @@
-import axios  from "axios";
+import axios from "axios";
 import qs from "qs";
 import { z } from "zod";
+import { authApi } from "./auth.api";
 
 const RecipeTagSchema = z.object({
   id: z.number(),
@@ -20,7 +21,7 @@ export const RecipeSchema = z.object({
   thumbnail: z.string().optional(),
   ingredients: z.array(RecipeIngredientSchema),
   description: z.string().min(3).optional().or(z.literal("")),
-  tags: z.array(RecipeTagSchema)
+  tags: z.array(RecipeTagSchema),
 });
 
 export type RecipeTag = z.infer<typeof RecipeTagSchema>;
@@ -34,29 +35,29 @@ export async function getRecipes(filters: {
 }) {
   const { name, tags, ingredients } = filters;
   const url = `${import.meta.env.VITE_APP_API_URL}api/recipes/`;
-  return await axios
-    .get<Recipe[]>(url, {
-      params: { tags, ingredients, name },
-      paramsSerializer: (params) =>
-        qs.stringify(params, { arrayFormat: "comma" }),
-    })
-    .then((response) => response.data);
+  const response = await authApi.get<Recipe[]>(url, {
+    params: { tags, ingredients, name },
+    paramsSerializer: (params) =>
+      qs.stringify(params, { arrayFormat: "comma" }),
+  });
+  return response.data;
 }
 
 export async function getRecipe(recipeId: string) {
-  return await axios
-    .get<Recipe>(`${import.meta.env.VITE_APP_API_URL}api/recipes/${recipeId}/`)
-    .then((response) => response.data);
+  const response = await authApi.get<Recipe>(
+    `${import.meta.env.VITE_APP_API_URL}api/recipes/${recipeId}/`
+  );
+  return response.data;
 }
 
 export async function deleteRecipe(recipeId: string) {
-  return await axios.delete(
+  return await authApi.delete(
     `${import.meta.env.VITE_APP_API_URL}api/recipes/${recipeId}/`
   );
 }
 
 export async function createRecipe(recipe: Recipe) {
-  return await axios({
+  return await authApi({
     method: "POST",
     url: `${import.meta.env.VITE_APP_API_URL}api/recipes/`,
     data: recipe,
@@ -64,7 +65,7 @@ export async function createRecipe(recipe: Recipe) {
 }
 
 export async function updateRecipe(recipe: Recipe) {
-  return await axios({
+  return await authApi({
     method: "PUT",
     url: `${import.meta.env.VITE_APP_API_URL}api/recipes/${recipe.id}/`,
     data: recipe,
@@ -74,7 +75,7 @@ export async function updateRecipe(recipe: Recipe) {
 export async function uploadPicture(file: File) {
   const formData = new FormData();
   formData.append("file", file);
-  return await axios({
+  return await authApi({
     method: "POST",
     url: `${import.meta.env.VITE_APP_API_URL}recipes_upload/`,
     data: formData,
@@ -85,25 +86,25 @@ export async function uploadPicture(file: File) {
 }
 
 export async function getTagsNames() {
-  return await axios
+  return await authApi 
     .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/tags_list/`)
     .then((response) => response.data);
 }
 
 export async function getTags() {
-  return await axios
+  return await authApi 
     .get<RecipeTag[]>(`${import.meta.env.VITE_APP_API_URL}api/tags/`)
     .then((response) => response.data);
 }
 
 export async function deleteTag(id: number) {
-  return await axios.delete(
+  return await authApi.delete(
     `${import.meta.env.VITE_APP_API_URL}api/tags/${id}/`
   );
 }
 
 export async function getIngredients() {
-  return await axios
+  return await authApi 
     .get<string[]>(`${import.meta.env.VITE_APP_API_URL}api/ingredients/`)
     .then((response) => response.data);
 }

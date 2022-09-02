@@ -18,7 +18,7 @@ const pages = [
 ];
 
 export const AppMenu: FunctionComponent = () => {
-  const [_, setLocation] = useLocation();
+  const [location, setLocation] = useLocation();
   const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleCloseNavMenu = (page: {name: string, path: string}) => {
     setAnchorElNav(null);
@@ -27,6 +27,8 @@ export const AppMenu: FunctionComponent = () => {
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
+
+  if (location === "/login") return null;
 
   return (
     <AppBar position="static">
