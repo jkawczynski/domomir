@@ -1,4 +1,3 @@
-import axios from "axios";
 import qs from "qs";
 import { z } from "zod";
 import { authApi } from "./auth.api";

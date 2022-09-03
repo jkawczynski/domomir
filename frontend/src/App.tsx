@@ -4,33 +4,24 @@ import { FunctionComponent } from "react";
 import { Redirect, Route, Router } from "wouter";
 import { StateContextProvider } from "./common/context";
 
-import { AppMenu } from "./common/menu";
+import { DomomirAppBar } from "./common/appBar";
 import { NestedRouter } from "./common/nested-router";
 import { RecipesRouter } from "./food/router";
 import { LoginComponent } from "./login/login";
 import AuthMiddleware from "./middleware";
 import { Shutter } from "./shutter/shutter";
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      refetchOnWindowFocus: false,
-      refetchOnReconnect: false,
-      retry: 1,
-      staleTime: 5 * 1000,
-    },
-  },
-});
+const queryClient = new QueryClient();
 
 export const App: FunctionComponent = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <StateContextProvider>
         <AuthMiddleware>
-          <AppMenu />
+          <DomomirAppBar />
           <Container maxWidth="lg">
             <Route path="/">
-              <Redirect to="/shutter" />
+              <Redirect to="/food/recipes" />
             </Route>
             <Route path="/shutter" component={Shutter} />
             <Route path="/login" component={LoginComponent} />

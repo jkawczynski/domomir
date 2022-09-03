@@ -1,4 +1,4 @@
-import axios, { Axios } from "axios";
+import axios from "axios";
 import { z } from "zod";
 import {
   clearUserToken,
@@ -17,11 +17,6 @@ export type TokenData = {
   access: string;
   refresh: string;
 };
-
-export const authApi = axios.create({
-  baseURL: import.meta.env.VITE_APP_API_URL,
-  withCredentials: true,
-});
 
 export const getToken = async (loginData: LoginData) => {
   return await axios
@@ -48,6 +43,11 @@ export const refreshAccessToken = async () => {
   storeUserToken({ access, refresh });
   return access;
 };
+
+export const authApi = axios.create({
+  baseURL: import.meta.env.VITE_APP_API_URL,
+  withCredentials: true,
+});
 
 authApi.interceptors.request.use(
   async (config) => {
