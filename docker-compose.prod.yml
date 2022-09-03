@@ -28,4 +28,4 @@ services:
       - ${PWD}/etc/nginx/nginx_proxy.conf:/etc/nginx/nginx.conf
       - ${PWD}/etc/nginx/proxy_params:/etc/nginx/proxy_params
     ports:
-      - '80:80'
+      - '8080:80'
