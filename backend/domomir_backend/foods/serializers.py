@@ -1,9 +1,37 @@
-from rest_framework import serializers
-import os.path
-from typing import Optional, List
+from typing import List, Optional
 
-from foods.models import Recipe, RecipeTag, RecipePicture, RecipeIngredient
 from django.db import transaction
+from foods.models import (
+    Recipe,
+    RecipeIngredient,
+    RecipePicture,
+    RecipeTag,
+    ShoppingListItem,
+)
+from rest_framework import serializers
+
+
+class ShoppingListItemSerializer(serializers.ModelSerializer):
+    author = serializers.SerializerMethodField()
+
+    def get_author(self, instance: ShoppingListItem):
+        if not instance.author:
+            return
+        return instance.author.username
+
+    class Meta:
+        model = ShoppingListItem
+        fields = (
+            "id",
+            "name",
+            "marked_as_done",
+            "author",
+        )
+
+    @transaction.atomic
+    def create(self, validated_data: dict) -> ShoppingListItem:
+        validated_data["author"] = self.context.get("request").user
+        return super().create(validated_data)
 
 
 class RecipeTagSerializer(serializers.ModelSerializer):

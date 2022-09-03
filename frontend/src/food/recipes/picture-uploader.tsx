@@ -55,7 +55,7 @@ export const PictureUploader: FunctionComponent<{
           />
         </Button>
       </Stack>
-      {mutation.isLoading ? <LinearProgress /> : null}
+      {mutation.isLoading ? <LinearProgress sx={{mt: 1}}/> : null}
     </Stack>
   );
 };

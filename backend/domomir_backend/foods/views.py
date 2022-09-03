@@ -1,8 +1,18 @@
 from django_filters import rest_framework as filters
 from foods.filters import RecipeFilter
-from foods.models import Recipe, RecipeIngredient, RecipePicture, RecipeTag
-from foods.serializers import (RecipeInputSerializer, RecipeSerializer,
-                               RecipeTagSerializer)
+from foods.models import (
+    Recipe,
+    RecipeIngredient,
+    RecipePicture,
+    RecipeTag,
+    ShoppingListItem,
+)
+from foods.serializers import (
+    RecipeInputSerializer,
+    RecipeSerializer,
+    RecipeTagSerializer,
+    ShoppingListItemSerializer,
+)
 from rest_framework import viewsets
 from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser
@@ -54,3 +64,8 @@ class IngredientsViewSet(viewsets.ViewSet):
             RecipeIngredient.objects.all().values_list("name", flat=True).distinct()
         )
         return Response(ingredients)
+
+
+class ShoppingListItemViewSet(viewsets.ModelViewSet):
+    queryset = ShoppingListItem.objects.all()
+    serializer_class = ShoppingListItemSerializer

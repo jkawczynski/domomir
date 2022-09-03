@@ -13,6 +13,7 @@ router.register(r"recipes", food_views.RecipeViewSet)
 router.register(r"tags_list", food_views.TagsListViewSet, basename="tags")
 router.register(r"tags", food_views.TagsViewSet)
 router.register(r"ingredients", food_views.IngredientsViewSet, basename="ingredients")
+router.register(r"shopping", food_views.ShoppingListItemViewSet, basename="shopping")
 router.register(r"shutter", shutter_views.ShutterViewSet, basename="shutter")
 router.register(r"me", users_views.MeViewSet, basename="me")
 
