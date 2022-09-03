@@ -47,7 +47,7 @@ export const PictureUploader: FunctionComponent<{
           <UploadIcon />
           <input
             hidden
-            accept="image/*"
+            accept="image/jpg,image/jpeg"
             multiple
             type="file"
             onChange={onChange}

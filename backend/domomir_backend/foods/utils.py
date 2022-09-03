@@ -1,6 +1,7 @@
 from datetime import datetime, timedelta
 
-from foods.models import RecipePicture
+from foods.models import RecipePicture, ShoppingListItem
+
 
 def clean_temp_pictures():
     """
@@ -10,11 +11,16 @@ def clean_temp_pictures():
     anything during form submition.
     """
     now = datetime.now()
-    print(now)
     pictures = RecipePicture.objects.filter(
         recipe__isnull=True, created__lte=now - timedelta(days=1)
     )
-    print("pictuuuures", RecipePicture.objects.all().get().created)
     for picture in pictures:
         picture.file.delete()
         picture.delete()
+
+
+def clean_shopping_list():
+    """
+    Clean all shopping list item that were marked as done
+    """
+    ShoppingListItem.objects.filter(marked_as_done=True).delete()
