@@ -102,6 +102,7 @@ export const DomomirAppBar: FunctionComponent = () => {
   const appItems = [
     { name: "Shutter", path: "/shutter" },
     { name: "Food", path: "/food/recipes" },
+    { name: "Fitness", path: "/fitness/plans" },
   ];
 
   const profileItems = [

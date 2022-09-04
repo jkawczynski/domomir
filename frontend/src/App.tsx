@@ -10,6 +10,7 @@ import { RecipesRouter } from "./food/router";
 import { LoginComponent } from "./login/login";
 import AuthMiddleware from "./middleware";
 import { Shutter } from "./shutter/shutter";
+import { FitnessRouter } from "./fitness/router";
 
 const queryClient = new QueryClient();
 
@@ -28,6 +29,9 @@ export const App: FunctionComponent = () => {
             <Router base="/">
               <NestedRouter base="/food">
                 <RecipesRouter />
+              </NestedRouter>
+              <NestedRouter base="/fitness">
+                <FitnessRouter />
               </NestedRouter>
             </Router>
           </Container>
