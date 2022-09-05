@@ -9,6 +9,7 @@ const transformZeroToNull = (val: number | undefined) => {
 };
 
 export const TrainingSchema = z.object({
+  id: z.number(),
   started: z.date(),
   completed: z.date().optional(),
   description: z.string(),
@@ -72,6 +73,13 @@ export const editTrainingPlan = async (plan: TrainingPlan) => {
   return response.data;
 };
 
+export const startTraining = async (plan: TrainingPlan) => {
+  const response = await authApi.post<Training>(
+    `api/fitness/training_plans/${plan.id}/start_training/`
+  );
+  return response.data;
+};
+
 export const getActiveTraining = async () => {
   const response = await authApi.get<Training>(
     "api/fitness/trainings/get_active/"
@@ -79,9 +87,7 @@ export const getActiveTraining = async () => {
   return response.data;
 };
 
-export const startTraining = async (plan: TrainingPlan) => {
-  const response = await authApi.post<Training>(
-    `api/fitness/training_plans/${plan.id}/start_training/`
-  );
+export const getTrainings = async () => {
+  const response = await authApi.get<Training[]>("api/fitness/trainings/");
   return response.data;
 };

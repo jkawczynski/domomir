@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "foods",
     "shutter",
     "users",
+    "fitness",
 ]
 
 

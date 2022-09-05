@@ -22,10 +22,24 @@ services:
     user: app 
     expose: ["8500"]
 
-  nginx:
-    image: nginx:1
+  celery-worker:
+    build: ${PWD}/backend/
+    environment:
+      - YAMLCONF_CONFFILE=/srv/config.yaml
     volumes:
-      - ${PWD}/etc/nginx/nginx_proxy.conf:/etc/nginx/nginx.conf
-      - ${PWD}/etc/nginx/proxy_params:/etc/nginx/proxy_params
-    ports:
-      - '8080:80'
+      - ${PWD}/etc/database/:/srv/database/
+      - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
+    command: celery-worker 
+
+  celery-beat:
+    build: ${PWD}/backend/
+    environment:
+      - YAMLCONF_CONFFILE=/srv/config.yaml
+    volumes:
+      - ${PWD}/etc/database/:/srv/database/
+      - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
+    command: celery-beat
+
+  redis:
+    image: redis:latest
+    expose: ["6379"]

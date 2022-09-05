@@ -19,6 +19,7 @@ import { clearUserToken } from "../api/tokenStorage";
 type AppMenuItem = {
   name: string;
   path?: string;
+  external?: boolean;
   onClick?: () => void;
 };
 
@@ -44,7 +45,9 @@ const AppPagesMenu: FunctionComponent<{
     if (!item.path && !item.onClick) {
       return;
     }
-    if (item.path) {
+    if (item.external) {
+      window.open(item.path, "_blank");
+    } else if (item.path) {
       setLocation(item.path);
     }
     if (item.onClick) {
@@ -100,7 +103,11 @@ export const DomomirAppBar: FunctionComponent = () => {
   const stateContext = useStateContext();
   const user = stateContext.state.user;
   const appItems = [
-    { name: "Shutter", path: "/shutter" },
+    {
+      name: "Shutter",
+      path: "http://192.168.50.150:8090/shutter",
+      external: true,
+    },
     { name: "Food", path: "/food/recipes" },
     { name: "Fitness", path: "/fitness/plans" },
   ];
@@ -115,6 +122,14 @@ export const DomomirAppBar: FunctionComponent = () => {
       },
     },
   ];
+
+  const openPage = (page: AppMenuItem) => {
+    if (page.external) {
+      window.open(page.path, "_blank");
+    } else if (page.path) {
+      setLocation(page.path);
+    }
+  };
 
   if (!user) return null;
 
@@ -173,7 +188,7 @@ export const DomomirAppBar: FunctionComponent = () => {
             {appItems.map((page) => (
               <Button
                 key={page.name}
-                onClick={() => setLocation(page.path)}
+                onClick={() => openPage(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
               >
                 {page.name}
