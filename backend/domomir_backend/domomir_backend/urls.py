@@ -1,13 +1,13 @@
-from users import views as users_views
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
+from fitness import views as fitness_views
 from foods import views as food_views
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from shutter import views as shutter_views
-from fitness import views as fitness_views 
+from users import views as users_views
 
 router = DefaultRouter()
 # Foods
@@ -23,9 +23,20 @@ router.register(r"shutter", shutter_views.ShutterViewSet, basename="shutter")
 # Users
 router.register(r"me", users_views.MeViewSet, basename="me")
 
-#Fitness
-router.register(r"fitness/training_plans", fitness_views.TrainingPlanViewset, basename="training_plans")
-router.register(r"fitness/trainings", fitness_views.TrainingViewset, basename="trainings")
+# Fitness
+router.register(
+    r"fitness/training_plans",
+    fitness_views.TrainingPlanViewset,
+    basename="training_plans",
+)
+router.register(
+    r"fitness/trainings", fitness_views.TrainingViewset, basename="trainings"
+)
+router.register(
+    r"fitness/training_exercises",
+    fitness_views.TrainingExerciseVewiset,
+    basename="training_exercises",
+)
 
 urlpatterns = [
     path("admin/", admin.site.urls),

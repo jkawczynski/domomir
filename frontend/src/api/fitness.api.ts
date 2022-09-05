@@ -8,14 +8,6 @@ const transformZeroToNull = (val: number | undefined) => {
   return val;
 };
 
-export const TrainingSchema = z.object({
-  id: z.number(),
-  started: z.date(),
-  completed: z.date().optional(),
-  description: z.string(),
-  owner: z.string(),
-});
-
 export const TrainingPlanExerciseSchema = z.object({
   order: z.number(),
   name: z.string().min(1, { message: "Cannot be empty" }),
@@ -39,9 +31,34 @@ export const TrainingPlanSchema = z.object({
     .nonempty({ message: "At least one exercise is required" }),
 });
 
+export const TrainingExerciseSchema = z.object({
+  id: z.number(),
+  name: z.string(),
+  started: z.date().optional(),
+  completed: z.date().optional(),
+  set_number: z.number(),
+  reps: z
+    .preprocess((val) => Number(val), z.number().optional())
+    .transform((val) => transformZeroToNull(val)),
+  weight: z
+    .preprocess((val) => Number(val), z.number().optional())
+    .transform((val) => transformZeroToNull(val)),
+});
+
+export const TrainingSchema = z.object({
+  id: z.number(),
+  started: z.date(),
+  completed: z.date().optional(),
+  description: z.string(),
+  owner: z.string(),
+  exercises: z.array(TrainingExerciseSchema),
+  training_plan: TrainingPlanSchema,
+});
+
 export type TrainingPlan = z.infer<typeof TrainingPlanSchema>;
 export type TrainingPlanExercise = z.infer<typeof TrainingPlanExerciseSchema>;
 export type Training = z.infer<typeof TrainingSchema>;
+export type TrainingExercise = z.infer<typeof TrainingExerciseSchema>;
 
 export const getTrainingPlans = async () => {
   const response = await authApi.get<TrainingPlan[]>(
@@ -89,5 +106,26 @@ export const getActiveTraining = async () => {
 
 export const getTrainings = async () => {
   const response = await authApi.get<Training[]>("api/fitness/trainings/");
+  return response.data;
+};
+
+export const getTrainingById = async (id: string) => {
+  const response = await authApi.get<Training>(`api/fitness/trainings/${id}/`);
+  return response.data;
+};
+
+export const updateTraining = async (exercise: Training) => {
+  const response = await authApi.patch<Training>(
+    `api/fitness/trainings/${exercise.id}/`,
+    exercise
+  );
+  return response.data;
+};
+
+export const updateTrainingExercise = async (exercise: TrainingExercise) => {
+  const response = await authApi.patch<TrainingExercise>(
+    `api/fitness/training_exercises/${exercise.id}/`,
+    exercise
+  );
   return response.data;
 };

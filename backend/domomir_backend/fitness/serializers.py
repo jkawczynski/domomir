@@ -1,4 +1,9 @@
-from fitness.models import Training, TrainingPlan, TrainingPlanExercise
+from fitness.models import (
+    Training,
+    TrainingExercise,
+    TrainingPlan,
+    TrainingPlanExercise,
+)
 from rest_framework import serializers
 
 
@@ -57,7 +62,14 @@ class TrainingPlanSerializer(serializers.ModelSerializer):
             "weekday_verbose",
         )
 
-class TrainingSerializer(serializers.ModelSerializer):
+
+class TrainingExerciseSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TrainingExercise
+        fields = "__all__"
+
+
+class TrainingSerializerSimple(serializers.ModelSerializer):
     owner = serializers.SerializerMethodField()
 
     def get_owner(self, instance: Training) -> str:
@@ -66,3 +78,8 @@ class TrainingSerializer(serializers.ModelSerializer):
     class Meta:
         model = Training
         fields = "__all__"
+
+
+class TrainingSerializerDetailed(TrainingSerializerSimple):
+    exercises = TrainingExerciseSerializer(many=True)
+    training_plan = TrainingPlanSerializer(many=False)

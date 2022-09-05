@@ -59,6 +59,13 @@ export const TrainingPlanForm: FunctionComponent<{
               size="small"
               error={!!errors?.description?.message}
               helperText={errors?.description?.message}
+              type="number"
+              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">x</InputAdornment>
+                ),
+              }}
               {...form.register("description")}
             />
           </Stack>

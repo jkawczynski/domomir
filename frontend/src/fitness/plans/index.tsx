@@ -136,7 +136,7 @@ export const TrainingAlreadyRunningMessage: FunctionComponent<{
 }> = ({ training }) => {
   const trainingPath = `/trainings/${training.id}`;
   return (
-    <Typography color="warning.main" variant="h6" mt={2}>
+    <Typography color="warning.main" variant="body1" mt={2}>
       There is a training that was already started, see it
       <Link href={trainingPath}> here</Link>
     </Typography>
