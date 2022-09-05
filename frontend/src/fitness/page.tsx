@@ -6,7 +6,7 @@ import { Page, PageAction } from "../common/page";
 
 const subNavigation = [
   { name: "Plans", path: "/plans", icon: <CalendarMonthIcon /> },
-  { name: "Training", path: "/trainings", icon: <FitnessCenterIcon/> },
+  { name: "Trainings", path: "/trainings", icon: <FitnessCenterIcon/> },
 ];
 
 export const FitnessPage: FunctionComponent<{

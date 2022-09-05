@@ -1,8 +1,7 @@
-import { getTrainingPlans } from "../api/fitness.api";
-import { FunctionComponent } from "react";
+import { getTrainingPlans, TrainingPlan } from "../api/fitness.api";
+import { FunctionComponent, useEffect, useState } from "react";
 import {
   FormControl,
-  FormHelperText,
   InputLabel,
   LinearProgress,
   MenuItem,
@@ -11,24 +10,43 @@ import {
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 
+const WEEKDAYS = [
+  { value: "1", name: "Monday", disabled: false },
+  { value: "2", name: "Tuesday", disabled: false },
+  { value: "3", name: "Wednsday", disabled: false },
+  { value: "4", name: "Thursday", disabled: false },
+  { value: "5", name: "Friday", disabled: false },
+  { value: "6", name: "Saturday", disabled: false },
+  { value: "7", name: "Sunday", disabled: false },
+];
+
 export const WeekdaySelect: FunctionComponent<{
   initialValue?: string;
   value: string;
   onChange: (value: string) => void;
-}> = ({ value, onChange }) => {
-  const { isLoading, data } = useQuery(["getTrainingPlans", value], () =>
-    getTrainingPlans(value)
+}> = ({ initialValue, value, onChange }) => {
+  const { isLoading, isError, data } = useQuery(["getTrainingPlans"], () =>
+    getTrainingPlans()
   );
 
-  const weekdays = [
-    { value: "1", name: "Monday" },
-    { value: "2", name: "Tuesday" },
-    { value: "3", name: "Wednsday" },
-    { value: "4", name: "Thursday" },
-    { value: "5", name: "Friday" },
-    { value: "6", name: "Saturday" },
-    { value: "7", name: "Sunday" },
-  ];
+  if (isLoading) return <LinearProgress sx={{ mt: 2 }} />;
+  if (!data && isError) {
+    return (
+      <Typography color="error" variant="caption">
+        Error with Weekday select, please reload the page
+      </Typography>
+    );
+  }
+
+  const weekdays = WEEKDAYS.map((weekday) => {
+    const plan = data.find((plan) => plan.weekday === weekday.value);
+    if (initialValue && plan?.weekday === initialValue) {
+      return weekday;
+    }
+    weekday.disabled = plan != null;
+    return weekday;
+  });
+
   return (
     <FormControl sx={{ minWidth: 120 }}>
       <InputLabel id="weekday-select">Weekday</InputLabel>
@@ -36,24 +54,21 @@ export const WeekdaySelect: FunctionComponent<{
         labelId="weekday-select"
         value={value}
         label="Weekday"
+        disabled={isLoading}
         onChange={(event) => onChange(event.target.value)}
         size="small"
       >
         {weekdays.map((weekday) => (
-          <MenuItem key={weekday.value} value={weekday.value}>
+          <MenuItem
+            key={weekday.value}
+            value={weekday.value}
+            disabled={weekday.disabled}
+          >
             {weekday.name}
           </MenuItem>
         ))}
       </Select>
       {isLoading && <LinearProgress sx={{ mt: 2 }} />}
-      {!!data?.length && (
-        <FormHelperText>
-          <Typography variant="caption" color="warning.main">
-            Plan for this weekday already exists, you can see it here (TODO) or
-            save to replace it.
-          </Typography>
-        </FormHelperText>
-      )}
     </FormControl>
   );
 };

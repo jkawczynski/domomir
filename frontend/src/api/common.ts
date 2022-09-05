@@ -3,5 +3,6 @@ export type APIError = {
     data: {
       detail: string;
     };
+    status: number
   };
 };

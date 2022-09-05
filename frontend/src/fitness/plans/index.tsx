@@ -8,21 +8,24 @@ import {
   Grid,
   List,
   ListItem,
-  ListItemIcon,
   ListItemText,
   Typography,
 } from "@mui/material";
-import { useQuery } from "@tanstack/react-query";
+import { useQueries, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { Link, useLocation } from "wouter";
 import {
+  getActiveTraining,
   getTrainingPlans,
+  Training,
   TrainingPlan,
   TrainingPlanExercise,
 } from "../../api/fitness.api";
 import { Spinner } from "../../common/spinner";
 import { FitnessPage } from "../page";
-import CircleIcon from "@mui/icons-material/Circle";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import EditIcon from "@mui/icons-material/Edit";
+import { APIError } from "../../api/common";
 
 const generateExerciseDescription = (exercise: TrainingPlanExercise) => {
   let result = "";
@@ -36,14 +39,21 @@ const generateExerciseDescription = (exercise: TrainingPlanExercise) => {
   return result;
 };
 
-const TrainingPlanItem: FunctionComponent<{ plan: TrainingPlan }> = ({
-  plan,
-}) => {
+const TrainingPlanItem: FunctionComponent<{
+  plan: TrainingPlan;
+  disableStart: boolean;
+}> = ({ plan, disableStart }) => {
+  const [_, setLocation] = useLocation();
+  const day = String(new Date().getDay() || 7);
+  const trainingIsTodayText = plan.weekday === day ? "This is today!" : "";
   return (
     <Card sx={{ minWidth: 275 }} key={plan.id}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {plan.weekday_verbose}
+          <Typography variant="subtitle2" color="warning.main">
+            {trainingIsTodayText}
+          </Typography>
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {plan.description}
@@ -53,7 +63,7 @@ const TrainingPlanItem: FunctionComponent<{ plan: TrainingPlan }> = ({
           {plan.exercises.map((exercise) => {
             const secondaryText = generateExerciseDescription(exercise);
             return (
-              <ListItem dense>
+              <ListItem key={exercise.order} dense>
                 <ListItemText
                   primary={exercise.name}
                   secondary={secondaryText}
@@ -63,10 +73,22 @@ const TrainingPlanItem: FunctionComponent<{ plan: TrainingPlan }> = ({
           })}
         </List>
         <CardActions sx={{ mt: 2 }}>
-          <Button variant="outlined" color="secondary">
+          <Button
+            startIcon={<EditIcon />}
+            variant="outlined"
+            color="secondary"
+            onClick={() => setLocation(`/plans/${plan.id}/edit`)}
+            size="small"
+          >
             Edit
           </Button>
-          <Button variant="outlined" color="success">
+          <Button
+            startIcon={<PlayArrowIcon />}
+            variant="outlined"
+            color="success"
+            size="small"
+            disabled={disableStart}
+          >
             Start
           </Button>
         </CardActions>
@@ -75,14 +97,18 @@ const TrainingPlanItem: FunctionComponent<{ plan: TrainingPlan }> = ({
   );
 };
 
-const TrainingPlansList: FunctionComponent = () => {
+const TrainingPlansList: FunctionComponent<{ disableStart: boolean }> = ({
+  disableStart,
+}) => {
   const { data, isLoading, isError } = useQuery(["getTrainingPlans"], () =>
     getTrainingPlans()
   );
 
   if (isLoading) return <Spinner />;
   if (!data && isError) {
-    return <Typography> Failed to load training plans </Typography>;
+    return (
+      <Typography color="error"> Failed to load training plans </Typography>
+    );
   }
 
   if (!data.length) {
@@ -97,16 +123,36 @@ const TrainingPlansList: FunctionComponent = () => {
   return (
     <Grid container spacing={2} sx={{ mt: 1 }}>
       {data.map((plan) => (
-        <Grid item xs={12} md={4}>
-          <TrainingPlanItem plan={plan} />
+        <Grid item xs={12} md={4} key={plan.weekday}>
+          <TrainingPlanItem plan={plan} disableStart={disableStart} />
         </Grid>
       ))}
     </Grid>
   );
 };
 
+export const TrainingAlreadyRunningMessage: FunctionComponent<{
+  training: Training;
+}> = ({ training }) => {
+  const trainingPath = `/trainings/${training.id}`;
+  return (
+    <Typography color="warning.main" variant="h6" mt={2}>
+      There is a training that was already started, see it
+      <Link href={trainingPath}> here</Link>
+    </Typography>
+  );
+};
+
 export const TrainingPlansPage: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
+  const { data, isLoading, error } = useQuery<Training, APIError>(
+    ["getActiveTraining"],
+    getActiveTraining,
+    { retry: 0 }
+  );
+
+  if (isLoading) return <Spinner />;
+
   return (
     <FitnessPage
       title="Training plans"
@@ -118,7 +164,8 @@ export const TrainingPlansPage: FunctionComponent = () => {
         },
       ]}
     >
-      <TrainingPlansList />
+      {data && <TrainingAlreadyRunningMessage training={data} />}
+      <TrainingPlansList disableStart={!!data} />
     </FitnessPage>
   );
 };
