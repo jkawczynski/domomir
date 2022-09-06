@@ -24,7 +24,7 @@ export const TrainingSteps: FunctionComponent<{
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
   return (
-    <Stepper activeStep={activeStep} orientation="vertical">
+    <Stepper sx={{ mt: 2 }} activeStep={activeStep} orientation="vertical">
       {training.training_plan.exercises.map((exercise) => (
         <Step key={exercise.name}>
           <StepLabel>{exercise.name}</StepLabel>
