@@ -14,7 +14,7 @@ const subNavigation = [
 export const FoodPage: FunctionComponent<{
   children?: React.ReactNode;
   actions?: PageAction[];
-  title: string;
+  title?: string;
 }> = ({ children, actions, title }) => {
   return (
     <Page title={title} actions={actions} subNavigation={subNavigation}>

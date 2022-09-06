@@ -1,64 +1,69 @@
+import { Box } from "@mui/material";
 import Checkbox from "@mui/material/Checkbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 
 import { RecipeIngredient } from "../api/models";
 
-export const IngredientsList: FunctionComponent<{
-  ingredients: RecipeIngredient[];
-}> = ({ ingredients }) => {
-  const [checked, setChecked] = useState<string[]>([]);
-
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
+const IngredientsListItem: FunctionComponent<{
+  ingredient: RecipeIngredient;
+  checked: boolean;
+  onClick: (isChecked: boolean) => void;
+  disabled?: boolean;
+}> = ({ ingredient, checked, onClick, disabled }) => {
+  const labelId = `checkbox-list-label-${ingredient.name}`;
 
   return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      dense
-    >
-      {ingredients.map((ingredient: RecipeIngredient) => {
-        const labelId = `checkbox-list-label-${ingredient.name}`;
+    <ListItem key={ingredient.name} disablePadding disabled={disabled}>
+      <ListItemButton role={undefined} onClick={() => onClick(checked)} dense>
+        <ListItemIcon>
+          <Checkbox
+            edge="start"
+            checked={checked}
+            tabIndex={-1}
+            disableRipple
+            inputProps={{ "aria-labelledby": labelId }}
+          />
+        </ListItemIcon>
+        <ListItemText
+          id={labelId}
+          primary={ingredient.name}
+          secondary={ingredient.amount_and_unit}
+        />
+      </ListItemButton>
+    </ListItem>
+  );
+};
 
-        return (
-          <ListItem key={ingredient.name} disablePadding>
-            <ListItemButton
-              role={undefined}
-              onClick={handleToggle(ingredient.name)}
-              dense
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={checked.indexOf(ingredient.name) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                id={labelId}
-                primary={ingredient.name}
-                secondary={ingredient.amount_and_unit}
-              />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
-    </List>
+export const IngredientsList: FunctionComponent<{
+  value: RecipeIngredient[];
+  checked: RecipeIngredient[];
+  onChange: (checked: RecipeIngredient[]) => void;
+  disabled?: boolean;
+}> = ({ value, checked, onChange, disabled }) => {
+  const onToggle = (isChecked: boolean, ingredient: RecipeIngredient) => {
+    if (!isChecked) {
+      onChange([...checked, ingredient]);
+    } else {
+      onChange(checked.filter((ing) => ing.id !== ingredient.id));
+    }
+  };
+  return (
+    <Box>
+      <List sx={{ width: "100%", maxWidth: 360 }} dense>
+        {value.map((ingredient: RecipeIngredient) => (
+          <IngredientsListItem
+            disabled={disabled}
+            ingredient={ingredient}
+            onClick={(isChecked) => onToggle(isChecked, ingredient)}
+            checked={!!checked.find((ing) => ing.id === ingredient.id)}
+          />
+        ))}
+      </List>
+    </Box>
   );
 };

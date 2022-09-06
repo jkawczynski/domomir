@@ -1,7 +1,9 @@
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
+  Alert,
   Button,
   Card,
   CardActions,
@@ -9,29 +11,89 @@ import {
   CardMedia,
   Divider,
   Grid,
+  Snackbar,
   Stack,
   Typography,
 } from "@mui/material";
-import { FunctionComponent } from "react";
+import { useMutation } from "@tanstack/react-query";
+import { FunctionComponent, useState } from "react";
 
-import { Recipe } from "../api/models";
+import { addToShoppingList } from "../../shopping/api";
+import { Recipe, RecipeIngredient } from "../api/models";
 import { IngredientsList } from "./IngredientsList";
 import { TagsList } from "./TagsList";
+
+const RecipeIngredients: FunctionComponent<{
+  ingredients: RecipeIngredient[];
+}> = ({ ingredients }) => {
+  const [checkedIngredients, setCheckedIngredients] = useState<
+    RecipeIngredient[]
+  >([]);
+  const [snackbarOpened, setSnackbarOpened] = useState(false);
+  const mutation = useMutation(addToShoppingList, {
+    onSuccess: () => {
+      setCheckedIngredients([]);
+      setSnackbarOpened(true);
+    },
+  });
+
+  const onAddToShoppingList = () => {
+    mutation.mutate(
+      checkedIngredients.map((ing) => ({
+        name: `${ing.name} - ${ing.amount_and_unit}`,
+        marked_as_done: false,
+      }))
+    );
+  };
+
+  return (
+    <>
+      <Typography gutterBottom variant="h5" component="div">
+        Ingredients:
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        {ingredients.length < 1 ? "No ingredients provided" : null}
+      </Typography>
+      {!!ingredients.length && (
+        <IngredientsList
+          value={ingredients}
+          checked={checkedIngredients}
+          onChange={setCheckedIngredients}
+          disabled={mutation.isLoading}
+        />
+      )}
+      <Button
+        sx={{ mt: 2 }}
+        variant="outlined"
+        startIcon={<AddShoppingCartIcon />}
+        onClick={onAddToShoppingList}
+        disabled={!checkedIngredients.length || mutation.isLoading}
+      >
+        Add to shopping list
+      </Button>
+      <Snackbar
+        open={snackbarOpened}
+        onClose={() => setSnackbarOpened(false)}
+        autoHideDuration={3000}
+      >
+        <Alert severity="success">Added to shopping list</Alert>
+      </Snackbar>
+    </>
+  );
+};
 
 const RecipeDescription: FunctionComponent<{
   description?: string;
 }> = ({ description }) => {
-  if (!description) {
-    return (
-      <Typography variant="body2" color="text.secondary">
-        No description provided
-      </Typography>
-    );
-  }
   return (
-    <Typography variant="body2" color="text.secondary">
-      {description}
-    </Typography>
+    <>
+      <Typography gutterBottom variant="h5" component="div">
+        Description:
+      </Typography>
+      <Typography variant="body2" color="text.secondary">
+        {description ? description : "No description provided"}
+      </Typography>
+    </>
   );
 };
 
@@ -40,25 +102,13 @@ export const RecipeDetailCard: FunctionComponent<{
   onDelete: () => void;
   onEdit: () => void;
 }> = ({ recipe, onDelete, onEdit }) => {
-  const recipeUrl = recipe.url ? (
-    <Button
-      href={recipe.url}
-      size="small"
-      target="_blank"
-      color="secondary"
-      startIcon={<OpenInNewIcon />}
-    >
-      Link
-    </Button>
-  ) : null;
-
   return (
     <Card sx={{ minWidth: 300 }}>
       <CardMedia
         component="img"
-        height="250"
         image={recipe.picture}
         alt="Recipe picture"
+        sx={{ maxHeight: 600 }}
       />
       <CardContent>
         <Typography gutterBottom variant="h4" component="div">
@@ -68,20 +118,9 @@ export const RecipeDetailCard: FunctionComponent<{
         <Divider />
         <Grid container mt={2} spacing={2}>
           <Grid item md={6} xs={12}>
-            <Typography gutterBottom variant="h5" component="div">
-              Ingredients:
-            </Typography>
-            <Typography variant="body2" color="text.secondary">
-              {recipe.ingredients.length < 1 ? "No ingredients provided" : null}
-            </Typography>
-            {!!recipe.ingredients.length && (
-              <IngredientsList ingredients={recipe.ingredients} />
-            )}
+            <RecipeIngredients ingredients={recipe.ingredients} />
           </Grid>
           <Grid item md={6} xs={12}>
-            <Typography gutterBottom variant="h5" component="div">
-              Description:
-            </Typography>
             <RecipeDescription description={recipe.description} />
           </Grid>
         </Grid>
@@ -103,7 +142,17 @@ export const RecipeDetailCard: FunctionComponent<{
           >
             Edit
           </Button>
-          {recipeUrl}
+          {!!recipe.url && (
+            <Button
+              href={recipe.url}
+              size="small"
+              target="_blank"
+              color="secondary"
+              startIcon={<OpenInNewIcon />}
+            >
+              Link
+            </Button>
+          )}
         </Stack>
       </CardActions>
     </Card>

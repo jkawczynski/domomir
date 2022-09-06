@@ -11,6 +11,11 @@ export const createShoppingListItem = async (item: ShoppingListItem) => {
   return response.data;
 };
 
+export const addToShoppingList = async (items: ShoppingListItem[]) => {
+  const response = await authApi.post<ShoppingListItem>("api/shopping/add_bulk/", items);
+  return response.data;
+}
+
 export const markItemAsDone = async (item: ShoppingListItem) => {
   const response = await authApi.patch<ShoppingListItem>(
     `api/shopping/${item.id}/`,

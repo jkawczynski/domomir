@@ -6,6 +6,7 @@ export const RecipeTagSchema = z.object({
 });
 
 export const RecipeIngredientSchema = z.object({
+  id: z.number().nullable(),
   name: z.string(),
   amount_and_unit: z.string(),
 });

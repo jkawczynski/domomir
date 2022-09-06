@@ -14,6 +14,7 @@ from foods.serializers import (
     ShoppingListItemSerializer,
 )
 from rest_framework import viewsets
+from rest_framework.decorators import action
 from rest_framework.exceptions import ValidationError
 from rest_framework.parsers import MultiPartParser
 from rest_framework.response import Response
@@ -69,3 +70,12 @@ class IngredientsViewSet(viewsets.ViewSet):
 class ShoppingListItemViewSet(viewsets.ModelViewSet):
     queryset = ShoppingListItem.objects.all()
     serializer_class = ShoppingListItemSerializer
+
+    @action(detail=False, methods=["POST"])
+    def add_bulk(self, request):
+        serializer = ShoppingListItemSerializer(
+            data=request.data, many=True, context={"request": request}
+        )
+        serializer.is_valid()
+        serializer.save()
+        return Response(serializer.data)

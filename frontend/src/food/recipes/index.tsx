@@ -5,7 +5,6 @@ import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
 
 import { FullPageLoading } from "../../common/components";
-import { Page } from "../../common/page";
 import { FoodPage } from "../page";
 import { deleteRecipe, getRecipe } from "./api";
 import { RecipeDetailCard, RecipesList, TagsManagedList } from "./components";
@@ -54,13 +53,13 @@ export const RecipeDetailsPage: FunctionComponent<{ id: string }> = ({
   if (deleteError) return <span>Error deleteing recipe</span>;
 
   return (
-    <Page>
+    <FoodPage>
       <RecipeDetailCard
         recipe={data}
         onEdit={() => setLocation(`/recipes/${id}/edit`)}
         onDelete={() => mutation.mutate(id)}
       />
-    </Page>
+    </FoodPage>
   );
 };
 
