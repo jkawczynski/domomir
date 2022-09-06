@@ -45,7 +45,7 @@ export const IngredientsSelect: FunctionComponent<{
   onChange: (ingredients: RecipeIngredient[]) => void;
 }> = ({ value, onChange }) => {
   const addNextIngredient = () => {
-    onChange([...value, { name: "", amount_and_unit: "" }]);
+    onChange([...value, { id: null, name: "", amount_and_unit: "" }]);
   };
   const removeIngredient = (index: number) => {
     onChange(value.filter((_, idx) => index !== idx));
