@@ -32,7 +32,7 @@ class TrainingPlanViewset(viewsets.ModelViewSet):
     def start_training(self, _, pk=None):
         training_plan = get_object_or_404(TrainingPlan, pk=pk)
         training = start_training(training_plan)
-        serializer = TrainingSerializer(training)
+        serializer = TrainingSerializerSimple(training)
         return Response(serializer.data)
 
 
@@ -54,7 +54,7 @@ class TrainingViewset(viewsets.ModelViewSet):
                 output_field=BooleanField(),
             )
         )
-        return queryset.order_by("is_active", "-completed")
+        return queryset.order_by("-is_active", "-completed")
 
     @action(detail=False, methods=["GET"])
     def get_active(self, request):
@@ -63,6 +63,7 @@ class TrainingViewset(viewsets.ModelViewSet):
         )
         serializer = self.get_serializer(training)
         return Response(serializer.data)
+
 
 class TrainingExerciseVewiset(viewsets.ModelViewSet):
     queryset = TrainingExercise.objects.all()

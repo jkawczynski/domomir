@@ -8,8 +8,8 @@ import {
   getRecipe,
   updateRecipe,
 } from "../../api/recipes.api";
+import { FullPageLoading } from "../../common/components";
 import { Page } from "../../common/page";
-import { Spinner } from "../../common/spinner";
 import { RecipeForm } from "./form";
 
 type Error = {
@@ -44,7 +44,7 @@ export const EditRecipeView: FunctionComponent<{ id: string }> = ({ id }) => {
     getRecipe(id)
   );
 
-  if (!data && isLoading) return <Spinner />;
+  if (!data && isLoading) return <FullPageLoading />;
   if (isError) return <span>Error loading recipe</span>;
 
   const title = `Edit ${data.name}`;

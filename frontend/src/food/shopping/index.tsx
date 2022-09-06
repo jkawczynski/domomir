@@ -7,8 +7,8 @@ import {
   markItemAsDone,
 } from "../../api/shopping.api";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Spinner } from "../../common/spinner";
 import { ShoppingList, ShoppingListInput } from "./shopping-list";
+import { FullPageLoading } from "../../common/components";
 
 export const ShoppingListPage: FunctionComponent = () => {
   const { data, isLoading, refetch } = useQuery(
@@ -21,7 +21,7 @@ export const ShoppingListPage: FunctionComponent = () => {
   const markAsDoneMutation = useMutation(markItemAsDone, {
     onSuccess: () => refetch(),
   });
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <FullPageLoading />;
   return (
     <FoodPage title="Shopping List">
       <ShoppingListInput

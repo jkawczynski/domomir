@@ -5,14 +5,14 @@ import {
   CardActions,
   CardContent,
   FormHelperText,
-  InputAdornment,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { useFieldArray, useFormContext } from "react-hook-form";
+import { NumberField } from "../../../common/components";
 
-export const PlanExercisesManagableList: FunctionComponent = () => {
+export const PlanExercisesManagedListForm: FunctionComponent = () => {
   const { control, formState, register } = useFormContext();
   const { fields, append, remove } = useFieldArray({
     name: "exercises",
@@ -37,46 +37,28 @@ export const PlanExercisesManagableList: FunctionComponent = () => {
                     helperText={error?.[index]?.name?.message}
                     {...register(`exercises.${index}.name` as const)}
                   />
-                  <TextField
+                  <NumberField
                     label="Sets"
                     size="small"
-                    type="number"
                     error={!!error?.[index]?.sets?.message}
                     helperText={error?.[index]?.sets?.message}
-                    inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">x</InputAdornment>
-                      ),
-                    }}
+                    adornment="x"
                     {...register(`exercises.${index}.sets` as const)}
                   />
-                  <TextField
+                  <NumberField
                     label="Reps (optional)"
                     size="small"
-                    type="number"
                     error={!!error?.[index]?.reps?.message}
                     helperText={error?.[index]?.reps?.message}
-                    inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">x</InputAdornment>
-                      ),
-                    }}
+                    adornment="x"
                     {...register(`exercises.${index}.reps` as const)}
                   />
-                  <TextField
+                  <NumberField
                     label="Starting weight (optional)"
                     size="small"
-                    type="number"
                     error={!!error?.[index]?.starting_weight?.message}
                     helperText={error?.[index]?.starting_weight?.message}
-                    InputProps={{
-                      startAdornment: (
-                        <InputAdornment position="start">kg</InputAdornment>
-                      ),
-                    }}
-                    inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
+                    adornment="kg"
                     {...register(`exercises.${index}.starting_weight` as const)}
                   />
                 </Stack>

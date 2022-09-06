@@ -2,8 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import { useStateContext } from "../common/context";
 import { FunctionComponent, ReactNode } from "react";
 import { getMe } from "../api/user";
-import { Spinner } from "../common/spinner";
 import { getAccessToken } from "../api/tokenStorage";
+import { FullPageLoading } from "../common/components";
 
 const AuthMiddleware: FunctionComponent<{ children: ReactNode }> = ({
   children,
@@ -19,7 +19,7 @@ const AuthMiddleware: FunctionComponent<{ children: ReactNode }> = ({
   });
 
   if (query.isLoading && accessToken) {
-    return <Spinner />;
+    return <FullPageLoading />;
   }
 
   return <>{children}</>;

@@ -1,5 +1,4 @@
-import { getTrainingPlans, TrainingPlan } from "../api/fitness.api";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FunctionComponent } from "react";
 import {
   FormControl,
   InputLabel,
@@ -9,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { getTrainingPlans } from "../../api";
 
 const WEEKDAYS = [
   { value: "1", name: "Monday", disabled: false },

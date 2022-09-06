@@ -52,3 +52,5 @@ def start_training(plan: TrainingPlan):
 
     copy_plan_exercises(original_plan_pk, plan)
     create_training_exercises(plan, training)
+
+    return training

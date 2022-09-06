@@ -15,8 +15,8 @@ import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
 import { Recipe, deleteRecipe, getRecipe } from "../../api/recipes.api";
+import { FullPageLoading } from "../../common/components";
 import { Page } from "../../common/page";
-import { Spinner } from "../../common/spinner";
 import { TagsList } from "../tags/tags";
 import { IngredientList } from "./ingredients";
 
@@ -67,7 +67,7 @@ const RecipeDetailCard: FunctionComponent<{
           {recipe.name}
         </Typography>
         <TagsList tags={recipe.tags.map((t) => t.name)} />
-        <Divider  />
+        <Divider />
         <Grid container mt={2}>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">
@@ -122,7 +122,7 @@ export const RecipeDetailsView: FunctionComponent<{ id: string }> = ({
   });
   const deleteError = mutation?.error as Error;
 
-  if ((!data && isLoading) || mutation.isLoading) return <Spinner />;
+  if ((!data && isLoading) || mutation.isLoading) return <FullPageLoading />;
   if (isError) return <span>Error loading recipe</span>;
   if (deleteError) return <span>Error deleteing recipe</span>;
 

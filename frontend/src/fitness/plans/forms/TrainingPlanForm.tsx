@@ -1,23 +1,17 @@
 import { Controller, FormProvider, useForm } from "react-hook-form";
-import {
-  getTrainingPlans,
-  TrainingPlan,
-  TrainingPlanSchema,
-} from "../../api/fitness.api";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { FunctionComponent } from "react";
 import { Box, Button, Stack, TextField } from "@mui/material";
-import { WeekdaySelect } from "../weekdaySelect";
-import { PlanExercisesManagableList } from "./planExercisesList";
-import { useQuery } from "@tanstack/react-query";
-import { Spinner } from "../../common/spinner";
+import { PlanExercisesManagedListForm } from "./PlanExercisesManagedListForm";
+import { WeekdaySelect } from "../components";
+import { TrainingPlan } from "../../api/models";
+import { TrainingPlanSchema } from "../../api/schemas";
 
 export const TrainingPlanForm: FunctionComponent<{
   plan?: TrainingPlan;
   nextAvailableWeekday?: string;
   onSubmit: (plan: TrainingPlan) => void;
 }> = ({ plan, nextAvailableWeekday, onSubmit }) => {
-  const { data, isLoading } = useQuery(["getTrainingPlans"], getTrainingPlans);
   const form = useForm<TrainingPlan>({
     resolver: zodResolver(TrainingPlanSchema),
     defaultValues: {
@@ -32,7 +26,6 @@ export const TrainingPlanForm: FunctionComponent<{
     },
   });
   const { errors, isSubmitting } = form.formState;
-  if (isLoading) return <Spinner />;
   return (
     <FormProvider {...form}>
       <Box
@@ -59,17 +52,10 @@ export const TrainingPlanForm: FunctionComponent<{
               size="small"
               error={!!errors?.description?.message}
               helperText={errors?.description?.message}
-              type="number"
-              inputProps={{ inputMode: "numeric", pattern: "[0-9]*" }}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">x</InputAdornment>
-                ),
-              }}
               {...form.register("description")}
             />
           </Stack>
-          <PlanExercisesManagableList />
+          <PlanExercisesManagedListForm />
           <Button disabled={isSubmitting} type="submit" variant="outlined">
             Save
           </Button>

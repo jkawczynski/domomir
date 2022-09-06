@@ -6,7 +6,7 @@ import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
 
 import { getRecipes } from "../../api/recipes.api";
-import { Spinner } from "../../common/spinner";
+import { FullPageLoading } from "../../common/components";
 import { FoodPage } from "../page";
 import { RecipeListItem } from "./list-item";
 import { Filters, RecipesFilter } from "./search-filter";
@@ -17,7 +17,7 @@ const RecipesList: FunctionComponent<{
   const { isLoading, data, isError } = useQuery(["getRecipes", filters], () =>
     getRecipes(filters)
   );
-  if (!data && isLoading) return <Spinner />;
+  if (!data && isLoading) return <FullPageLoading />;
   if (isError) return <span>Error loading recipe</span>;
 
   if (!data.length) return <h3>No recipes found.</h3>;

@@ -1,30 +1,17 @@
 import { Page } from "../../common/page";
 import { FunctionComponent } from "react";
-import { TrainingPlanForm } from "./planForm";
 import { useLocation } from "wouter";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { Typography } from "@mui/material";
+import { FullPageLoading } from "../../common/components";
+import { getNextAvailableWeekday } from "./utils";
+import { TrainingPlanForm } from "./forms";
 import {
   createTrainingPlan,
   editTrainingPlan,
   getTrainingPlanById,
   getTrainingPlans,
-  TrainingPlan,
-} from "../../api/fitness.api";
-import { Spinner } from "../../common/spinner";
-import { Typography } from "@mui/material";
-
-const weekdays = [...Array(7).keys()].map((i: number) => String(i + 1));
-
-const getNextAvailableWeekday = (plans: TrainingPlan[]) => {
-  const availableWeekdays = weekdays.filter(
-    (weekday) => !plans.find((plan) => plan.weekday === weekday)
-  );
-  if (availableWeekdays.length) {
-    return availableWeekdays[0];
-  }
-  // TODO: disable creating new if there are no weekdays available
-  return "1";
-};
+} from "../api";
 
 export const NewTrainingPlanPage: FunctionComponent = () => {
   const [_, setLocation] = useLocation();
@@ -34,7 +21,7 @@ export const NewTrainingPlanPage: FunctionComponent = () => {
   const { data, isLoading } = useQuery(["getTrainingPlans"], getTrainingPlans);
   const error = mutation?.error as Error;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <FullPageLoading />;
 
   return (
     <Page title="New training plan">
@@ -62,7 +49,7 @@ export const EditTrainingPlanPage: FunctionComponent<{ id: string }> = ({
   });
   const error = mutation?.error as Error;
 
-  if (isLoading) return <Spinner />;
+  if (isLoading) return <FullPageLoading />;
   if (!data && isError) {
     return <Typography>Error loading training plan</Typography>;
   }

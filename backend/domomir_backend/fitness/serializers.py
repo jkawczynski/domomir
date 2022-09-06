@@ -77,9 +77,18 @@ class TrainingSerializerSimple(serializers.ModelSerializer):
 
     class Meta:
         model = Training
-        fields = "__all__"
+        fields = (
+            "id",
+            "started",
+            "completed",
+            "description",
+            "owner",
+        )
 
 
 class TrainingSerializerDetailed(TrainingSerializerSimple):
     exercises = TrainingExerciseSerializer(many=True)
     training_plan = TrainingPlanSerializer(many=False)
+
+    class Meta(TrainingSerializerSimple.Meta):
+        fields = TrainingSerializerSimple.Meta.fields + ("exercises", "training_plan")
