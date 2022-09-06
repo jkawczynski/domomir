@@ -13,7 +13,7 @@ type Error = {
 };
 
 export const NewRecipeView: FunctionComponent = () => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const mutation = useMutation(createRecipe, {
     onSuccess: () => setLocation("/recipes"),
   });
@@ -30,7 +30,7 @@ export const NewRecipeView: FunctionComponent = () => {
   );
 };
 export const EditRecipeView: FunctionComponent<{ id: string }> = ({ id }) => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const mutation = useMutation(updateRecipe, {
     onSuccess: () => setLocation("/recipes"),
   });

@@ -9,7 +9,7 @@ const ShutterCommandButton: FunctionComponent<{
   color: "secondary" | "error";
   disabled?: boolean;
   onClick: () => void;
-}> = ({ name, color, disabled, onClick}) => (
+}> = ({ name, color, disabled, onClick }) => (
   <Button
     color={color}
     variant="outlined"
@@ -22,8 +22,8 @@ const ShutterCommandButton: FunctionComponent<{
 
 export const ShutterCommandButtons: FunctionComponent<{
   disabled: boolean;
-  proxyAddress:string
-}> = ({ disabled, proxyAddress}) => (
+  proxyAddress: string;
+}> = ({ disabled, proxyAddress }) => (
   <Stack mt={2} spacing={2}>
     <ShutterCommandButton
       color="secondary"

@@ -1,14 +1,14 @@
-import { FunctionComponent } from "react";
-
+import { Typography } from "@mui/material";
+import Checkbox from "@mui/material/Checkbox";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
-import Checkbox from "@mui/material/Checkbox";
-import { Typography } from "@mui/material";
-import { ShoppingListItem } from "../api/models";
+import { FunctionComponent } from "react";
+
 import { Spinner } from "../../../common/spinner";
+import { ShoppingListItem } from "../api/models";
 
 export const ShoppingList: FunctionComponent<{
   data: ShoppingListItem[];

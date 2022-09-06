@@ -1,11 +1,11 @@
-import { FunctionComponent } from "react";
-import { FoodPage } from "../page";
-
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { FunctionComponent } from "react";
+
 import { FullPageLoading } from "../../common/components";
-import { getShoppingList, createShoppingListItem, markItemAsDone } from "./api";
-import { ShoppingListForm } from "./forms";
+import { FoodPage } from "../page";
+import { createShoppingListItem, getShoppingList, markItemAsDone } from "./api";
 import { ShoppingList } from "./components";
+import { ShoppingListForm } from "./forms";
 
 export const ShoppingListPage: FunctionComponent = () => {
   const { data, isLoading, refetch } = useQuery(

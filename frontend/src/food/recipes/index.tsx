@@ -1,17 +1,18 @@
+import AddIcon from "@mui/icons-material/Add";
 import { Box } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
+
 import { FullPageLoading } from "../../common/components";
 import { Page } from "../../common/page";
 import { FoodPage } from "../page";
 import { deleteRecipe, getRecipe } from "./api";
-import { Filters, RecipesFilter } from "./components/RecipesFilter";
-import AddIcon from "@mui/icons-material/Add";
 import { RecipeDetailCard, RecipesList, TagsManagedList } from "./components";
+import { Filters, RecipesFilter } from "./components/RecipesFilter";
 
 export const RecipesDashboardPage: FunctionComponent = () => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const [filters, setFilters] = useState<Filters>({
     tags: [],
     ingredients: [],
@@ -39,7 +40,7 @@ export const RecipesDashboardPage: FunctionComponent = () => {
 export const RecipeDetailsPage: FunctionComponent<{ id: string }> = ({
   id,
 }) => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const { isLoading, data, isError } = useQuery(["getRecipe", id], () =>
     getRecipe(id)
   );

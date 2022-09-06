@@ -1,8 +1,9 @@
-import { Box, Button, Grid } from "@mui/material";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import { zodResolver } from "@hookform/resolvers/zod";
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
+import { Box, Button, Grid } from "@mui/material";
 import { FunctionComponent } from "react";
 import { useForm } from "react-hook-form";
+
 import { NumberField } from "../../../common/components";
 import { TrainingExercise } from "../../api/models";
 import { TrainingExerciseSchema } from "../../api/schemas";

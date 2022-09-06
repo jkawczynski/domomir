@@ -5,10 +5,11 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@tanstack/react-query";
 import React, { FunctionComponent, useState } from "react";
+
 import { uploadPicture } from "../api";
 
 export const PictureUploader: FunctionComponent<{
-  onFileSelect: Function;
+  onFileSelect: (file: File) => void;
   error?: string;
 }> = ({ onFileSelect, error }) => {
   const [fileName, setFileName] = useState("");

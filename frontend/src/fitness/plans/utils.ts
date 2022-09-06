@@ -1,4 +1,4 @@
-import { TrainingPlan } from "../trainings/api/models";
+import { TrainingPlan } from "../api/models";
 
 const weekdays = [...Array(7).keys()].map((i: number) => String(i + 1));
 

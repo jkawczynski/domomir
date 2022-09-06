@@ -5,6 +5,7 @@ import Chip from "@mui/material/Chip";
 import TextField from "@mui/material/TextField";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
+
 import { Spinner } from "../../../common/spinner";
 import { getTagsNames } from "../api";
 
@@ -82,6 +83,7 @@ export const TagsSelect: FunctionComponent<{
                 size="small"
                 label={option.inputValue}
                 {...getTagProps({ index })}
+                key={option.name}
               />
             );
           })

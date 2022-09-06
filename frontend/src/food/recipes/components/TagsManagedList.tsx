@@ -1,15 +1,15 @@
+import DeleteIcon from "@mui/icons-material/Delete";
 import { ListItem, ListItemText } from "@mui/material";
 import Grid from "@mui/material/Grid";
+import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
-
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
+
 import { Spinner } from "../../../common/spinner";
 import { deleteTag, getTags } from "../api";
 import { RecipeTag } from "../api/models";
-import DeleteIcon from "@mui/icons-material/Delete";
-import IconButton from "@mui/material/IconButton";
 
 const TagsManagedListItem: FunctionComponent<{
   tag: RecipeTag;
@@ -47,7 +47,11 @@ export const TagsManagedList: FunctionComponent = () => {
         <Grid item xs={12} md={6}>
           <List dense>
             {data.map((tag: RecipeTag) => (
-              <TagsManagedListItem tag={tag} onDelete={handleDelete} />
+              <TagsManagedListItem
+                key={tag.name}
+                tag={tag}
+                onDelete={handleDelete}
+              />
             ))}
           </List>
         </Grid>

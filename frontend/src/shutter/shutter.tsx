@@ -38,7 +38,7 @@ export const OnlineShutterInfo: FunctionComponent<{
   const { data, isError, isLoading } = useQuery(
     ["getShutterStatus", proxyAddress],
     () => getShutterStatus(proxyAddress),
-    {refetchInterval: 1000}
+    { refetchInterval: 1000 }
   );
   if (!data && isLoading) return <Spinner />;
   if (isError) return <OfflineShutterInfo />;

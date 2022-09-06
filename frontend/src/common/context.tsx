@@ -1,10 +1,11 @@
 import {
-  createContext,
   FunctionComponent,
   ReactNode,
+  createContext,
   useContext,
   useReducer,
 } from "react";
+
 import { User } from "../api/user";
 
 type State = {

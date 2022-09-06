@@ -1,11 +1,12 @@
-import { Controller, FormProvider, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { FunctionComponent } from "react";
 import { Box, Button, Stack, TextField } from "@mui/material";
-import { PlanExercisesManagedListForm } from "./PlanExercisesManagedListForm";
-import { WeekdaySelect } from "../components";
+import { FunctionComponent } from "react";
+import { Controller, FormProvider, useForm } from "react-hook-form";
+
 import { TrainingPlan } from "../../api/models";
 import { TrainingPlanSchema } from "../../api/schemas";
+import { WeekdaySelect } from "../components";
+import { PlanExercisesManagedListForm } from "./PlanExercisesManagedListForm";
 
 export const TrainingPlanForm: FunctionComponent<{
   plan?: TrainingPlan;

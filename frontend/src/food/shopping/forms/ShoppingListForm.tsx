@@ -1,9 +1,9 @@
-import { FunctionComponent, useEffect } from "react";
-
-import { Box, Button, Grid, LinearProgress, TextField } from "@mui/material";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
+import { Box, Button, Grid, LinearProgress, TextField } from "@mui/material";
+import { FunctionComponent, useEffect } from "react";
+import { useForm } from "react-hook-form";
+
 import { ShoppingListItem } from "../api/models";
 import { ShoppingListItemSchema } from "../api/schemas";
 
@@ -18,7 +18,7 @@ export const ShoppingListForm: FunctionComponent<{
         marked_as_done: false,
       },
     });
-  const { errors, isSubmitting, isDirty } = formState;
+  const { errors, isSubmitting, isDirty, isSubmitted } = formState;
 
   const handleOnSubmit = (item: ShoppingListItem) => {
     reset();
@@ -26,7 +26,7 @@ export const ShoppingListForm: FunctionComponent<{
   };
 
   useEffect(() => {
-    if (!isDirty) setFocus("name");
+    if (!isDirty && isSubmitted) setFocus("name");
   });
 
   return (

@@ -11,6 +11,7 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { useQuery } from "@tanstack/react-query";
 import { ChangeEvent, FunctionComponent } from "react";
+
 import { Spinner } from "../../../common/spinner";
 import { getIngredients, getTagsNames } from "../api";
 
@@ -61,7 +62,7 @@ export const CheckboxListFilter: FunctionComponent<{
 
 export const RecipesFilter: FunctionComponent<{
   value: Filters;
-  onChange: Function;
+  onChange: (filters: Filters) => void;
 }> = ({ onChange, value }) => {
   const onChangeTags = (tags: string[]) => {
     onChange({ ...value, tags });

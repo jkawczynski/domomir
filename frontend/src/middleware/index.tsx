@@ -1,9 +1,10 @@
 import { useQuery } from "@tanstack/react-query";
-import { useStateContext } from "../common/context";
 import { FunctionComponent, ReactNode } from "react";
-import { getMe } from "../api/user";
+
 import { getAccessToken } from "../api/tokenStorage";
+import { getMe } from "../api/user";
 import { FullPageLoading } from "../common/components";
+import { useStateContext } from "../common/context";
 
 const AuthMiddleware: FunctionComponent<{ children: ReactNode }> = ({
   children,

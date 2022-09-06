@@ -13,7 +13,7 @@ import { useLocation } from "wouter";
 
 export type PageAction = {
   icon: React.ReactNode;
-  onClick: Function;
+  onClick: () => void;
   name: string;
 };
 export type SubNavigation = {
@@ -37,7 +37,7 @@ const PageBottomNavigation: FunctionComponent<{
     >
       <BottomNavigation
         showLabels
-        onChange={(event, newValue) => setLocation(newValue)}
+        onChange={(_, newValue) => setLocation(newValue)}
         value={location}
       >
         {subNavigation.map((navigation) => (

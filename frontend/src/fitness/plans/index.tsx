@@ -1,16 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
+import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
 import { useLocation } from "wouter";
+
 import { APIError } from "../../api/common";
-import { FitnessPage } from "../page";
-import { useQuery } from "@tanstack/react-query";
 import { FullPageLoading } from "../../common/components";
-import { TrainingAlreadyRunningMessage, TrainingPlansList } from "./components";
-import { Training } from "../api/models";
 import { getActiveTraining } from "../api";
+import { Training } from "../api/models";
+import { FitnessPage } from "../page";
+import { TrainingAlreadyRunningMessage, TrainingPlansList } from "./components";
 
 export const TrainingPlansPage: FunctionComponent = () => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const [activeTraining, setActiveTraining] = useState<Training>();
 
   const { isLoading } = useQuery<Training, APIError>(

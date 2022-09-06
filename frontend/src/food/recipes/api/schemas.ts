@@ -20,4 +20,3 @@ export const RecipeSchema = z.object({
   description: z.string().min(3).optional().or(z.literal("")),
   tags: z.array(RecipeTagSchema),
 });
-

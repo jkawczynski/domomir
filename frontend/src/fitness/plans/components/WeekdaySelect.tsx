@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import {
   FormControl,
   InputLabel,
@@ -8,6 +7,8 @@ import {
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
+import { FunctionComponent } from "react";
+
 import { getTrainingPlans } from "../../api";
 
 const WEEKDAYS = [

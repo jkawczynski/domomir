@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
+
 import { FullPageLoading } from "../../../common/components";
 import { getRecipes } from "../api";
 import { RecipeListItem } from "./RecipeListItem";

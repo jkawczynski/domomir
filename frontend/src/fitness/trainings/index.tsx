@@ -1,11 +1,12 @@
 import { Box, Divider, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
-import { FitnessPage } from "../page";
+
 import { FullPageLoading } from "../../common/components";
-import { TrainingsList, TrainingSteps } from "./components";
-import { Training } from "../api/models";
 import { getTrainingById, updateTraining } from "../api";
+import { Training } from "../api/models";
+import { FitnessPage } from "../page";
+import { TrainingSteps, TrainingsList } from "./components";
 
 export const TrainingsPage: FunctionComponent = () => {
   return (

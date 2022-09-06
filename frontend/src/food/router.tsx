@@ -1,7 +1,11 @@
 import { FunctionComponent } from "react";
 import { Route, Switch } from "wouter";
-import { RecipeDetailsPage, RecipesDashboardPage, TagsDashboardPage } from "./recipes";
 
+import {
+  RecipeDetailsPage,
+  RecipesDashboardPage,
+  TagsDashboardPage,
+} from "./recipes";
 import { EditRecipeView, NewRecipeView } from "./recipes/management";
 import { ShoppingListPage } from "./shopping";
 

@@ -1,5 +1,6 @@
 import { FunctionComponent } from "react";
 import { Route, Switch } from "wouter";
+
 import { TrainingPlansPage } from "./plans";
 import { EditTrainingPlanPage, NewTrainingPlanPage } from "./plans/management";
 import { TrainingDetailsPage, TrainingsPage } from "./trainings";

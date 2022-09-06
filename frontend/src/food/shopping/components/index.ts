@@ -1,3 +1,3 @@
-import { ShoppingList } from "./ShoppingList"
+import { ShoppingList } from "./ShoppingList";
 
-export {ShoppingList};
+export { ShoppingList };

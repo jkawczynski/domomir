@@ -1,4 +1,3 @@
-import { FunctionComponent } from "react";
 import {
   Button,
   Card,
@@ -9,7 +8,9 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { FunctionComponent } from "react";
 import { useFieldArray, useFormContext } from "react-hook-form";
+
 import { NumberField } from "../../../common/components";
 
 export const PlanExercisesManagedListForm: FunctionComponent = () => {

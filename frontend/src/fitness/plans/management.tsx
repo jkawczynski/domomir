@@ -1,20 +1,21 @@
-import { Page } from "../../common/page";
+import { Typography } from "@mui/material";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { Typography } from "@mui/material";
+
 import { FullPageLoading } from "../../common/components";
-import { getNextAvailableWeekday } from "./utils";
-import { TrainingPlanForm } from "./forms";
+import { Page } from "../../common/page";
 import {
   createTrainingPlan,
   editTrainingPlan,
   getTrainingPlanById,
   getTrainingPlans,
 } from "../api";
+import { TrainingPlanForm } from "./forms";
+import { getNextAvailableWeekday } from "./utils";
 
 export const NewTrainingPlanPage: FunctionComponent = () => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const mutation = useMutation(createTrainingPlan, {
     onSuccess: () => setLocation("/plans"),
   });
@@ -39,7 +40,7 @@ export const NewTrainingPlanPage: FunctionComponent = () => {
 export const EditTrainingPlanPage: FunctionComponent<{ id: string }> = ({
   id,
 }) => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const { data, isLoading, isError } = useQuery(
     ["getTrainingPlanById", id],
     () => getTrainingPlanById(id)

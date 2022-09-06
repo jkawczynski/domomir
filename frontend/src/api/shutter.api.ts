@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { authApi } from "./auth.api";
 
 export type ShutterStatus = {

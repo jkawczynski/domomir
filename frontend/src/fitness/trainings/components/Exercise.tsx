@@ -1,10 +1,11 @@
+import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
 import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import { ExerciseForm } from "../forms";
-import { TrainingExercise } from "../../api/models";
+
 import { updateTrainingExercise } from "../../api";
+import { TrainingExercise } from "../../api/models";
+import { ExerciseForm } from "../forms";
 
 export const Exercise: FunctionComponent<{
   exercise: TrainingExercise;

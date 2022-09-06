@@ -1,3 +1,6 @@
+import DeleteIcon from "@mui/icons-material/Delete";
+import EditIcon from "@mui/icons-material/Edit";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
   Button,
   Card,
@@ -10,11 +13,9 @@ import {
   Typography,
 } from "@mui/material";
 import { FunctionComponent } from "react";
+
 import { Recipe } from "../api/models";
 import { IngredientsList } from "./IngredientsList";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import DeleteIcon from "@mui/icons-material/Delete";
-import EditIcon from "@mui/icons-material/Edit";
 import { TagsList } from "./TagsList";
 
 const RecipeDescription: FunctionComponent<{
@@ -36,8 +37,8 @@ const RecipeDescription: FunctionComponent<{
 
 export const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;
-  onDelete: Function;
-  onEdit: Function;
+  onDelete: () => void;
+  onEdit: () => void;
 }> = ({ recipe, onDelete, onEdit }) => {
   const recipeUrl = recipe.url ? (
     <Button
@@ -52,10 +53,10 @@ export const RecipeDetailCard: FunctionComponent<{
   ) : null;
 
   return (
-    <Card sx={{ minWidth: 350 }}>
+    <Card sx={{ minWidth: 300 }}>
       <CardMedia
         component="img"
-        height="500"
+        height="250"
         image={recipe.picture}
         alt="Recipe picture"
       />
@@ -65,7 +66,7 @@ export const RecipeDetailCard: FunctionComponent<{
         </Typography>
         <TagsList tags={recipe.tags.map((t) => t.name)} />
         <Divider />
-        <Grid container mt={2}>
+        <Grid container mt={2} spacing={2}>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">
               Ingredients:
@@ -73,7 +74,9 @@ export const RecipeDetailCard: FunctionComponent<{
             <Typography variant="body2" color="text.secondary">
               {recipe.ingredients.length < 1 ? "No ingredients provided" : null}
             </Typography>
-            <IngredientsList ingredients={recipe.ingredients} />
+            {!!recipe.ingredients.length && (
+              <IngredientsList ingredients={recipe.ingredients} />
+            )}
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">

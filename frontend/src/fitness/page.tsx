@@ -1,12 +1,12 @@
+import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import FitnessCenterIcon from "@mui/icons-material/FitnessCenter";
 import { FunctionComponent } from "react";
-import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
-import FitnessCenterIcon from '@mui/icons-material/FitnessCenter';
 
 import { Page, PageAction } from "../common/page";
 
 const subNavigation = [
   { name: "Plans", path: "/plans", icon: <CalendarMonthIcon /> },
-  { name: "Trainings", path: "/trainings", icon: <FitnessCenterIcon/> },
+  { name: "Trainings", path: "/trainings", icon: <FitnessCenterIcon /> },
 ];
 
 export const FitnessPage: FunctionComponent<{

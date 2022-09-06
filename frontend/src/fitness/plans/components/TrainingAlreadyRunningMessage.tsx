@@ -1,12 +1,13 @@
 import { Link, Typography } from "@mui/material";
 import { FunctionComponent } from "react";
-import { Training } from "../../api/models";
 import { useLocation } from "wouter";
+
+import { Training } from "../../api/models";
 
 export const TrainingAlreadyRunningMessage: FunctionComponent<{
   training: Training;
 }> = ({ training }) => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const trainingPath = `/trainings/${training.id}`;
   return (
     <Typography color="warning.main" variant="body1" mt={2}>

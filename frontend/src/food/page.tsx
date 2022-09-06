@@ -1,6 +1,6 @@
 import ListAltIcon from "@mui/icons-material/ListAlt";
-import TagIcon from "@mui/icons-material/Tag";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import TagIcon from "@mui/icons-material/Tag";
 import { FunctionComponent } from "react";
 
 import { Page, PageAction } from "../common/page";

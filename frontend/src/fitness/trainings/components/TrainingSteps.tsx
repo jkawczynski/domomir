@@ -1,5 +1,6 @@
 import { Step, StepContent, StepLabel, Stepper } from "@mui/material";
 import { FunctionComponent, useState } from "react";
+
 import { Training } from "../../api/models";
 import { StepExercises } from "./StepExercises";
 

@@ -1,3 +1,5 @@
+import InfoIcon from "@mui/icons-material/Info";
+import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import {
   IconButton,
   List,
@@ -6,16 +8,15 @@ import {
   Typography,
 } from "@mui/material";
 import { useQuery } from "@tanstack/react-query";
-import InfoIcon from "@mui/icons-material/Info";
-import PlayCircleIcon from "@mui/icons-material/PlayCircle";
 import moment from "moment";
 import { useLocation } from "wouter";
+
 import { FullPageLoading } from "../../../common/components";
 import { getTrainings } from "../../api";
 
 export const TrainingsList = () => {
   const { data, isLoading, isError } = useQuery(["getTrainings"], getTrainings);
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
 
   if (isLoading) return <FullPageLoading />;
   if (!data && isError) {

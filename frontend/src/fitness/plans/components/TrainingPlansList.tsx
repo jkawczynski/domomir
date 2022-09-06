@@ -1,3 +1,5 @@
+import EditIcon from "@mui/icons-material/Edit";
+import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import {
   Button,
   Card,
@@ -13,11 +15,10 @@ import {
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { Link, useLocation } from "wouter";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import EditIcon from "@mui/icons-material/Edit";
+
 import { FullPageLoading } from "../../../common/components";
-import { TrainingPlan, TrainingPlanExercise } from "../../api/models";
 import { getTrainingPlans, startTraining } from "../../api";
+import { TrainingPlan, TrainingPlanExercise } from "../../api/models";
 
 const generateExerciseDescription = (exercise: TrainingPlanExercise) => {
   let result = "";
@@ -36,7 +37,7 @@ const TrainingPlanItem: FunctionComponent<{
   disableStart: boolean;
   onStart: () => void;
 }> = ({ plan, disableStart, onStart }) => {
-  const [_, setLocation] = useLocation();
+  const [, setLocation] = useLocation();
   const day = String(new Date().getDay() || 7);
   const trainingIsTodayText = plan.weekday === day ? "This is today!" : "";
 
@@ -92,45 +93,46 @@ const TrainingPlanItem: FunctionComponent<{
   );
 };
 
-export const TrainingPlansList: FunctionComponent<{ disableStart: boolean }> =
-  ({ disableStart }) => {
-    const [_, setLocation] = useLocation();
-    const { data, isLoading, isError } = useQuery(["getTrainingPlans"], () =>
-      getTrainingPlans()
-    );
-    const mutation = useMutation(startTraining, {
-      onSuccess: (data) => {
-        setLocation(`/trainings/${data.id}`);
-      },
-    });
+export const TrainingPlansList: FunctionComponent<{
+  disableStart: boolean;
+}> = ({ disableStart }) => {
+  const [, setLocation] = useLocation();
+  const { data, isLoading, isError } = useQuery(["getTrainingPlans"], () =>
+    getTrainingPlans()
+  );
+  const mutation = useMutation(startTraining, {
+    onSuccess: (data) => {
+      setLocation(`/trainings/${data.id}`);
+    },
+  });
 
-    if (isLoading || mutation.isLoading) return <FullPageLoading />;
-    if (!data && isError) {
-      return (
-        <Typography color="error"> Failed to load training plans </Typography>
-      );
-    }
-
-    if (!data.length) {
-      return (
-        <Typography mt={2}>
-          There are no plans yet, create new training plan
-          <Link href="/plans/new"> here.</Link>
-        </Typography>
-      );
-    }
-
+  if (isLoading || mutation.isLoading) return <FullPageLoading />;
+  if (!data && isError) {
     return (
-      <Grid container spacing={2} sx={{ mt: 1 }}>
-        {data.map((plan) => (
-          <Grid item xs={12} md={4} key={plan.weekday}>
-            <TrainingPlanItem
-              plan={plan}
-              disableStart={disableStart}
-              onStart={() => mutation.mutate(plan)}
-            />
-          </Grid>
-        ))}
-      </Grid>
+      <Typography color="error"> Failed to load training plans </Typography>
     );
-  };
+  }
+
+  if (!data.length) {
+    return (
+      <Typography mt={2}>
+        There are no plans yet, create new training plan
+        <Link href="/plans/new"> here.</Link>
+      </Typography>
+    );
+  }
+
+  return (
+    <Grid container spacing={2} sx={{ mt: 1 }}>
+      {data.map((plan) => (
+        <Grid item xs={12} md={4} key={plan.weekday}>
+          <TrainingPlanItem
+            plan={plan}
+            disableStart={disableStart}
+            onStart={() => mutation.mutate(plan)}
+          />
+        </Grid>
+      ))}
+    </Grid>
+  );
+};

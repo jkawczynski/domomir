@@ -11,11 +11,12 @@ import ListItem from "@mui/material/ListItem";
 import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent } from "react";
+
 import { RecipeIngredient } from "../api/models";
 
 const IngredientSelectItem: FunctionComponent<{
   value: RecipeIngredient;
-  onChange: Function;
+  onChange: (ingredient: RecipeIngredient) => void;
 }> = ({ value, onChange }) => {
   return (
     <Stack direction="row" spacing={2}>
@@ -41,7 +42,7 @@ const IngredientSelectItem: FunctionComponent<{
 
 export const IngredientsSelect: FunctionComponent<{
   value: RecipeIngredient[];
-  onChange: Function;
+  onChange: (ingredients: RecipeIngredient[]) => void;
 }> = ({ value, onChange }) => {
   const addNextIngredient = () => {
     onChange([...value, { name: "", amount_and_unit: "" }]);

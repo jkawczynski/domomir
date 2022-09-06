@@ -1,5 +1,5 @@
-import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
+import { defineConfig } from "vite";
 import { splitVendorChunkPlugin } from "vite";
 
 const manualChunks = (id) => {
@@ -20,5 +20,8 @@ export default defineConfig({
         manualChunks: manualChunks,
       },
     },
+  },
+  esbuild: {
+    logOverride: { "this-is-undefined-in-esm": "silent" },
   },
 });
