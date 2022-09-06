@@ -1,4 +1,5 @@
+import { TrainingAlreadyRunningMessage } from "./TrainingAlreadyRunningMessage";
 import { TrainingPlansList } from "./TrainingPlansList";
 import { WeekdaySelect } from "./WeekdaySelect";
 
-export { TrainingPlansList, WeekdaySelect };
+export { TrainingAlreadyRunningMessage, TrainingPlansList, WeekdaySelect };

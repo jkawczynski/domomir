@@ -1,14 +1,11 @@
 import { FunctionComponent } from "react";
 import { FoodPage } from "../page";
 
-import {
-  createShoppingListItem,
-  getShoppingList,
-  markItemAsDone,
-} from "../../api/shopping.api";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { ShoppingList, ShoppingListInput } from "./shopping-list";
 import { FullPageLoading } from "../../common/components";
+import { getShoppingList, createShoppingListItem, markItemAsDone } from "./api";
+import { ShoppingListForm } from "./forms";
+import { ShoppingList } from "./components";
 
 export const ShoppingListPage: FunctionComponent = () => {
   const { data, isLoading, refetch } = useQuery(
@@ -24,7 +21,7 @@ export const ShoppingListPage: FunctionComponent = () => {
   if (isLoading) return <FullPageLoading />;
   return (
     <FoodPage title="Shopping List">
-      <ShoppingListInput
+      <ShoppingListForm
         onSubmit={(item) => createMutation.mutate(item)}
         loading={createMutation.isLoading}
       />

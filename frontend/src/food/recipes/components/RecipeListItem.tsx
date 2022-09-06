@@ -6,11 +6,12 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
+import { Recipe } from "../api/models";
+import { TagsList } from "./TagsList";
 
-import { Recipe } from "../../api/recipes.api";
-import { TagsList } from "../tags/tags";
-
-export const RecipeListItem: FunctionComponent<Recipe> = (recipe: Recipe) => {
+export const RecipeListItem: FunctionComponent<{ recipe: Recipe }> = ({
+  recipe,
+}) => {
   const [_, setLocation] = useLocation();
   const recipePath = `/recipes/${recipe.id}`;
   let buttons = [

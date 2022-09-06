@@ -1,77 +1,17 @@
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EggIcon from "@mui/icons-material/Egg";
+import { Stack, TextField } from "@mui/material";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Checkbox from "@mui/material/Checkbox";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import ListItem from "@mui/material/ListItem";
-import ListItemButton from "@mui/material/ListItemButton";
 import ListItemIcon from "@mui/material/ListItemIcon";
-import ListItemText from "@mui/material/ListItemText";
-import Stack from "@mui/material/Stack";
-import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
-import { FunctionComponent, useState } from "react";
-
-import { RecipeIngredient } from "../../api/recipes.api";
-
-export const IngredientList: FunctionComponent<{
-  ingredients: RecipeIngredient[];
-}> = ({ ingredients }) => {
-  const [checked, setChecked] = useState<string[]>([]);
-
-  const handleToggle = (value: string) => () => {
-    const currentIndex = checked.indexOf(value);
-    const newChecked = [...checked];
-
-    if (currentIndex === -1) {
-      newChecked.push(value);
-    } else {
-      newChecked.splice(currentIndex, 1);
-    }
-
-    setChecked(newChecked);
-  };
-
-  return (
-    <List
-      sx={{ width: "100%", maxWidth: 360, bgcolor: "background.paper" }}
-      dense
-    >
-      {ingredients.map((ingredient: RecipeIngredient) => {
-        const labelId = `checkbox-list-label-${ingredient.name}`;
-
-        return (
-          <ListItem key={ingredient.name} disablePadding>
-            <ListItemButton
-              role={undefined}
-              onClick={handleToggle(ingredient.name)}
-              dense
-            >
-              <ListItemIcon>
-                <Checkbox
-                  edge="start"
-                  checked={checked.indexOf(ingredient.name) !== -1}
-                  tabIndex={-1}
-                  disableRipple
-                  inputProps={{ "aria-labelledby": labelId }}
-                />
-              </ListItemIcon>
-              <ListItemText
-                id={labelId}
-                primary={ingredient.name}
-                secondary={ingredient.amount_and_unit}
-              />
-            </ListItemButton>
-          </ListItem>
-        );
-      })}
-    </List>
-  );
-};
+import { FunctionComponent } from "react";
+import { RecipeIngredient } from "../api/models";
 
 const IngredientSelectItem: FunctionComponent<{
   value: RecipeIngredient;

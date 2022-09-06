@@ -5,8 +5,7 @@ import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useMutation } from "@tanstack/react-query";
 import React, { FunctionComponent, useState } from "react";
-
-import { uploadPicture } from "../../api/recipes.api";
+import { uploadPicture } from "../api";
 
 export const PictureUploader: FunctionComponent<{
   onFileSelect: Function;
@@ -55,7 +54,7 @@ export const PictureUploader: FunctionComponent<{
           />
         </Button>
       </Stack>
-      {mutation.isLoading ? <LinearProgress sx={{mt: 1}}/> : null}
+      {mutation.isLoading ? <LinearProgress sx={{ mt: 1 }} /> : null}
     </Stack>
   );
 };

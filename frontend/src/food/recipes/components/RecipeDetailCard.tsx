@@ -1,24 +1,21 @@
+import {
+  Button,
+  Card,
+  CardActions,
+  CardContent,
+  CardMedia,
+  Divider,
+  Grid,
+  Stack,
+  Typography,
+} from "@mui/material";
+import { FunctionComponent } from "react";
+import { Recipe } from "../api/models";
+import { IngredientsList } from "./IngredientsList";
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import DeleteIcon from "@mui/icons-material/Delete";
 import EditIcon from "@mui/icons-material/Edit";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
-import { Divider } from "@mui/material";
-import Button from "@mui/material/Button";
-import Card from "@mui/material/Card";
-import CardActions from "@mui/material/CardActions";
-import CardContent from "@mui/material/CardContent";
-import CardMedia from "@mui/material/CardMedia";
-import Grid from "@mui/material/Grid";
-import Stack from "@mui/material/Stack";
-import Typography from "@mui/material/Typography";
-import { useQuery, useMutation } from "@tanstack/react-query";
-import { FunctionComponent } from "react";
-import { useLocation } from "wouter";
-
-import { Recipe, deleteRecipe, getRecipe } from "../../api/recipes.api";
-import { FullPageLoading } from "../../common/components";
-import { Page } from "../../common/page";
-import { TagsList } from "../tags/tags";
-import { IngredientList } from "./ingredients";
+import { TagsList } from "./TagsList";
 
 const RecipeDescription: FunctionComponent<{
   description?: string;
@@ -37,7 +34,7 @@ const RecipeDescription: FunctionComponent<{
   );
 };
 
-const RecipeDetailCard: FunctionComponent<{
+export const RecipeDetailCard: FunctionComponent<{
   recipe: Recipe;
   onDelete: Function;
   onEdit: Function;
@@ -76,7 +73,7 @@ const RecipeDetailCard: FunctionComponent<{
             <Typography variant="body2" color="text.secondary">
               {recipe.ingredients.length < 1 ? "No ingredients provided" : null}
             </Typography>
-            <IngredientList ingredients={recipe.ingredients} />
+            <IngredientsList ingredients={recipe.ingredients} />
           </Grid>
           <Grid item md={6} xs={12}>
             <Typography gutterBottom variant="h5" component="div">
@@ -107,32 +104,5 @@ const RecipeDetailCard: FunctionComponent<{
         </Stack>
       </CardActions>
     </Card>
-  );
-};
-
-export const RecipeDetailsView: FunctionComponent<{ id: string }> = ({
-  id,
-}) => {
-  const [_, setLocation] = useLocation();
-  const { isLoading, data, isError } = useQuery(["getRecipe", id], () =>
-    getRecipe(id)
-  );
-  const mutation = useMutation(deleteRecipe, {
-    onSuccess: () => setLocation("/recipes"),
-  });
-  const deleteError = mutation?.error as Error;
-
-  if ((!data && isLoading) || mutation.isLoading) return <FullPageLoading />;
-  if (isError) return <span>Error loading recipe</span>;
-  if (deleteError) return <span>Error deleteing recipe</span>;
-
-  return (
-    <Page>
-      <RecipeDetailCard
-        recipe={data}
-        onEdit={() => setLocation(`/recipes/${id}/edit`)}
-        onDelete={() => mutation.mutate(id)}
-      />
-    </Page>
   );
 };

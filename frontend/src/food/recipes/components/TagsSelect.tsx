@@ -2,31 +2,11 @@ import { FilterOptionsState } from "@mui/material";
 import Autocomplete, { createFilterOptions } from "@mui/material/Autocomplete";
 import Box from "@mui/material/Box";
 import Chip from "@mui/material/Chip";
-import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
-
-import { getTagsNames } from "../../api/recipes.api";
-import { Spinner } from "../../common/spinner";
-
-export const Tag: FunctionComponent<{ tag: string }> = ({ tag }) => {
-  return <Chip key={tag} size="small" label={tag} />;
-};
-
-export const TagsList: FunctionComponent<{
-  tags: string[];
-}> = ({ tags }) => {
-  return (
-    <Box mt={2} mb={2}>
-      <Stack direction="row" spacing={1}>
-        {tags.map((tag) => (
-          <Tag key={tag} tag={tag} />
-        ))}
-      </Stack>
-    </Box>
-  );
-};
+import { Spinner } from "../../../common/spinner";
+import { getTagsNames } from "../api";
 
 const filter = createFilterOptions<TagOption>();
 

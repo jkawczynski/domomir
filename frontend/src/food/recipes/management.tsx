@@ -2,15 +2,11 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 import { useLocation } from "wouter";
 
-import {
-  Recipe,
-  createRecipe,
-  getRecipe,
-  updateRecipe,
-} from "../../api/recipes.api";
 import { FullPageLoading } from "../../common/components";
 import { Page } from "../../common/page";
-import { RecipeForm } from "./form";
+import { createRecipe, getRecipe, updateRecipe } from "./api";
+import { Recipe } from "./api/models";
+import { RecipeForm } from "./forms";
 
 type Error = {
   message: string;

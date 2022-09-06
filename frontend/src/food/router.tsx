@@ -1,24 +1,22 @@
 import { FunctionComponent } from "react";
 import { Route, Switch } from "wouter";
+import { RecipeDetailsPage, RecipesDashboardPage, TagsDashboardPage } from "./recipes";
 
-import { RecipesDashboard } from "./recipes/dashboard";
-import { RecipeDetailsView } from "./recipes/details";
 import { EditRecipeView, NewRecipeView } from "./recipes/management";
 import { ShoppingListPage } from "./shopping";
-import { TagsDashboard } from "./tags/tags-dashboard";
 
 export const RecipesRouter: FunctionComponent = () => {
   return (
     <Switch>
-      <Route path="/recipes" component={RecipesDashboard} />
+      <Route path="/recipes" component={RecipesDashboardPage} />
       <Route path="/recipes/new" component={NewRecipeView} />
       <Route path="/recipes/:id">
-        {(params) => <RecipeDetailsView id={params.id} />}
+        {(params) => <RecipeDetailsPage id={params.id} />}
       </Route>
       <Route path="/recipes/:id/edit">
         {(params) => <EditRecipeView id={params.id} />}
       </Route>
-      <Route path="/tags" component={TagsDashboard} />
+      <Route path="/tags" component={TagsDashboardPage} />
       <Route path="/shopping" component={ShoppingListPage} />
     </Switch>
   );

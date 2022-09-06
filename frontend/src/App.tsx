@@ -9,7 +9,6 @@ import { NestedRouter } from "./common/nested-router";
 import { RecipesRouter } from "./food/router";
 import { LoginComponent } from "./login/login";
 import AuthMiddleware from "./middleware";
-import { Shutter } from "./shutter/shutter";
 import { FitnessRouter } from "./fitness/router";
 
 const queryClient = new QueryClient();
@@ -24,7 +23,6 @@ export const App: FunctionComponent = () => {
             <Route path="/">
               <Redirect to="/food/recipes" />
             </Route>
-            <Route path="/shutter" component={Shutter} />
             <Route path="/login" component={LoginComponent} />
             <Router base="/">
               <NestedRouter base="/food">

@@ -5,12 +5,10 @@ import TextField from "@mui/material/TextField";
 import { FunctionComponent } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { z } from "zod";
-
-import { Recipe, RecipeSchema } from "../../api/recipes.api";
-import { Spinner } from "../../common/spinner";
-import { TagsSelect, mapToTagOption } from "../tags/tags";
-import { IngredientsSelect } from "./ingredients";
-import { PictureUploader } from "./picture-uploader";
+import { Spinner } from "../../../common/spinner";
+import { Recipe } from "../api/models";
+import { RecipeSchema } from "../api/schemas";
+import { IngredientsSelect, PictureUploader, TagsSelect } from "../components";
 
 export const RecipeForm: FunctionComponent<{
   recipe?: Recipe;

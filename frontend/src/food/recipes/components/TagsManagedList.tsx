@@ -1,16 +1,15 @@
-import DeleteIcon from "@mui/icons-material/Delete";
+import { ListItem, ListItemText } from "@mui/material";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
 
-import ListItem from "@mui/material/ListItem";
-import ListItemText from "@mui/material/ListItemText";
 import { useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
-
-import { RecipeTag, deleteTag, getTags } from "../../api/recipes.api";
-import { Spinner } from "../../common/spinner";
+import { Spinner } from "../../../common/spinner";
+import { deleteTag, getTags } from "../api";
+import { RecipeTag } from "../api/models";
+import DeleteIcon from "@mui/icons-material/Delete";
+import IconButton from "@mui/material/IconButton";
 
 const TagsManagedListItem: FunctionComponent<{
   tag: RecipeTag;
@@ -32,7 +31,7 @@ const TagsManagedListItem: FunctionComponent<{
   );
 };
 
-export const TagsManagedList = () => {
+export const TagsManagedList: FunctionComponent = () => {
   const { isLoading, data, isError, refetch } = useQuery(["getTags"], getTags);
   if (isLoading) return <Spinner />;
   if (isError) return <span>Failed to load tags</span>;
@@ -53,6 +52,6 @@ export const TagsManagedList = () => {
           </List>
         </Grid>
       </Grid>
-    </Paper >
+    </Paper>
   );
 };
