@@ -36,7 +36,9 @@ export const RecipeForm: FunctionComponent<{
       description: recipe?.description,
       url: recipe?.url || "",
       tags: recipe?.tags.map((t) => t.name) || [],
-      ingredients: recipe?.ingredients || [{ name: "", amount_and_unit: "" }],
+      ingredients: recipe?.ingredients || [
+        { id: null, name: "", amount_and_unit: "" },
+      ],
     },
   });
   const { errors, isSubmitting } = formState;
