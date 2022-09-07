@@ -1,8 +1,7 @@
-import PlayCircleFilledIcon from "@mui/icons-material/PlayCircleFilled";
-import { Button } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
+import { TimeCounter } from "../../../common/components/TimeCounter";
 import { updateTrainingExercise } from "../../api";
 import { TrainingExercise } from "../../api/models";
 import { ExerciseForm } from "../forms";
@@ -11,37 +10,34 @@ export const Exercise: FunctionComponent<{
   exercise: TrainingExercise;
   onFinish: () => void;
 }> = ({ exercise, onFinish }) => {
-  const mutation = useMutation(updateTrainingExercise);
-  const onStart = () => {
-    exercise.started = new Date();
-    mutation.mutate(exercise);
-  };
+  const mutation = useMutation(updateTrainingExercise, {
+    onSuccess: (data) => {
+      if (data.completed) {
+        onFinish();
+      }
+    },
+  });
   const onSubmit = (formData: TrainingExercise) => {
-    const completed = new Date();
-    formData.completed = completed;
-    exercise.completed = completed;
-    mutation.mutate(exercise);
-    onFinish();
+    const currentDate = new Date();
+    if (exercise.started) {
+      formData.completed = currentDate;
+      exercise.completed = currentDate;
+    } else {
+      formData.started = currentDate;
+      exercise.started = currentDate;
+    }
+    mutation.mutate(formData);
   };
-  if (!exercise.started) {
-    return (
-      <Button
-        startIcon={<PlayCircleFilledIcon />}
-        onClick={onStart}
-        variant="contained"
-        size="small"
-        sx={{ mt: 1, mr: 1 }}
-        disabled={mutation.isLoading}
-      >
-        Start
-      </Button>
-    );
-  }
   return (
-    <ExerciseForm
-      disabled={mutation.isLoading}
-      exercise={exercise}
-      onSubmit={onSubmit}
-    />
+    <>
+      {!!exercise.started && (
+        <TimeCounter hideHours startFrom={exercise.started} />
+      )}
+      <ExerciseForm
+        disabled={mutation.isLoading}
+        exercise={exercise}
+        onSubmit={onSubmit}
+      />
+    </>
   );
 };

@@ -1,8 +1,9 @@
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
 import { FullPageLoading } from "../../common/components";
+import { TimeCounter } from "../../common/components/TimeCounter";
 import { getTrainingById, updateTraining } from "../api";
 import { FitnessPage } from "../page";
 import { TrainingDetails, TrainingSteps, TrainingsList } from "./components";
@@ -39,7 +40,12 @@ export const TrainingDetailsPage: FunctionComponent<{ id: string }> = ({
       {data.completed ? (
         <TrainingDetails training={data} />
       ) : (
-        <TrainingSteps training={data} onFinish={onFinish} />
+        <>
+          <Box mt={2}>
+            <TimeCounter startFrom={data.started} /> 
+          </Box>
+          <TrainingSteps training={data} onFinish={onFinish} />
+        </>
       )}
     </FitnessPage>
   );

@@ -1,6 +1,6 @@
-import { StepExercises } from "./StepExercises";
+import { ExerciseSteps } from "./ExerciseSteps";
 import { TrainingDetails } from "./TrainingDetails";
 import { TrainingsList } from "./TrainingList";
 import { TrainingSteps } from "./TrainingSteps";
 
-export { TrainingDetails, TrainingSteps, TrainingsList, StepExercises };
+export { TrainingDetails, TrainingSteps, TrainingsList, ExerciseSteps };

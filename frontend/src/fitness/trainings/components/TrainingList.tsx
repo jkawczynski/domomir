@@ -24,6 +24,9 @@ export const TrainingsList = () => {
       <Typography color="error.main"> Failed to load trainings </Typography>
     );
   }
+  if (!data.length) {
+    return <Typography>Trainings history is empty</Typography>;
+  }
 
   return (
     <List>

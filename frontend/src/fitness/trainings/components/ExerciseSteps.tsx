@@ -5,7 +5,7 @@ import { FunctionComponent, useState } from "react";
 import { TrainingExercise } from "../../api/models";
 import { Exercise } from "./Exercise";
 
-export const StepExercises: FunctionComponent<{
+export const ExerciseSteps: FunctionComponent<{
   exercises: TrainingExercise[];
   onFinish: () => void;
 }> = ({ exercises, onFinish }) => {

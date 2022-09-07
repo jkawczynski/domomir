@@ -2,7 +2,7 @@ import { Step, StepContent, StepLabel, Stepper } from "@mui/material";
 import { FunctionComponent, useState } from "react";
 
 import { Training } from "../../api/models";
-import { StepExercises } from "./StepExercises";
+import { ExerciseSteps } from "./ExerciseSteps";
 
 export const TrainingSteps: FunctionComponent<{
   training: Training;
@@ -24,12 +24,12 @@ export const TrainingSteps: FunctionComponent<{
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
   };
   return (
-    <Stepper sx={{ mt: 2 }} activeStep={activeStep} orientation="vertical">
+    <Stepper activeStep={activeStep} orientation="vertical">
       {training.training_plan.exercises.map((exercise) => (
         <Step key={exercise.name}>
           <StepLabel>{exercise.name}</StepLabel>
           <StepContent>
-            <StepExercises
+            <ExerciseSteps
               onFinish={handleNext}
               exercises={training.exercises.filter(
                 (e) => e.name === exercise.name
