@@ -1,7 +1,7 @@
 import qs from "qs";
 
 import { authApi } from "../../../api/auth.api";
-import { Recipe, RecipeTag } from "./models";
+import { Recipe, RecipePicture, RecipeTag } from "./models";
 
 export async function getRecipes(filters: {
   tags: string[];
@@ -50,14 +50,16 @@ export async function updateRecipe(recipe: Recipe) {
 export async function uploadPicture(file: File) {
   const formData = new FormData();
   formData.append("file", file);
-  return await authApi({
-    method: "POST",
-    url: `${import.meta.env.VITE_APP_API_URL}recipes_upload/`,
-    data: formData,
-    headers: {
-      "Content-Disposition": `Content-Disposition: attachment; filename=${file.name}`,
-    },
-  });
+  const response = await authApi.post<RecipePicture>(
+    `${import.meta.env.VITE_APP_API_URL}recipes_upload/`,
+    formData,
+    {
+      headers: {
+        "Content-Disposition": `Content-Disposition: attachment; filename=${file.name}`,
+      },
+    }
+  );
+  return response.data;
 }
 
 export async function getIngredients() {

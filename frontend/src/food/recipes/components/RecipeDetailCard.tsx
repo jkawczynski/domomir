@@ -4,6 +4,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import {
   Alert,
+  Box,
   Button,
   Card,
   CardActions,
@@ -11,6 +12,7 @@ import {
   CardMedia,
   Divider,
   Grid,
+  LinearProgress,
   Snackbar,
   Stack,
   Typography,
@@ -18,6 +20,7 @@ import {
 import { useMutation } from "@tanstack/react-query";
 import { FunctionComponent, useState } from "react";
 
+import { Spinner } from "../../../common/spinner";
 import { addToShoppingList } from "../../shopping/api";
 import { Recipe, RecipeIngredient } from "../api/models";
 import { IngredientsList } from "./IngredientsList";
@@ -62,15 +65,26 @@ const RecipeIngredients: FunctionComponent<{
           disabled={mutation.isLoading}
         />
       )}
-      <Button
-        sx={{ mt: 2 }}
-        variant="outlined"
-        startIcon={<AddShoppingCartIcon />}
-        onClick={onAddToShoppingList}
-        disabled={!checkedIngredients.length || mutation.isLoading}
-      >
-        Add to shopping list
-      </Button>
+      <Grid container>
+        <Grid item xs={10}>
+          <Button
+            sx={{ mt: 2 }}
+            variant="outlined"
+            startIcon={<AddShoppingCartIcon />}
+            onClick={onAddToShoppingList}
+            disabled={!checkedIngredients.length || mutation.isLoading}
+          >
+            Add to shopping list
+          </Button>
+        </Grid>
+        <Grid item xs={2}>
+          {mutation.isLoading && (
+            <Box mt={2}>
+              <Spinner />
+            </Box>
+          )}
+        </Grid>
+      </Grid>
       <Snackbar
         open={snackbarOpened}
         onClose={() => setSnackbarOpened(false)}
@@ -90,9 +104,13 @@ const RecipeDescription: FunctionComponent<{
       <Typography gutterBottom variant="h5" component="div">
         Description:
       </Typography>
-      <Typography variant="body2" color="text.secondary">
-        {description ? description : "No description provided"}
-      </Typography>
+      {!description && "No description provided"}
+      {!!description &&
+        description.split("\n").map((line, index) => (
+          <Typography key={index} variant="body2" color="text.secondary">
+            {line}
+          </Typography>
+        ))}
     </>
   );
 };

@@ -1,3 +1,4 @@
+import os.path
 from typing import List, Optional
 
 from django.db import transaction
@@ -9,6 +10,23 @@ from foods.models import (
     ShoppingListItem,
 )
 from rest_framework import serializers
+
+
+class RecipePictureSerializer(serializers.ModelSerializer):
+    thumbnail = serializers.SerializerMethodField()
+    name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = RecipePicture
+        fields = ("id", "file", "name", "thumbnail")
+
+    def get_name(self, picture: RecipePicture) -> str:
+        return os.path.basename(picture.file.name)
+
+    def get_thumbnail(self, picture: RecipePicture) -> str:
+        request = self.context.get("request")
+        picture_url = request.build_absolute_uri(picture.file.url)
+        return f"{picture_url}.recipe_thumb.jpg"
 
 
 class ShoppingListItemSerializer(serializers.ModelSerializer):

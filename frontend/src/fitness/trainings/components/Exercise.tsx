@@ -1,3 +1,4 @@
+import { LinearProgress } from "@mui/material";
 import { useMutation } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
@@ -30,6 +31,7 @@ export const Exercise: FunctionComponent<{
   };
   return (
     <>
+      {mutation.isLoading && <LinearProgress />}
       {!!exercise.started && (
         <TimeCounter hideHours startFrom={exercise.started} />
       )}

@@ -49,7 +49,8 @@ export const IncrementableNumberField: FunctionComponent<{
   onChange: (value: number) => void;
   label: string;
   incrementStep?: number;
-}> = ({ value, onChange, label, incrementStep }) => {
+  disabled?: boolean;
+}> = ({ value, onChange, label, incrementStep, disabled }) => {
   const onIncrement = () => {
     onChange((value || 0) + (incrementStep || 1));
   };
@@ -71,6 +72,7 @@ export const IncrementableNumberField: FunctionComponent<{
         sx={{ m: 0, pl: 1, pr: 1 }}
         value={value}
         id="incrementable-input"
+        disabled={disabled}
         startAdornment={
           <InputAdornment position="start">
             <IconButton onClick={onReduce} edge="start">

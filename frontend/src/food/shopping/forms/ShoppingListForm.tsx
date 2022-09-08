@@ -37,7 +37,7 @@ export const ShoppingListForm: FunctionComponent<{
       mt={3}
     >
       <Grid container spacing={1}>
-        <Grid item>
+        <Grid item xs={8}>
           <TextField
             size="small"
             label="Add to shopping list..."
@@ -47,7 +47,7 @@ export const ShoppingListForm: FunctionComponent<{
             {...register("name")}
           />
         </Grid>
-        <Grid item alignItems="stretch" sx={{ display: "flex" }}>
+        <Grid item alignItems="stretch" xs={4} sx={{ display: "flex" }}>
           <Button
             type="submit"
             startIcon={<AddShoppingCartIcon />}

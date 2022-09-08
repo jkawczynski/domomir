@@ -4,10 +4,10 @@ import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import List from "@mui/material/List";
 import Paper from "@mui/material/Paper";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
-import { Spinner } from "../../../common/spinner";
+import { FullPageLoading } from "../../../common/components";
 import { deleteTag, getTags } from "../api";
 import { RecipeTag } from "../api/models";
 
@@ -33,11 +33,12 @@ const TagsManagedListItem: FunctionComponent<{
 
 export const TagsManagedList: FunctionComponent = () => {
   const { isLoading, data, isError, refetch } = useQuery(["getTags"], getTags);
-  if (isLoading) return <Spinner />;
+  const mutation = useMutation(deleteTag, { onSuccess: () => refetch() });
+  if (isLoading || mutation.isLoading) return <FullPageLoading />;
   if (isError) return <span>Failed to load tags</span>;
 
   const handleDelete = (tag: RecipeTag) => {
-    deleteTag(tag.id);
+    mutation.mutate(tag.id);
     refetch();
   };
 

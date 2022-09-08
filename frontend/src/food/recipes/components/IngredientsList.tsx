@@ -18,8 +18,13 @@ const IngredientsListItem: FunctionComponent<{
   const labelId = `checkbox-list-label-${ingredient.name}`;
 
   return (
-    <ListItem key={ingredient.name} disablePadding disabled={disabled}>
-      <ListItemButton role={undefined} onClick={() => onClick(checked)} dense>
+    <ListItem key={ingredient.name} disablePadding disabled={disabled} dense>
+      <ListItemButton
+        role={undefined}
+        onClick={() => onClick(checked)}
+        sx={{ pt: 0, pb: 0 }}
+        dense
+      >
         <ListItemIcon>
           <Checkbox
             edge="start"
@@ -30,6 +35,7 @@ const IngredientsListItem: FunctionComponent<{
           />
         </ListItemIcon>
         <ListItemText
+          sx={{ m: 0 }}
           id={labelId}
           primary={ingredient.name}
           secondary={ingredient.amount_and_unit}

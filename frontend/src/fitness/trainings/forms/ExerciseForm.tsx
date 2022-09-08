@@ -9,9 +9,10 @@ import { IncrementableNumberField } from "../../../common/components/NumberField
 import { TrainingExercise } from "../../api/models";
 import { TrainingExerciseSchema } from "../../api/schemas";
 
-const StepButton: FunctionComponent<{ exercise: TrainingExercise }> = ({
-  exercise,
-}) => {
+const StepButton: FunctionComponent<{
+  exercise: TrainingExercise;
+  disabled?: boolean;
+}> = ({ exercise, disabled }) => {
   if (exercise.started) {
     return (
       <Button
@@ -21,6 +22,7 @@ const StepButton: FunctionComponent<{ exercise: TrainingExercise }> = ({
         size="small"
         color="success"
         sx={{ mt: 1, mr: 1 }}
+        disabled={disabled}
       >
         Complete Set
       </Button>
@@ -33,6 +35,7 @@ const StepButton: FunctionComponent<{ exercise: TrainingExercise }> = ({
         variant="contained"
         size="small"
         sx={{ mt: 1, mr: 1 }}
+        disabled={disabled}
       >
         Start Set
       </Button>
@@ -70,6 +73,7 @@ export const ExerciseForm: FunctionComponent<{
                 label="Reps"
                 onChange={onChange}
                 value={value}
+                disabled={disabled}
               />
             )}
             name="reps"
@@ -83,6 +87,7 @@ export const ExerciseForm: FunctionComponent<{
                 label="Weight (kg)"
                 onChange={onChange}
                 value={value}
+                disabled={disabled}
               />
             )}
             name="weight"
@@ -91,7 +96,7 @@ export const ExerciseForm: FunctionComponent<{
         </Grid>
       </Grid>
       <Divider sx={{ mt: 2, mb: 1 }} />
-      <StepButton exercise={exercise} />
+      <StepButton disabled={disabled} exercise={exercise} />
     </Box>
   );
 };

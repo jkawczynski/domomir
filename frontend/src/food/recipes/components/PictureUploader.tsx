@@ -9,15 +9,15 @@ import React, { FunctionComponent, useState } from "react";
 import { uploadPicture } from "../api";
 
 export const PictureUploader: FunctionComponent<{
-  onFileSelect: (file: File) => void;
+  onFileSelect: (fileName: string) => void;
   error?: string;
 }> = ({ onFileSelect, error }) => {
   const [fileName, setFileName] = useState("");
 
   const mutation = useMutation(uploadPicture, {
-    onSuccess: (response) => {
-      onFileSelect(response.data["file_id"]);
-      setFileName(response.data["file_name"]);
+    onSuccess: (data) => {
+      onFileSelect(data.id);
+      setFileName(data.name);
     },
   });
 
