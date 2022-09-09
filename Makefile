@@ -4,6 +4,9 @@ run-prod:
 run-dev:
 	docker-compose up --build
 
+create-test-user:
+	docker-compose run --rm backend create-test-user
+
 shell:
 	docker-compose exec backend python manage.py shell
 

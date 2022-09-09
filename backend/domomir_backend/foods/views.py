@@ -34,9 +34,6 @@ class RecipeUploadView(APIView):
         picture = RecipePicture.objects.create(file=file)
         serializer = RecipePictureSerializer(picture, context={"request": self.request})
         return Response(data=serializer.data)
-        return Response(
-            data={"file_id": picture.pk, "file_name": file.name}, status=200
-        )
 
 
 class RecipeViewSet(viewsets.ModelViewSet):
