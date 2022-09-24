@@ -55,10 +55,10 @@ export const getTrainingById = async (id: string) => {
   return response.data;
 };
 
-export const updateTraining = async (exercise: Training) => {
+export const updateTraining = async (training: Training) => {
   const response = await authApi.patch<Training>(
-    `api/fitness/trainings/${exercise.id}/`,
-    exercise
+    `api/fitness/trainings/${training.id}/`,
+    training
   );
   return response.data;
 };
@@ -68,5 +68,10 @@ export const updateTrainingExercise = async (exercise: TrainingExercise) => {
     `api/fitness/training_exercises/${exercise.id}/`,
     exercise
   );
+  return response.data;
+};
+
+export const removeTraining = async (id: number) => {
+  const response = await authApi.delete(`api/fitness/trainings/${id}/`);
   return response.data;
 };

@@ -1,3 +1,4 @@
+import { Box, Button, ButtonGroup, Grid, Typography } from "@mui/material";
 import Paper from "@mui/material/Paper";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -8,6 +9,7 @@ import TableRow from "@mui/material/TableRow";
 import moment from "moment";
 import { FunctionComponent } from "react";
 
+import { TimeCounter } from "../../../common/components/TimeCounter";
 import { Training, TrainingExercise } from "../../api/models";
 
 const headers = ["Exercise", "Set number", "Time spent", "Weight", "Reps"];
@@ -56,5 +58,33 @@ export const TrainingDetails: FunctionComponent<{ training: Training }> = ({
         </TableBody>
       </Table>
     </TableContainer>
+  );
+};
+
+export const RunningTrainingDetails: FunctionComponent<{
+  training: Training;
+  onDelete: () => void;
+}> = ({ training, onDelete }) => {
+  return (
+    <Box mt={2}>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
+          <Typography>Workout time:</Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <TimeCounter startFrom={training.started} />
+        </Grid>
+        <Grid item xs={4}>
+          <Typography>Actions:</Typography>
+        </Grid>
+        <Grid item xs={8}>
+          <ButtonGroup variant="contained">
+            <Button color="error" size="small" onClick={onDelete}>
+              Stop and Discard
+            </Button>
+          </ButtonGroup>
+        </Grid>
+      </Grid>
+    </Box>
   );
 };

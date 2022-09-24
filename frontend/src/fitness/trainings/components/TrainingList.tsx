@@ -25,7 +25,7 @@ export const TrainingsList = () => {
     );
   }
   if (!data.length) {
-    return <Typography>Trainings history is empty</Typography>;
+    return <Typography mt={2}>Trainings history is empty</Typography>;
   }
 
   return (

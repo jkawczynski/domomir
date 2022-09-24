@@ -15,7 +15,7 @@ export const ShoppingList: FunctionComponent<{
   onMarkedAsDone: (item: ShoppingListItem) => void;
 }> = ({ data, onMarkedAsDone }) => {
   if (!data.length) {
-    return <Typography>The list is empty</Typography>;
+    return <Typography mt={2}>The list is empty</Typography>;
   }
   const handleMarkedAsDone = (item: ShoppingListItem) => {
     item.loading = true;
