@@ -32,9 +32,6 @@ export const Exercise: FunctionComponent<{
   return (
     <>
       {mutation.isLoading && <LinearProgress />}
-      {!!exercise.started && (
-        <TimeCounter hideHours startFrom={exercise.started} />
-      )}
       <ExerciseForm
         disabled={mutation.isLoading}
         exercise={exercise}
