@@ -2,6 +2,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import CottageIcon from "@mui/icons-material/Cottage";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
+import OpenInNewIcon from '@mui/icons-material/OpenInNew';
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -91,7 +92,7 @@ const AppPagesMenu: FunctionComponent<{
         )}
         {menuItems.map((page) => (
           <MenuItem key={page.name} onClick={() => handleCloseNavMenu(page)}>
-            <Typography textAlign="center">{page.name}</Typography>
+            <Typography textAlign="center"> { page.external ? <OpenInNewIcon fontSize="small"/> : null } {page.name}  </Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -104,13 +105,23 @@ export const DomomirAppBar: FunctionComponent = () => {
   const stateContext = useStateContext();
   const user = stateContext.state.user;
   const appItems = [
-    {
-      name: "Shutter",
-      path: "http://192.168.50.150:8090/shutter",
-      external: true,
-    },
     { name: "Food", path: "/food/recipes" },
     { name: "Fitness", path: "/fitness/plans" },
+    {
+      name: "Home assistant",
+      path: "http://192.168.50.50:8123",
+      external: true,
+    },
+    {
+      name: "Taiga",
+      path: "https://taiga.bklrzn.pl",
+      external: true,
+    },
+    {
+      name: "Todo",
+      path: "https://todo.bklrzn.pl",
+      external: true,
+    },
   ];
 
   const profileItems = [
@@ -191,6 +202,7 @@ export const DomomirAppBar: FunctionComponent = () => {
                 key={page.name}
                 onClick={() => openPage(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
+                endIcon={page.external ? <OpenInNewIcon/> : null}
               >
                 {page.name}
               </Button>
