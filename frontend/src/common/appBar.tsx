@@ -109,7 +109,7 @@ export const DomomirAppBar: FunctionComponent = () => {
     { name: "Fitness", path: "/fitness/plans" },
     {
       name: "Home assistant",
-      path: "http://192.168.50.50:8123",
+      path: "https://my.home-assistant.io",
       external: true,
     },
     {
