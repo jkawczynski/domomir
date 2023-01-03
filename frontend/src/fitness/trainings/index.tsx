@@ -57,8 +57,9 @@ export const TrainingDetailsPage: FunctionComponent<{ id: string }> = ({
           <RunningTrainingDetails
             training={data}
             onDelete={() => deleteMutation.mutate(data.id)}
+            onFinish={onFinish} 
           />
-          <TrainingSteps training={data} onFinish={onFinish} />
+          <TrainingSteps training={data}/>
         </>
       )}
     </FitnessPage>

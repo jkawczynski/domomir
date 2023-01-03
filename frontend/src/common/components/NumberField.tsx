@@ -1,6 +1,9 @@
 import AddIcon from "@mui/icons-material/Add";
+import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
+import RemoveCircleOutlineIcon from "@mui/icons-material/RemoveCircleOutline";
 import RemoveIcon from "@mui/icons-material/Remove";
 import {
+  Box,
   Button,
   ButtonGroup,
   FormControl,
@@ -11,8 +14,10 @@ import {
   OutlinedInput,
   OutlinedInputProps,
   Paper,
+  Stack,
   TextField,
   TextFieldProps,
+  Typography,
 } from "@mui/material";
 import { FunctionComponent, PropsWithChildren, useState } from "react";
 import { forwardRef } from "react";
@@ -62,33 +67,29 @@ export const IncrementableNumberField: FunctionComponent<{
   };
 
   return (
-    <FormControl
-      variant="outlined"
-      size="small"
-      sx={{ m: 0, p: 0, mt: 2, display: "flex" }}
-    >
-      <InputLabel htmlFor="incrementable-input">{label}</InputLabel>
-      <OutlinedInput
-        sx={{ m: 0, pl: 1, pr: 1 }}
-        value={value}
-        id="incrementable-input"
-        disabled={disabled}
-        startAdornment={
-          <InputAdornment position="start">
-            <IconButton onClick={onReduce} edge="start">
-              <RemoveIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-        endAdornment={
-          <InputAdornment position="end">
-            <IconButton onClick={onIncrement} sx={{ m: 0, p: 0 }}>
-              <AddIcon />
-            </IconButton>
-          </InputAdornment>
-        }
-        label={label}
-      />
+    <FormControl variant="outlined" size="small">
+      <Typography variant="caption">{label}</Typography>
+      <Stack direction="row" spacing={0}>
+        <IconButton
+          size="small"
+          color="error"
+          variant="contained"
+          onClick={onReduce}
+        >
+          <RemoveCircleOutlineIcon />
+        </IconButton>
+        <Box sx={{ mt: 0.5 }}>
+          <Typography variant="caption">{value}</Typography>
+        </Box>
+        <IconButton
+          size="small"
+          color="success"
+          variant="contained"
+          onClick={onIncrement}
+        >
+          <AddCircleOutlineIcon />
+        </IconButton>
+      </Stack>
     </FormControl>
   );
 };

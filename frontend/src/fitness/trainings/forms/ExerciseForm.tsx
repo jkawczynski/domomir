@@ -1,5 +1,13 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Box, Grid, Checkbox } from "@mui/material";
+import {
+  Box,
+  Button,
+  Divider,
+  Grid,
+  Checkbox,
+  Typography,
+  Stack,
+} from "@mui/material";
 import { FunctionComponent } from "react";
 import { Controller, useForm } from "react-hook-form";
 
@@ -10,8 +18,9 @@ import { TrainingExerciseSchema } from "../../api/schemas";
 export const ExerciseForm: FunctionComponent<{
   exercise: TrainingExercise;
   onSubmit: (exercise: TrainingExercise) => void;
+  onSkip: (exercise: TrainingExercise) => void;
   disabled?: boolean;
-}> = ({ exercise, onSubmit, disabled }) => {
+}> = ({ exercise, onSubmit, onSkip, disabled }) => {
   const { handleSubmit, control } = useForm<TrainingExercise>({
     resolver: zodResolver(TrainingExerciseSchema),
     defaultValues: {
@@ -27,13 +36,11 @@ export const ExerciseForm: FunctionComponent<{
       component="form"
       onSubmit={handleSubmit(onSubmit)}
       noValidate
-      sx={{ maxWidth: 500 }}
+      sx={{ maxWidth: 500, mt: 1 }}
     >
-      <Grid container spacing={1}>
-        <Grid item xs={2}>
-          <Checkbox sx={{mt: 2}} />
-        </Grid>
-        <Grid item xs={5}>
+      <Typography> # {exercise.set_number} </Typography>
+      <Grid container spacing={2}>
+        <Grid item xs={4}>
           <Controller
             render={({ field: { onChange, value } }) => (
               <IncrementableNumberField
@@ -47,7 +54,7 @@ export const ExerciseForm: FunctionComponent<{
             control={control}
           />
         </Grid>
-        <Grid item xs={5}>
+        <Grid item xs={4}>
           <Controller
             render={({ field: { onChange, value } }) => (
               <IncrementableNumberField
@@ -62,7 +69,31 @@ export const ExerciseForm: FunctionComponent<{
           />
         </Grid>
       </Grid>
+      <Stack
+        direction="row"
+        spacing={1}
+        sx={{ mt: 1 }}
+        justifyContent="flex-end"
+      >
+        <Button
+          size="small"
+          disabled={disabled}
+          color="warning"
+          variant="outlined"
+          onClick={() => onSkip(exercise)}
+        >
+          Skip
+        </Button>
+        <Button
+          size="small"
+          disabled={disabled}
+          color="success"
+          variant="outlined"
+          type="submit"
+        >
+          Complete
+        </Button>
+      </Stack>
     </Box>
   );
 };
-
