@@ -33,7 +33,7 @@ export const TrainingPlanSchema = z.object({
 export const TrainingExerciseSchema = z.object({
   id: z.number(),
   name: z.string(),
-  started: z.date().optional(),
+  skipped: z.boolean().optional(),
   completed: z.date().optional(),
   set_number: z.number(),
   reps: z
