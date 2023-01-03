@@ -19,7 +19,7 @@ export const Exercise: FunctionComponent<{
   };
   const onSkip = (skippedExercise: TrainingExercise) => {
     exercise.skipped = true;
-    mutation.mutate({ id: skippedExercise.id, skipped: true });
+    mutation.mutate({ id: skippedExercise.id, skipped: true } as TrainingExercise);
   };
   return (
     <>

@@ -1,19 +1,11 @@
-import {
-  Typography,
-  Box,
-  Step,
-  StepContent,
-  StepLabel,
-  Stepper,
-} from "@mui/material";
-import { FunctionComponent, useState } from "react";
+import { Typography, Box } from "@mui/material";
+import { FunctionComponent } from "react";
 
 import { Training } from "../../api/models";
 import { ExerciseSteps } from "./ExerciseSteps";
 
 export const TrainingSteps: FunctionComponent<{
   training: Training;
-  onFinish: () => void;
 }> = ({ training }) => {
   return (
     <>

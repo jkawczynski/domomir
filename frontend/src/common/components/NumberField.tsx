@@ -73,7 +73,6 @@ export const IncrementableNumberField: FunctionComponent<{
         <IconButton
           size="small"
           color="error"
-          variant="contained"
           onClick={onReduce}
         >
           <RemoveCircleOutlineIcon />
@@ -84,7 +83,6 @@ export const IncrementableNumberField: FunctionComponent<{
         <IconButton
           size="small"
           color="success"
-          variant="contained"
           onClick={onIncrement}
         >
           <AddCircleOutlineIcon />
