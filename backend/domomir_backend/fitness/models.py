@@ -15,12 +15,11 @@ class TrainingExercise(models.Model):
         Training, on_delete=models.CASCADE, related_name="exercises"
     )
     name = models.CharField(max_length=255)
-    started = models.DateTimeField(null=True)
     completed = models.DateTimeField(null=True)
+    skipped = models.BooleanField(default=False)
     set_number = models.PositiveSmallIntegerField(null=True)
     reps = models.PositiveSmallIntegerField(null=True)
     weight = models.PositiveSmallIntegerField(null=True)
-
 
 class TrainingPlan(models.Model):
     WEEKDAYS = [

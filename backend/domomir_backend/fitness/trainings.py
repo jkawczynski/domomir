@@ -39,7 +39,8 @@ def start_training(plan: TrainingPlan):
         )
 
     description = plan.weekday_verbose
-    description += f" - {plan.description}"
+    if plan.description:
+        description += f" - {plan.description}"
 
     training = Training.objects.create(
         description=description,

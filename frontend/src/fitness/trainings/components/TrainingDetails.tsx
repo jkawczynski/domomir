@@ -12,14 +12,11 @@ import { FunctionComponent } from "react";
 import { TimeCounter } from "../../../common/components/TimeCounter";
 import { Training, TrainingExercise } from "../../api/models";
 
-const headers = ["Exercise", "Set number", "Time spent", "Weight", "Reps"];
+const headers = ["Exercise", "Set number", "Completed", "Skipped", "Weight", "Reps"];
 
 const ExerciseRow: FunctionComponent<{ exercise: TrainingExercise }> = ({
   exercise,
 }) => {
-  const timeSpent = moment
-    .duration(moment(exercise.started).diff(moment(exercise.completed)))
-    .humanize(false, { ss: 1 });
   return (
     <TableRow
       key={exercise.id}
@@ -29,7 +26,8 @@ const ExerciseRow: FunctionComponent<{ exercise: TrainingExercise }> = ({
         {exercise.name}
       </TableCell>
       <TableCell align="right">{exercise.set_number}</TableCell>
-      <TableCell align="right">{timeSpent}</TableCell>
+      <TableCell align="right">{exercise.completed ? "Yes" : "No"}</TableCell>
+      <TableCell align="right">{exercise.skipped ? "Yes" : "No"}</TableCell>
       <TableCell align="right">{exercise.weight}</TableCell>
       <TableCell align="right">{exercise.reps}</TableCell>
     </TableRow>
@@ -64,7 +62,8 @@ export const TrainingDetails: FunctionComponent<{ training: Training }> = ({
 export const RunningTrainingDetails: FunctionComponent<{
   training: Training;
   onDelete: () => void;
-}> = ({ training, onDelete }) => {
+  onFinish: () => void;
+}> = ({ training, onDelete, onFinish }) => {
   return (
     <Box mt={2}>
       <Grid container spacing={2}>
@@ -80,7 +79,10 @@ export const RunningTrainingDetails: FunctionComponent<{
         <Grid item xs={8}>
           <ButtonGroup variant="contained">
             <Button color="error" size="small" onClick={onDelete}>
-              Stop and Discard
+              Discard
+            </Button>
+            <Button color="success" size="small" onClick={onFinish}>
+              Finish
             </Button>
           </ButtonGroup>
         </Grid>
