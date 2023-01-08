@@ -105,12 +105,7 @@ const RecipeDescription: FunctionComponent<{
         Description:
       </Typography>
       {!description && "No description provided"}
-      {!!description &&
-        description.split("\n").map((line, index) => (
-          <Typography key={index} variant="body2" color="text.secondary">
-            {line}
-          </Typography>
-        ))}
+      {!!description && <div dangerouslySetInnerHTML={{__html: description}}></div>}
     </>
   );
 };

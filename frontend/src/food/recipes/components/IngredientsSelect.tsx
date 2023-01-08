@@ -26,6 +26,7 @@ const IngredientSelectItem: FunctionComponent<{
         variant="standard"
         size="small"
         label="Name"
+        autoFocus={true}
       />
       <TextField
         value={value.amount_and_unit}
