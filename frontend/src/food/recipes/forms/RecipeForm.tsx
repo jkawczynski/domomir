@@ -10,6 +10,7 @@ import { Spinner } from "../../../common/spinner";
 import { Recipe } from "../api/models";
 import { RecipeSchema } from "../api/schemas";
 import { IngredientsSelect, PictureUploader, TagsSelect } from "../components";
+import { RecipeDescription } from "../components/RecipeDescription";
 
 export const RecipeForm: FunctionComponent<{
   recipe?: Recipe;
@@ -74,13 +75,16 @@ export const RecipeForm: FunctionComponent<{
           helperText={errors?.url?.message}
           {...register("url")}
         />
-        <TextField
-          label="Description"
-          size="small"
-          error={!!errors?.description?.message}
-          helperText={errors?.description?.message}
-          {...register("description")}
-          multiline
+        <Controller
+          render={({ field: { onChange, value } }) => (
+            <RecipeDescription
+              value={value}
+              error={errors?.description?.message}
+              onChange={onChange}
+            />
+          )}
+          name="description"
+          control={control}
         />
         <Controller
           render={({ field: { onChange } }) => (

@@ -42,7 +42,7 @@ export const RecipeListItem: FunctionComponent<{ recipe: Recipe }> = ({
         alt="green iguana"
       />
       <CardContent>
-        <Typography gutterBottom variant="h5" component="div">
+        <Typography gutterBottom variant="h5" component="div" onClick={() => setLocation(recipePath)} >
           {recipe.name}
         </Typography>
         <TagsList tags={recipe.tags.map((t) => t.name)} />
