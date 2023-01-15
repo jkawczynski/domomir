@@ -1,6 +1,5 @@
 import { Divider, Stack } from "@mui/material";
-import moment from "moment";
-import { FunctionComponent, useState } from "react";
+import { FunctionComponent } from "react";
 
 import { TrainingExercise } from "../../api/models";
 import { Exercise } from "./Exercise";

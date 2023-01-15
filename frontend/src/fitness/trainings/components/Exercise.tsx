@@ -1,8 +1,8 @@
 import { LinearProgress } from "@mui/material";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { FunctionComponent } from "react";
 
-import { updateTrainingExercise } from "../../api";
+import { getTrainingExercise, updateTrainingExercise } from "../../api";
 import { TrainingExercise } from "../../api/models";
 import { ExerciseForm } from "../forms";
 import { ExerciseCompletedInfo } from "./ExerciseCompletedInfo";
@@ -10,26 +10,42 @@ import { ExerciseCompletedInfo } from "./ExerciseCompletedInfo";
 export const Exercise: FunctionComponent<{
   exercise: TrainingExercise;
 }> = ({ exercise }) => {
-  const mutation = useMutation(updateTrainingExercise);
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["getTrainingExercise", exercise.id],
+    queryFn: () => getTrainingExercise(exercise.id),
+    initialData: exercise,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    refetchOnWindowFocus: false,
+  });
+  const mutation = useMutation({
+    mutationFn: updateTrainingExercise,
+    onSuccess: () => {
+      console.log("update udany");
+      refetch();
+    },
+  });
   const onSubmit = (formData: TrainingExercise) => {
     const currentDate = new Date();
     formData.completed = currentDate;
-    exercise.completed = currentDate;
     mutation.mutate(formData);
   };
   const onSkip = (skippedExercise: TrainingExercise) => {
     exercise.skipped = true;
-    mutation.mutate({ id: skippedExercise.id, skipped: true } as TrainingExercise);
+    mutation.mutate({
+      id: skippedExercise.id,
+      skipped: true,
+    } as TrainingExercise);
   };
   return (
     <>
-      {mutation.isLoading && <LinearProgress />}
-      {exercise.completed || exercise.skipped ? (
-        <ExerciseCompletedInfo exercise={exercise} />
+      {(isLoading || mutation.isLoading) && <LinearProgress />}
+      {data.completed || data.skipped ? (
+        <ExerciseCompletedInfo exercise={data} />
       ) : (
         <ExerciseForm
-          disabled={mutation.isLoading}
-          exercise={exercise}
+          disabled={isLoading || mutation.isLoading}
+          exercise={data}
           onSubmit={onSubmit}
           onSkip={onSkip}
         />

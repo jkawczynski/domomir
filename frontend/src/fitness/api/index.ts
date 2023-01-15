@@ -71,6 +71,12 @@ export const updateTrainingExercise = async (exercise: TrainingExercise) => {
   return response.data;
 };
 
+export const getTrainingExercise = async (id: number) => {
+  const response = await authApi.get<TrainingExercise>(
+    `api/fitness/training_exercises/${id}/`);
+  return response.data;
+};
+
 export const removeTraining = async (id: number) => {
   const response = await authApi.delete(`api/fitness/trainings/${id}/`);
   return response.data;

@@ -1,12 +1,7 @@
 import { FunctionComponent } from "react";
 import {
   Box,
-  Button,
-  Divider,
-  Grid,
-  Checkbox,
   Typography,
-  Stack,
 } from "@mui/material";
 
 import { TrainingExercise } from "../../api/models";
