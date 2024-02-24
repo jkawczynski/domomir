@@ -24,8 +24,7 @@ class RecipePictureSerializer(serializers.ModelSerializer):
         return os.path.basename(picture.file.name)
 
     def get_thumbnail(self, picture: RecipePicture) -> str:
-        request = self.context.get("request")
-        picture_url = request.build_absolute_uri(picture.file.url)
+        picture_url = picture.file.url
         return f"{picture_url}.recipe_thumb.jpg"
 
 
@@ -74,8 +73,7 @@ class RecipeSerializer(serializers.ModelSerializer):
     thumbnail = serializers.SerializerMethodField()
 
     def get_picture(self, recipe: Recipe) -> Optional[str]:
-        request = self.context.get("request")
-        return request.build_absolute_uri(recipe.picture.file.url)
+        return recipe.picture.file.url
 
     def get_thumbnail(self, recipe: Recipe) -> Optional[str]:
         picture_url = self.get_picture(recipe)

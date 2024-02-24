@@ -19,6 +19,7 @@ export const PictureUploader: FunctionComponent<{
       onFileSelect(data.id);
       setFileName(data.name);
     },
+    onError: console.error,
   });
 
   const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {

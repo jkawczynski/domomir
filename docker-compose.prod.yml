@@ -10,8 +10,10 @@ services:
       - ${PWD}/etc/upload/:/srv/upload/
       - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
       - ${PWD}/etc/nginx/nginx_backend.conf:/etc/nginx/nginx.conf
-    user: app
+    user: "${UID}:${GID}"
     expose: ["8000"]
+    ports:
+      - "8100:8000"
 
   frontend:
     build:
@@ -19,8 +21,10 @@ services:
       dockerfile: ${PWD}/frontend/prod.Dockerfile
     volumes:
       - ${PWD}/etc/nginx/nginx_frontend.conf:/etc/nginx/nginx.conf
-    user: app 
+    user: "${UID}:${GID}"
     expose: ["8500"]
+    ports:
+      - "8200:8500"
 
   celery-worker:
     build: ${PWD}/backend/
@@ -43,3 +47,11 @@ services:
   redis:
     image: redis:latest
     expose: ["6379"]
+
+  nginx:
+    image: nginx:alpine
+    volumes:
+      - ./etc/nginx/nginx_proxy.conf:/etc/nginx/nginx.conf:ro
+      - ./etc/nginx/proxy_params:/etc/nginx/proxy_params
+    ports:
+      - "8080:80"

@@ -7,7 +7,6 @@ ENV GUNICORN_CONFIG=/srv/gunicorn/config.py
 
 RUN apt update \
     && apt install -y \
-        python-dev \
         build-essential \
         nginx \
     && rm -rf /var/lib/apt/lists/*

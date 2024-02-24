@@ -2,7 +2,7 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import CottageIcon from "@mui/icons-material/Cottage";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
-import OpenInNewIcon from '@mui/icons-material/OpenInNew';
+import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -21,7 +21,6 @@ import { useStateContext } from "./context";
 type AppMenuItem = {
   name: string;
   path?: string;
-  external?: boolean;
   onClick?: () => void;
 };
 
@@ -47,9 +46,7 @@ const AppPagesMenu: FunctionComponent<{
     if (!item.path && !item.onClick) {
       return;
     }
-    if (item.external) {
-      window.open(item.path, "_blank");
-    } else if (item.path) {
+    if (item.path) {
       setLocation(item.path);
     }
     if (item.onClick) {
@@ -92,7 +89,7 @@ const AppPagesMenu: FunctionComponent<{
         )}
         {menuItems.map((page) => (
           <MenuItem key={page.name} onClick={() => handleCloseNavMenu(page)}>
-            <Typography textAlign="center"> { page.external ? <OpenInNewIcon fontSize="small"/> : null } {page.name}  </Typography>
+            <Typography textAlign="center">{page.name}</Typography>
           </MenuItem>
         ))}
       </Menu>
@@ -107,21 +104,6 @@ export const DomomirAppBar: FunctionComponent = () => {
   const appItems = [
     { name: "Food", path: "/food/recipes" },
     { name: "Fitness", path: "/fitness/plans" },
-    {
-      name: "Home assistant",
-      path: "https://my.home-assistant.io",
-      external: true,
-    },
-    {
-      name: "Taiga",
-      path: "https://taiga.bklrzn.pl",
-      external: true,
-    },
-    {
-      name: "Todo",
-      path: "https://todo.bklrzn.pl",
-      external: true,
-    },
   ];
 
   const profileItems = [
@@ -136,9 +118,7 @@ export const DomomirAppBar: FunctionComponent = () => {
   ];
 
   const openPage = (page: AppMenuItem) => {
-    if (page.external) {
-      window.open(page.path, "_blank");
-    } else if (page.path) {
+    if (page.path) {
       setLocation(page.path);
     }
   };
@@ -202,7 +182,6 @@ export const DomomirAppBar: FunctionComponent = () => {
                 key={page.name}
                 onClick={() => openPage(page)}
                 sx={{ my: 2, color: "white", display: "block" }}
-                endIcon={page.external ? <OpenInNewIcon/> : null}
               >
                 {page.name}
               </Button>
