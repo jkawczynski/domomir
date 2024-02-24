@@ -12,6 +12,7 @@ FROM alpine:latest
 RUN apk update \
     && apk add nginx
 
+ADD etc/nginx.conf /etc/nginx/nginx.conf
 RUN adduser --uid 1001 app --gecos app --disabled-password
 
 RUN touch /var/run/nginx.pid && \

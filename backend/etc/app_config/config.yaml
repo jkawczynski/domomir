@@ -1,10 +1,9 @@
 DEBUG: false
 SHUTTER_IP_ADDRESS: '192.168.50.201'
 SHUTTER_PROXY_ADDRESS: 'http://192.168.50.150:8555/'
-STATIC_ROOT: '/srv/static'
-MEDIA_ROOT: '/srv/upload'
+STATIC_ROOT: '/srv/etc/static'
+MEDIA_ROOT: '/srv/etc/upload'
 DATABASES:
   default:
     ENGINE: 'django.db.backends.sqlite3'
-    NAME: '/srv/database/db.sqlite3'
-SECRET_KEY: 'super_secret'
+    NAME: '/srv/etc/database/db.sqlite3'

@@ -4,6 +4,7 @@ MAINTAINER jkawczynski
 ENV APP_ROOT=/app
 ENV ETC_ROOT=/srv
 ENV GUNICORN_CONFIG=/srv/gunicorn/config.py
+ENV YAMLCONF_CONFFILE=/app/etc/config.yaml
 
 RUN apt update \
     && apt install -y \
@@ -27,6 +28,7 @@ RUN pip install gunicorn && \
 
 ADD etc/nginx/nginx.conf /etc/nginx/nginx.conf
 ADD etc/gunicorn/* $ETC_ROOT/gunicorn/
+ADD etc/app_config/config.yaml $APP_ROOT/etc/config.yaml
 ADD domomir_backend $APP_ROOT/
 ADD docker_entrypoint.sh $ETC_ROOT
 

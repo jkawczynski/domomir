@@ -2,46 +2,27 @@ version: "3.9"
 
 services:
   backend:
-    build: ${PWD}/backend/
+    image: domomir_backend
     environment:
-      - YAMLCONF_CONFFILE=/srv/config.yaml
+      - DJANGO_SECRET=secret
     volumes:
-      - ${PWD}/etc/database/:/srv/database/
-      - ${PWD}/etc/upload/:/srv/upload/
-      - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
-      - ${PWD}/etc/nginx/nginx_backend.conf:/etc/nginx/nginx.conf
-    user: "${UID}:${GID}"
+      - domomir-etc:/srv/etc/
     expose: ["8000"]
-    ports:
-      - "8100:8000"
 
   frontend:
-    build:
-      context: ${PWD}/frontend/
-      dockerfile: ${PWD}/frontend/prod.Dockerfile
-    volumes:
-      - ${PWD}/etc/nginx/nginx_frontend.conf:/etc/nginx/nginx.conf
-    user: "${UID}:${GID}"
+    image: domomir_frontend
     expose: ["8500"]
-    ports:
-      - "8200:8500"
 
   celery-worker:
-    build: ${PWD}/backend/
-    environment:
-      - YAMLCONF_CONFFILE=/srv/config.yaml
+    image: domomir_backend
     volumes:
-      - ${PWD}/etc/database/:/srv/database/
-      - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
+      - domomir-etc:/srv/etc/
     command: celery-worker 
 
   celery-beat:
-    build: ${PWD}/backend/
-    environment:
-      - YAMLCONF_CONFFILE=/srv/config.yaml
+    image: domomir_backend
     volumes:
-      - ${PWD}/etc/database/:/srv/database/
-      - ${PWD}/etc/app_config/config.yaml:/srv/config.yaml
+      - domomir-etc:/srv/etc/
     command: celery-beat
 
   redis:
@@ -55,3 +36,7 @@ services:
       - ./etc/nginx/proxy_params:/etc/nginx/proxy_params
     ports:
       - "8080:80"
+
+volumes:
+  domomir-etc:
+    external: true
