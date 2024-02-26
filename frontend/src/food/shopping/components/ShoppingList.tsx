@@ -52,7 +52,6 @@ export const ShoppingList: FunctionComponent<{
               textDecoration: item.marked_as_done ? "line-through" : "none",
             }}
             primary={item.name}
-            secondary={item.author}
           />
         </ListItem>
       ))}

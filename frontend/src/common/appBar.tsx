@@ -2,7 +2,6 @@ import AccountCircle from "@mui/icons-material/AccountCircle";
 import CottageIcon from "@mui/icons-material/Cottage";
 import MenuIcon from "@mui/icons-material/Menu";
 import AppBar from "@mui/material/AppBar";
-import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Container from "@mui/material/Container";
@@ -14,9 +13,6 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 import { FunctionComponent, ReactNode, useState } from "react";
 import { useLocation } from "wouter";
-
-import { clearUserToken } from "../api/tokenStorage";
-import { useStateContext } from "./context";
 
 type AppMenuItem = {
   name: string;
@@ -99,22 +95,8 @@ const AppPagesMenu: FunctionComponent<{
 
 export const DomomirAppBar: FunctionComponent = () => {
   const [, setLocation] = useLocation();
-  const stateContext = useStateContext();
-  const user = stateContext.state.user;
   const appItems = [
     { name: "Food", path: "/food/recipes" },
-    { name: "Fitness", path: "/fitness/plans" },
-  ];
-
-  const profileItems = [
-    {
-      name: "Logout",
-      onClick: () => {
-        clearUserToken();
-        stateContext.dispatch({ type: "SET_USER", payload: null });
-        setLocation("/login");
-      },
-    },
   ];
 
   const openPage = (page: AppMenuItem) => {
@@ -122,8 +104,6 @@ export const DomomirAppBar: FunctionComponent = () => {
       setLocation(page.path);
     }
   };
-
-  if (!user) return null;
 
   return (
     <AppBar position="static">
@@ -187,14 +167,6 @@ export const DomomirAppBar: FunctionComponent = () => {
               </Button>
             ))}
           </Box>
-          <AppPagesMenu
-            menuTitle={user.username}
-            menuItems={profileItems}
-            icon={<AccountCircle />}
-            positionHorizontal="right"
-            positionVertical="top"
-            display={{ xs: "block", md: "block" }}
-          />
         </Toolbar>
       </Container>
     </AppBar>

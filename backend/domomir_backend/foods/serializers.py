@@ -29,26 +29,13 @@ class RecipePictureSerializer(serializers.ModelSerializer):
 
 
 class ShoppingListItemSerializer(serializers.ModelSerializer):
-    author = serializers.SerializerMethodField()
-
-    def get_author(self, instance: ShoppingListItem):
-        if not instance.author:
-            return
-        return instance.author.username
-
     class Meta:
         model = ShoppingListItem
         fields = (
             "id",
             "name",
             "marked_as_done",
-            "author",
         )
-
-    @transaction.atomic
-    def create(self, validated_data: dict) -> ShoppingListItem:
-        validated_data["author"] = self.context.get("request").user
-        return super().create(validated_data)
 
 
 class RecipeTagSerializer(serializers.ModelSerializer):

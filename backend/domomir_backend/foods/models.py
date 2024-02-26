@@ -1,6 +1,5 @@
 import uuid
 
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils import timezone
 from easy_thumbnails.fields import ThumbnailerImageField
@@ -47,7 +46,6 @@ class ShoppingListItem(models.Model):
     name = models.CharField(max_length=255)
     marked_as_done = models.BooleanField(default=False)
     created = models.DateTimeField(default=timezone.now)
-    author = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
 
     class Meta:
         ordering = ("marked_as_done", "-created")

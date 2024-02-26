@@ -44,11 +44,8 @@ INSTALLED_APPS = [
     "easy_thumbnails",
     "rest_framework",
     "django_filters",
-    "rest_framework_simplejwt",
     "corsheaders",
     "foods",
-    "shutter",
-    "users",
     "fitness",
 ]
 
@@ -62,19 +59,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
-REST_FRAMEWORK = {
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
-    ),
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
-}
-
-SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=15),
-    "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
-}
+REST_FRAMEWORK = {}
 
 ROOT_URLCONF = "domomir_backend.urls"
 
@@ -181,10 +166,6 @@ THUMBNAIL_ALIASES = {
     },
 }
 
-
-# Shutter settings
-SHUTTER_IP_ADDRESS = "192.168.50.201"
-SHUTTER_PROXY_ADDRESS = "http://192.168.50.150:8555/"
 
 # Celery
 
